@@ -1,0 +1,83 @@
+[
+    {
+      "goat": "65a1b2c3d4e5f6789012345a1",
+      "date": "2024-01-15T00:00:00.000Z",
+      "type": "Vaccination",
+      "description": "Annual vaccination for CAE and CL prevention",
+      "veterinarian": "Dr. Sarah Johnson",
+      "medications": [
+        {
+          "name": "Covexin 8",
+          "dosage": "2ml",
+          "frequency": "Single dose",
+          "duration": "One time",
+          "notes": "Subcutaneous injection in neck"
+        }
+      ],
+      "cost": 45.50,
+      "nextDueDate": "2025-01-15T00:00:00.000Z",
+      "notes": "Goat showed no adverse reactions. Schedule next vaccination in 12 months.",
+      "createdAt": "2024-01-15T00:00:00.000Z",
+      "updatedAt": "2024-01-15T00:00:00.000Z"
+    },
+    {
+      "goat": "65a1b2c3d4e5f6789012345a2",
+      "date": "2024-02-10T00:00:00.000Z",
+      "type": "Treatment",
+      "description": "Treatment for hoof rot in left front hoof",
+      "veterinarian": "Dr. Mike Wilson",
+      "medications": [
+        {
+          "name": "Penicillin G",
+          "dosage": "5ml",
+          "frequency": "Twice daily",
+          "duration": "5 days",
+          "notes": "Intramuscular injection"
+        },
+        {
+          "name": "Zinc Sulfate Solution",
+          "dosage": "Apply liberally",
+          "frequency": "Daily",
+          "duration": "7 days",
+          "notes": "Topical application to affected hoof"
+        }
+      ],
+      "cost": 35.75,
+      "notes": "Isolate goat until treatment complete. Monitor for improvement.",
+      "createdAt": "2024-02-10T00:00:00.000Z",
+      "updatedAt": "2024-02-10T00:00:00.000Z"
+    },
+    {
+      "goat": "65a1b2c3d4e5f6789012345a3",
+      "date": "2024-03-01T00:00:00.000Z",
+      "type": "Deworming",
+      "description": "Routine deworming treatment based on fecal egg count",
+      "veterinarian": "Dr. Sarah Johnson",
+      "medications": [
+        {
+          "name": "Safeguard (Fenbendazole)",
+          "dosage": "10ml",
+          "frequency": "Single dose",
+          "duration": "One time",
+          "notes": "Oral administration, mixed with feed"
+        }
+      ],
+      "cost": 18.25,
+      "nextDueDate": "2024-06-01T00:00:00.000Z",
+      "notes": "Fecal egg count was 400 EPG. Recheck in 3 months.",
+      "createdAt": "2024-03-01T00:00:00.000Z",
+      "updatedAt": "2024-03-01T00:00:00.000Z"
+    },
+    {
+      "goat": "65a1b2c3d4e5f6789012345a4",
+      "date": "2024-03-20T00:00:00.000Z",
+      "type": "Checkup",
+      "description": "Routine health checkup and body condition scoring",
+      "veterinarian": "Dr. Sarah Johnson",
+      "medications": [],
+      "cost": 25.00,
+      "notes": "Body condition score: 3/5. Overall health good. Recommend increasing feed quality.",
+      "createdAt": "2024-03-20T00:00:00.000Z",
+      "updatedAt": "2024-03-20T00:00:00.000Z"
+    }
+  ]

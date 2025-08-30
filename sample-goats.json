@@ -1,0 +1,54 @@
+[
+  {
+    "tagNumber": "G001",
+    "name": "Bella",
+    "breed": "Jamunapari",
+    "gender": "Female",
+    "dateOfBirth": "2022-03-15T00:00:00.000Z",
+    "weight": {
+      "current": 45.5
+    },
+    "status": "Active",
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "updatedAt": "2024-01-10T00:00:00.000Z"
+  },
+  {
+    "tagNumber": "G002",
+    "name": "Raja",
+    "breed": "Sirohi",
+    "gender": "Male",
+    "dateOfBirth": "2021-08-20T00:00:00.000Z",
+    "weight": {
+      "current": 55.2
+    },
+    "status": "Active",
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "updatedAt": "2024-01-10T00:00:00.000Z"
+  },
+  {
+    "tagNumber": "G003",
+    "name": "Priya",
+    "breed": "Barbari",
+    "gender": "Female",
+    "dateOfBirth": "2022-11-05T00:00:00.000Z",
+    "weight": {
+      "current": 38.7
+    },
+    "status": "Active",
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "updatedAt": "2024-01-10T00:00:00.000Z"
+  },
+  {
+    "tagNumber": "G004",
+    "name": "Shyam",
+    "breed": "Osmanabadi",
+    "gender": "Male",
+    "dateOfBirth": "2021-12-10T00:00:00.000Z",
+    "weight": {
+      "current": 42.8
+    },
+    "status": "Active",
+    "createdAt": "2024-01-10T00:00:00.000Z",
+    "updatedAt": "2024-01-10T00:00:00.000Z"
+  }
+]

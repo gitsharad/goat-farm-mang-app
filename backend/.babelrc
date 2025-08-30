@@ -1,0 +1,32 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "modules": "commonjs"
+      }
+    ]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-runtime", {
+      "regenerator": true
+    }],
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "@config": "./src/config",
+        "@controllers": "./src/controllers",
+        "@models": "./src/models",
+        "@routes": "./src/routes",
+        "@middleware": "./src/middleware",
+        "@utils": "./src/utils"
+      }
+    }]
+  ],
+  "ignore": [
+    "**/*.test.js"
+  ]
+}

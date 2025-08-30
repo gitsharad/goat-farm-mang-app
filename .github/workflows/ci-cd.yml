@@ -1,0 +1,215 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18'
+  MONGODB_VERSION: '5.0'
+  DOCKER_IMAGE: ghcr.io/${{ github.repository_owner }}/goat-farm-app:${{ github.sha }}
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:5.0
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: test
+        options: >-
+          --health-cmd "echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd frontend && npm ci
+        cd ../backend && npm ci
+      working-directory: ./
+    
+    # Lint and test frontend
+    - name: Lint frontend
+      run: cd frontend && npm run lint
+      
+    - name: Test frontend
+      run: |
+        cd frontend
+        npm test -- --coverage --watchAll=false
+        
+    # Upload frontend coverage to Codecov
+    - name: Upload frontend coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        directory: frontend/coverage
+        fail_ci_if_error: false
+      
+    # Test backend
+    - name: Test backend
+      run: cd backend && npm test
+      env:
+        NODE_ENV: test
+        MONGODB_URI: mongodb://test:test@localhost:27017/goat-farm-test?authSource=admin
+        JWT_SECRET: test-secret
+  
+  build:
+    name: Build
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        
+    # Build frontend
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm ci
+        npm run build
+      env:
+        REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL || 'http://localhost:5000/api' }}
+        REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
+        REACT_APP_VERSION: ${{ github.sha }}
+    
+    # Build backend
+    - name: Build backend
+      run: |
+        cd backend
+        npm ci
+        npm run build
+      env:
+        NODE_ENV: production
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+    
+    # Create Sentry release
+    - name: Create Sentry release
+      uses: getsentry/action-release@v1
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+        SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      with:
+        environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+        sourcemaps: 'frontend/build/static/js'
+        url_prefix: '~/static/js/'
+      if: github.ref != 'refs/heads/develop'
+      
+    # Create artifact
+    - name: Create artifact
+      run: |
+        mkdir -p dist
+        cp -r frontend/build dist/frontend
+        cp -r backend/dist/* dist/
+        cp backend/package*.json dist/
+        cp -r backend/node_modules dist/
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: goat-farm-app
+        path: dist/
+        retention-days: 5
+
+  deploy:
+    name: Deploy
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: goat-farm-app
+        path: dist/
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: ${{ env.DOCKER_IMAGE }}
+        file: ./Dockerfile
+        build-args: |
+          NODE_ENV=production
+          NODE_VERSION=${{ env.NODE_VERSION }}
+          
+    - name: Deploy to production
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          # Pull the latest image
+          docker pull ${{ env.DOCKER_IMAGE }}
+          
+          # Stop and remove existing container if running
+          docker stop goat-farm-app || true
+          docker rm goat-farm-app || true
+          
+          # Start new container
+          docker run -d \
+            --name goat-farm-app \
+            --restart always \
+            -p 80:5000 \
+            -e NODE_ENV=production \
+            -e MONGODB_URI=${{ secrets.MONGODB_URI }} \
+            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            -e SENTRY_DSN=${{ secrets.SENTRY_DSN }} \
+            ${{ env.DOCKER_IMAGE }}
+            
+          # Clean up old images
+          docker image prune -af --filter "until=24h"
+          
+          # Send deployment notification to Sentry
+          curl -s https://sentry.io/api/0/organizations/${{ secrets.SENTRY_ORG }}/releases/ \
+            -X POST \
+            -H "Authorization: Bearer ${{ secrets.SENTRY_AUTH_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "version": "${{ github.sha }}",
+              "refs": [{
+                "repository": "${{ github.repository }}",
+                "commit": "${{ github.sha }}",
+                "previousCommit": "${{ github.event.before }}"
+              }],
+              "projects": ["${{ secrets.SENTRY_PROJECT }}"],
+              "environment": "production"
+            }'

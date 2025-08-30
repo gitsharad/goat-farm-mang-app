@@ -1,0 +1,94 @@
+# Dependencies
+**/node_modules/
+/.pnp
+.pnp.js
+
+# Backend specific
+/backend/node_modules/
+/backend/logs/*.log
+/backend/.env
+
+# Frontend specific
+/frontend/node_modules/
+/frontend/.next/
+/frontend/out/
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
+
+# Testing
+/coverage
+
+# Production
+/build
+/dist
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+**/logs/
+**/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build output
+.next/
+out/
+
+# Misc
+.DS_Store
+*.pem
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs from the application
+/backend/logs/*.log
+
+# MongoDB data directory
+/data/db/
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# Cache
+.cache/
+.parcel-cache/
