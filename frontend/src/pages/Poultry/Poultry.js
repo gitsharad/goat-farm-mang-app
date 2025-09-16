@@ -2,9 +2,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, Search, Filter, Edit, Trash, Eye, ChevronDown, ChevronUp, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import api from '../../services/api';
 
 const Poultry = () => {
+  const { t, i18n } = useTranslation('poultry');
+  
+  // Debug logging for translations
+  useEffect(() => {
+    console.log('Current language:', i18n.language);
+    console.log('Poultry translations:', i18n.getResourceBundle(i18n.language, 'poultry') || 'Not loaded');
+  }, [i18n]);
   const [poultry, setPoultry] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
@@ -43,14 +51,14 @@ const Poultry = () => {
   }, [fetchPoultry]);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this poultry record?')) {
+    if (window.confirm(t('pages.poultryPage.deleteConfirm'))) {
       try {
         await api.delete(`/poultry/${id}`);
-        toast.success('Poultry record deleted successfully');
+        toast.success(t('pages.poultryPage.deleteSuccess'));
         fetchPoultry();
       } catch (error) {
         console.error('Error deleting poultry:', error);
-        toast.error('Failed to delete poultry record');
+        toast.error(t('pages.poultryPage.deleteError'));
       }
     }
   };
@@ -84,17 +92,17 @@ const Poultry = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Poultry Management</h1>
-          <p className="text-gray-600">Manage your poultry inventory and records</p>
+          <h1 className="text-2xl font-bold text-gray-800">{t('pages.poultryPage.title')}</h1>
+          <p className="text-gray-600">{t('pages.poultryPage.subtitle')}</p>
         </div>
         <div className="flex items-center space-x-2">
           <Link to="/poultry/reports" className="btn-secondary">
             <BarChart2 className="w-4 h-4 mr-2" />
-            View Reports
+            {t('pages.poultryPage.viewReports')}
           </Link>
-          <Link to="/poultry/animals/new" className="btn-primary">
+          <Link to="/dashboard/poultry/animals/new" className="btn-primary">
             <Plus className="w-4 h-4 mr-2" />
-            Add Poultry
+            {t('pages.poultryPage.addPoultry')}
           </Link>
         </div>
       </div>
@@ -102,18 +110,19 @@ const Poultry = () => {
       {/* Filters */}
       <div className="bg-white rounded-lg shadow-sm border mb-6 p-4">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-medium text-gray-700">Filters</h3>
+          <h3 className="font-medium text-gray-700">{t('pages.poultryPage.filters.title')}</h3>
           <button
             onClick={() => setShowFilters(!showFilters)}
             className="text-sm text-primary-600 hover:text-primary-800 flex items-center"
+            aria-label={showFilters ? t('pages.poultryPage.filters.hideFilters') : t('pages.poultryPage.filters.showFilters')}
           >
             {showFilters ? (
               <>
-                <ChevronUp className="w-4 h-4 mr-1" /> Hide Filters
+                <ChevronUp className="w-4 h-4 mr-1" /> {t('pages.poultryPage.filters.hideFilters')}
               </>
             ) : (
               <>
-                <Filter className="w-4 h-4 mr-1" /> Show Filters
+                <Filter className="w-4 h-4 mr-1" /> {t('pages.poultryPage.filters.showFilters')}
               </>
             )}
           </button>
@@ -122,51 +131,51 @@ const Poultry = () => {
         {showFilters && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('pages.poultryPage.filters.breed')}</label>
               <select
                 name="breed"
                 value={filters.breed}
                 onChange={handleFilterChange}
                 className="input"
               >
-                <option value="">All Breeds</option>
-                <option value="Broiler">Broiler</option>
-                <option value="Layer">Layer</option>
-                <option value="Desi">Desi</option>
-                <option value="Kadaknath">Kadaknath</option>
-                <option value="Aseel">Aseel</option>
-                <option value="Other">Other</option>
+                <option value="">{t('pages.poultryPage.filters.allBreeds')}</option>
+                <option value="Broiler">{t('common:breeds.Broiler')}</option>
+                <option value="Layer">{t('common:breeds.Layer')}</option>
+                <option value="Desi">{t('common:breeds.Desi')}</option>
+                <option value="Kadaknath">{t('common:breeds.Kadaknath')}</option>
+                <option value="Aseel">{t('common:breeds.Aseel')}</option>
+                <option value="Other">{t('common:other')}</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('pages.poultryPage.filters.type')}</label>
               <select
                 name="type"
                 value={filters.type}
                 onChange={handleFilterChange}
                 className="input"
               >
-                <option value="">All Types</option>
-                <option value="Broiler">Broiler</option>
-                <option value="Layer">Layer</option>
-                <option value="Breeder">Breeder</option>
-                <option value="Dual Purpose">Dual Purpose</option>
+                <option value="">{t('pages.poultryPage.filters.allTypes')}</option>
+                <option value="Broiler">{t('common:types.Broiler')}</option>
+                <option value="Layer">{t('common:types.Layer')}</option>
+                <option value="Breeder">{t('common:types.Breeder')}</option>
+                <option value="Dual Purpose">{t('common:types.DualPurpose')}</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('pages.poultryPage.filters.status')}</label>
               <select
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
                 className="input"
               >
-                <option value="">All Status</option>
-                <option value="Active">Active</option>
-                <option value="Sold">Sold</option>
-                <option value="Mortality">Mortality</option>
-                <option value="Culled">Culled</option>
-                <option value="Other">Other</option>
+                <option value="">{t('pages.poultryPage.filters.allStatus')}</option>
+                <option value="Active">{t('common:status.Active')}</option>
+                <option value="Sold">{t('common:status.Sold')}</option>
+                <option value="Mortality">{t('common:status.Mortality')}</option>
+                <option value="Culled">{t('common:status.Culled')}</option>
+                <option value="Other">{t('common:other')}</option>
               </select>
             </div>
             <div className="flex items-end">
@@ -174,7 +183,7 @@ const Poultry = () => {
                 onClick={resetFilters}
                 className="btn-secondary w-full"
               >
-                Reset Filters
+                {t('pages.poultryPage.filters.resetFilters')}
               </button>
             </div>
           </div>
@@ -186,7 +195,7 @@ const Poultry = () => {
           </div>
           <input
             type="text"
-            placeholder="Search by tag or batch number..."
+            placeholder={t('pages.poultryPage.filters.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="input pl-10 w-full"
@@ -201,25 +210,25 @@ const Poultry = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Tag #
+                  {t('pages.poultryPage.table.tagNumber')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Batch #
+                  {t('pages.poultryPage.table.batchNumber')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Breed
+                  {t('pages.poultryPage.table.breed')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Type
+                  {t('pages.poultryPage.table.type')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Age
+                  {t('pages.poultryPage.table.age')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
+                  {t('pages.poultryPage.table.status')}
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  {t('pages.poultryPage.table.actions')}
                 </th>
               </tr>
             </thead>
@@ -227,7 +236,7 @@ const Poultry = () => {
               {poultry.length === 0 ? (
                 <tr>
                   <td colSpan="7" className="px-6 py-4 text-center text-gray-500">
-                    No poultry records found
+                    {t('pages.poultryPage.table.noRecords')}
                   </td>
                 </tr>
               ) : (
@@ -237,7 +246,7 @@ const Poultry = () => {
                       {item.tagNumber}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {item.batchNumber || 'N/A'}
+                      {item.batchNumber || t('pages.poultryPage.table.na')}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {item.breed}
@@ -249,8 +258,10 @@ const Poultry = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {item.dateOfHatch ? 
-                        `${Math.floor((new Date() - new Date(item.dateOfHatch)) / (1000 * 60 * 60 * 24 * 30))} months` : 
-                        'N/A'}
+                        t('pages.poultryPage.table.months', { 
+                          count: Math.floor((new Date() - new Date(item.dateOfHatch)) / (1000 * 60 * 60 * 24 * 30)) 
+                        }) : 
+                        t('pages.poultryPage.table.na')}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
@@ -269,21 +280,21 @@ const Poultry = () => {
                           className="text-blue-600 hover:text-blue-900"
                           title="View Details"
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-4 h-4" title={t('pages.poultryPage.table.viewDetails')} />
                         </Link>
                         <Link
                           to={`/poultry/animals/${item._id}/edit`}
                           className="text-indigo-600 hover:text-indigo-900"
                           title="Edit"
                         >
-                          <Edit className="w-4 h-4" />
+                          <Edit className="w-4 h-4" title={t('pages.poultryPage.table.edit')} />
                         </Link>
                         <button
                           onClick={() => handleDelete(item._id)}
                           className="text-red-600 hover:text-red-900"
                           title="Delete"
                         >
-                          <Trash className="w-4 h-4" />
+                          <Trash className="w-4 h-4" title={t('pages.poultryPage.table.delete')} />
                         </button>
                       </div>
                     </td>
@@ -303,21 +314,23 @@ const Poultry = () => {
                 disabled={currentPage === 1}
                 className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
               >
-                Previous
+                {t('poultryPage.pagination.previous')}
               </button>
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
                 className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
               >
-                Next
+                {t('poultryPage.pagination.next')}
               </button>
             </div>
             <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm text-gray-700">
-                  Showing page <span className="font-medium">{currentPage}</span> of{' '}
-                  <span className="font-medium">{totalPages}</span>
+                  {t('poultryPage.pagination.showingPage', {
+                  current: <span className="font-medium">{currentPage}</span>,
+                  total: <span className="font-medium">{totalPages}</span>
+                })}
                 </p>
               </div>
               <div>
@@ -327,7 +340,7 @@ const Poultry = () => {
                     disabled={currentPage === 1}
                     className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
                   >
-                    <span className="sr-only">Previous</span>
+                    <span className="sr-only">{t('poultryPage.pagination.previousPage')}</span>
                     <ChevronUp className="h-5 w-5 transform -rotate-90" />
                   </button>
                   {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -360,7 +373,7 @@ const Poultry = () => {
                     disabled={currentPage === totalPages}
                     className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
                   >
-                    <span className="sr-only">Next</span>
+                    <span className="sr-only">{t('poultryPage.pagination.nextPage')}</span>
                     <ChevronDown className="h-5 w-5 transform rotate-90" />
                   </button>
                 </nav>

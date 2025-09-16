@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Save, X } from 'lucide-react';
 import { toast } from '../../utils/toast';
+import { useTranslation } from 'react-i18next';
 import api from '../../services/api';
 
 const MilkRecordForm = () => {
+  const { t } = useTranslation('goat');
+  const tm = (key) => t(`pages.goatProduction.milk.${key}`);
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -32,7 +35,7 @@ const MilkRecordForm = () => {
       setGoats(response.data.goats || response.data.data || []);
     } catch (error) {
       console.error('Error fetching goats:', error);
-      toast.error('Failed to load goats');
+      toast.error(t('errors.loadGoats'));
     }
   };
 
@@ -52,7 +55,7 @@ const MilkRecordForm = () => {
       });
     } catch (error) {
       console.error('Error fetching milk record:', error);
-      toast.error('Failed to load milk record');
+      toast.error(t('errors.loadMilkRecord'));
       navigate('/goat-production');
     } finally {
       setLoading(false);
@@ -71,7 +74,7 @@ const MilkRecordForm = () => {
     e.preventDefault();
     
     if (!formData.goat || !formData.quantity) {
-      toast.error('Goat and quantity are required');
+      toast.error(tm('form.goat.required'));
       return;
     }
 
@@ -92,17 +95,16 @@ const MilkRecordForm = () => {
 
       if (id) {
         await api.put(`/goats/milk-records/${id}`, data);
-        toast.success('Milk record updated successfully');
+        toast.success(t('success.milkRecordUpdated'));
       } else {
         await api.post('/goats/milk-records', data);
-        toast.success('Milk record added successfully');
+        toast.success(t('success.milkRecordAdded'));
       }
       
       navigate('/goat-production');
     } catch (error) {
       console.error('Error saving milk record:', error);
-      const errorMessage = error.response?.data?.message || 'Failed to save milk record';
-      toast.error(errorMessage);
+      toast.error(t('errors.saveMilkRecord'));
     } finally {
       setLoading(false);
     }
@@ -118,7 +120,7 @@ const MilkRecordForm = () => {
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <h1 className="text-2xl font-bold text-gray-900">
-          {id ? 'Edit Milk Record' : 'Add New Milk Record'}
+          {id ? tm('title.edit') : tm('title.add')}
         </h1>
       </div>
 
@@ -126,7 +128,7 @@ const MilkRecordForm = () => {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label htmlFor="goat" className="block text-sm font-medium text-gray-700">
-              Goat <span className="text-red-500">*</span>
+              {tm('form.goat.label')} <span className="text-red-500">*</span>
             </label>
             <select
               id="goat"
@@ -137,7 +139,7 @@ const MilkRecordForm = () => {
               required
               disabled={loading || id}
             >
-              <option value="">Select a goat</option>
+              <option value="">{tm('form.goat.placeholder')}</option>
               {goats.map(goat => (
                 <option key={goat._id} value={goat._id}>
                   {goat.tagId} - {goat.name || 'Unnamed'}
@@ -149,7 +151,7 @@ const MilkRecordForm = () => {
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
-                Date
+                {tm('form.date')}
               </label>
               <input
                 type="date"
@@ -164,7 +166,7 @@ const MilkRecordForm = () => {
             </div>
             <div>
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="timeOfDay">
-                Time of Day
+                {tm('form.timeOfDay.label')}
               </label>
               <select
                 id="timeOfDay"
@@ -175,17 +177,17 @@ const MilkRecordForm = () => {
                 required
                 disabled={loading}
               >
-                <option value="morning">Morning</option>
-                <option value="afternoon">Afternoon</option>
-                <option value="evening">Evening</option>
-                <option value="night">Night</option>
+                <option value="morning">{tm('form.timeOfDay.options.morning')}</option>
+                <option value="afternoon">{tm('form.timeOfDay.options.afternoon')}</option>
+                <option value="evening">{tm('form.timeOfDay.options.evening')}</option>
+                <option value="night">{tm('form.timeOfDay.options.night')}</option>
               </select>
             </div>
           </div>
 
           <div>
             <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
-              Quantity (L) <span className="text-red-500">*</span>
+              {tm('form.quantity.label')} <span className="text-red-500">*</span>
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
               <input
@@ -197,7 +199,7 @@ const MilkRecordForm = () => {
                 step="0.01"
                 min="0"
                 className="block w-full pr-12 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                placeholder="0.00"
+                placeholder={tm('form.quantity.placeholder')}
                 required
                 disabled={loading}
               />
@@ -209,7 +211,7 @@ const MilkRecordForm = () => {
 
           <div>
             <label htmlFor="fat" className="block text-sm font-medium text-gray-700">
-              Fat %
+              {tm('form.fat.label')}
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
               <input
@@ -233,7 +235,7 @@ const MilkRecordForm = () => {
 
           <div>
             <label htmlFor="snf" className="block text-sm font-medium text-gray-700">
-              SNF %
+              {tm('form.snf.label')}
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
               <input
@@ -257,7 +259,7 @@ const MilkRecordForm = () => {
 
           <div className="sm:col-span-2">
             <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
-              Notes
+              {tm('form.notes.label')}
             </label>
             <div className="mt-1">
               <textarea
@@ -267,7 +269,7 @@ const MilkRecordForm = () => {
                 value={formData.notes}
                 onChange={handleChange}
                 className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border border-gray-300 rounded-md"
-                placeholder="Any additional notes about this milk record..."
+                placeholder={tm('form.notes.placeholder')}
                 disabled={loading}
               />
             </div>
@@ -282,7 +284,7 @@ const MilkRecordForm = () => {
             disabled={loading}
           >
             <X className="-ml-1 mr-2 h-5 w-5" />
-            Cancel
+            {tm('form.buttons.cancel')}
           </button>
           <button
             type="submit"
@@ -295,12 +297,12 @@ const MilkRecordForm = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Saving...
+                {tm('form.buttons.saving')}
               </>
             ) : (
               <>
                 <Save className="-ml-1 mr-2 h-5 w-5" />
-                {id ? 'Update Record' : 'Save Record'}
+                {id ? tm('form.buttons.update') : tm('form.buttons.save')}
               </>
             )}
           </button>

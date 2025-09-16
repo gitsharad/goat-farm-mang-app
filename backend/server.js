@@ -43,98 +43,95 @@ app.use(securityMiddleware);
 // Activity logging
 app.use(activityLogger);
 
-// Enhanced CORS Configuration
+// CORS Configuration
 const corsOptions = {
-  origin: (origin, callback) => {
-    try {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) {
-        console.log('[CORS] Allowing request with no origin');
-        return callback(null, true);
-      }
-
-      // Get allowed origins from environment
-      const allowedOrigins = process.env.ALLOWED_ORIGINS 
-        ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
-        : [];
-
-      // Development: Allow all with logging
-      if (process.env.NODE_ENV !== 'production') {
-        console.log(`[CORS] Development - Allowing origin: ${origin}`);
-        return callback(null, true);
-      }
-
-      // Production: Check against allowed origins
-      if (allowedOrigins.includes(origin)) {
-        console.log(`[CORS] Allowed origin: ${origin}`);
-        return callback(null, true);
-      }
-
-      // Check for localhost or IP addresses (useful for testing)
-      const isLocalhost = /^https?:\/\/localhost(:[0-9]+)?$/.test(origin);
-      const isIP = /^https?:\/\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(:[0-9]+)?$/.test(origin);
-      
-      if (isLocalhost || isIP) {
-        console.log(`[CORS] Allowed local/network origin: ${origin}`);
-        return callback(null, true);
-      }
-
-      // If we get here, the origin is not allowed
-      console.warn(`[CORS] Blocked origin: ${origin}`);
-      return callback(new Error(`Origin ${origin} not allowed by CORS`));
-      
-    } catch (error) {
-      console.error('[CORS] Error in origin validation:', error);
-      // In case of error, be permissive in development, restrictive in production
-      const allow = process.env.NODE_ENV !== 'production';
-      if (allow) {
-        console.warn(`[CORS] Allowing origin due to error: ${origin}`);
-      }
-      return callback(allow ? null : error);
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // List of allowed origins
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'http://127.0.0.1:3000',
+      'http://127.0.0.1:5000'
+    ];
+    
+    // Check if the origin is in the allowed list or is a localhost origin
+    if (
+      allowedOrigins.includes(origin) || 
+      /^https?:\/\/localhost(:\d+)?$/.test(origin) ||
+      /^https?:\/\/127\.0\.0\.1(:\d+)?$/.test(origin)
+    ) {
+      return callback(null, true);
     }
+    
+    // For production, you might want to be more strict
+    if (process.env.NODE_ENV === 'production') {
+      const msg = `The CORS policy for this site does not allow access from the specified origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    
+    return callback(null, true);
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: [
-    'Content-Type', 
+    'Content-Type',
     'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'Accept-Version',
+    'Content-Length',
+    'X-Total-Count',
+    'X-Pagination',
     'Cache-Control',
     'Pragma',
     'Expires',
+    'If-Modified-Since',
+    'If-None-Match',
     'X-Requested-With',
-    'Accept',
-    'X-Requested-With', 
-    'Accept', 
-    'Origin',
-    'X-CSRF-Token',
-    'X-Request-ID'
+    'x-retry-max',
+    'x-retry-count'
   ],
   exposedHeaders: [
-    'Content-Range', 
+    'Content-Length',
+    'Content-Type',
     'X-Total-Count',
-    'X-Request-ID',
-    'Retry-After',
-    'X-RateLimit-Limit',
-    'X-RateLimit-Remaining',
-    'X-RateLimit-Reset'
+    'X-Pagination',
+    'Cache-Control',
+    'ETag',
+    'Last-Modified'
   ],
-  optionsSuccessStatus: 204,
-  preflightContinue: false,
-  maxAge: 600 // 10 minutes
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11) choke on 204
+  maxAge: 600, // 10 minutes
+  preflightContinue: false
 };
 
-// Enable CORS for all routes with enhanced error handling
+// Apply CORS middleware to all routes
 app.use(cors(corsOptions));
 
-// Handle preflight requests
+// Handle preflight requests for all routes
 app.options('*', cors(corsOptions));
 
 // Add CORS headers to all responses
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization, Cache-Control, Pragma, Expires');
+  const origin = req.headers.origin;
+  if (origin) {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+    res.header('Access-Control-Expose-Headers', 'Content-Length, Content-Type, X-Total-Count, X-Pagination');
+    res.header('Access-Control-Max-Age', '600');
+  }
+  next();
+});
+
+// Log all incoming requests for debugging
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
   next();
 });
 
@@ -243,14 +240,48 @@ const adminOnly = (req, res, next) => {
   next();
 };
 
+// Log all incoming requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  console.log('Headers:', JSON.stringify(req.headers, null, 2));
+  console.log('Query:', JSON.stringify(req.query, null, 2));
+  next();
+});
+
 // API Routes
 const routes = [
+  // Auth and User Management
   { path: '/api/auth', route: require('./routes/auth') },
+  { path: '/api/users', route: require('./routes/users') },
   { path: '/api/subscription', route: require('./routes/subscription') },
+  
+  // Goat Management
   { path: '/api/goats', route: require('./routes/goats') },
   { path: '/api/health', route: require('./routes/health') },
   { path: '/api/breeding', route: require('./routes/breeding') },
+  
+  // Dairy Management
+  { path: '/api/milk-records', route: require('./routes/milkRecords') },
   { path: '/api/milk-production', route: require('./routes/milkProduction') },
+  { path: '/api/dairy', route: require('./routes/dairy') },
+  { path: '/api/dairy-feed', route: require('./routes/dairyFeed') },
+  { path: '/api/dairy-health', route: require('./routes/dairyHealth') },
+  
+  // Poultry Management
+  { path: '/api/poultry', route: require('./routes/poultry') },
+  { path: '/api/poultry-health', route: require('./routes/poultryHealth') },
+  { path: '/api/poultry-feed', route: require('./routes/poultryFeed') },
+  
+  // Other Features
+  { path: '/api/feed', route: require('./routes/feed') },
+  { path: '/api/sales', route: require('./routes/sales') },
+  { path: '/api/dashboard', route: require('./routes/dashboard') },
+  { path: '/api/reports', route: require('./routes/reports') },
+  { path: '/api/notifications', route: require('./routes/notifications') },
+  { path: '/api/inventory', route: require('./routes/inventory') },
+  { path: '/api/financial', route: require('./routes/financial') },
+  
+  // Admin Routes
   { 
     path: '/api/monitor', 
     route: (() => {
@@ -260,11 +291,12 @@ const routes = [
       router.use('/', monitorRoutes);
       return router;
     })()
-  },
+  }
 ];
 
-// Register routes
+// Register all routes
 routes.forEach(({ path, route }) => {
+  console.log(`Registering route: ${path}`);
   app.use(path, route);
 });
 
@@ -273,20 +305,33 @@ const swaggerDocs = require('./config/swagger');
 swaggerDocs(app, PORT);
 
 // Health check endpoint
-app.get('/health-check', (req, res) => {
+app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState;
+  const dbStatusText = {
+    2: 'connecting',
+    3: 'disconnecting'
+  }[dbStatus] || 'unknown';
+
   res.status(200).json({
     status: 'ok',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
+    database: {
+      status: dbStatusText,
+      name: process.env.MONGO_DB || 'not_configured',
+      host: process.env.MONGO_URI ? new URL(process.env.MONGO_URI).hostname : 'not_configured'
+    },
+    server: {
+      node: process.version,
+      platform: process.platform,
+      memory: process.memoryUsage(),
+      cpu: process.cpuUsage()
+    }
   });
 });
-// Auth routes
-app.use('/api/auth', require('./routes/auth'));
 
-// Application routes
-app.use('/api/goats', require('./routes/goats'));
-app.use('/api/goats/milk-records', require('./routes/milkRecords'));
-app.use('/api/breeding', require('./routes/breeding'));
+// Other routes that aren't in the routes array
+app.use('/api/milk-records', require('./routes/milkRecords'));
 app.use('/api/feed', require('./routes/feed'));
 app.use('/api/sales', require('./routes/sales'));
 app.use('/api/dairy', require('./routes/dairy'));
@@ -297,15 +342,14 @@ app.use('/api/dairy-health', require('./routes/dairyHealth'));
 app.use('/api/dairy-feed', require('./routes/dairyFeed'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 app.use('/api/reports', require('./routes/reports'));
+
+// Health route is already included in the routes array above
 app.use('/api/users', require('./routes/users'));
 app.use('/api/notifications', require('./routes/notifications'));
 app.use('/api/inventory', require('./routes/inventory'));
 app.use('/api/financial', require('./routes/financial'));
 
-// Health check endpoint
-app.get('/api/health-check', (req, res) => {
-  res.json({ status: 'OK', message: 'Goat Farm API is running' });
-});
+// Health check endpoint is already implemented at /api/health
 
 // The Sentry error handler must be before any other error middleware
 if (process.env.NODE_ENV === 'production') {

@@ -1,0 +1,84 @@
+{
+  "app": {
+    "title": "शेळी पालन व्यवस्थापन",
+    "loading": "लोड होत आहे..."
+  },
+  "navigation": {
+    "dashboard": "डॅशबोर्ड",
+    "goats": "शेळ्या",
+    "dairy": "डेअरी",
+    "poultry": "पोल्ट्री",
+    "healthRecords": "आरोग्य नोंदी",
+    "feedRecords": "खाद्य नोंदी",
+    "breeding": "पैदास",
+    "sales": "विक्री",
+    "settings": "सेटिंग्ज",
+    "users": "वापरकर्ते",
+    "devTools": "डेव्हलपर साधने",
+    "switchDashboard": "डॅशबोर्ड बदला",
+    "dashboard_goat": "शेळी डॅशबोर्ड",
+    "dashboard_dairy": "डेअरी डॅशबोर्ड",
+    "dashboard_poultry": "पोल्ट्री डॅशबोर्ड"
+  },
+  "common": {
+    "refreshing": "रिफ्रेश होत आहे...",
+    "refresh": "डेटा रिफ्रेश करा",
+    "updating": "अपडेट करत आहे",
+    "save": "जतन करा",
+    "cancel": "रद्द करा",
+    "edit": "सुधारा",
+    "delete": "हटवा",
+    "view": "पहा",
+    "add": "जोडा",
+    "search": "शोधा...",
+    "viewAll": "सर्व पहा",
+    "loading": "लोड होत आहे...",
+    "error": "त्रुटी आली",
+    "success": "यशस्वी",
+    "required": "आवश्यक आहे",
+    "noData": "कोणताही डेटा उपलब्ध नाही"
+  },
+  "pages": {
+    "dashboard": {
+      "goatFarmDashboard": "बकरी शेत डॅशबोर्ड",
+      "lastUpdated": "अंतिम अद्यतन: {date}",
+      "reloadDashboard": "डॅशबोर्ड पुन्हा लोड करा",
+      "unableToLoad": "डॅशबोर्ड लोड करण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+      "cachedData": "कॅश केलेला डेटा दाखवत आहे: {date}",
+      "overview": "तुमच्या शेळी पालन ऑपरेशन्सचे विहंगावलोकन",
+      "recentActivity": "अलीकडील क्रियाकलाप"
+    },
+    "goats": {
+      "title": "शेळी व्यवस्थापन",
+      "subtitle": "तुमच्या शेळ्यांची यादी आणि नोंदी व्यवस्थापित करा",
+      "addGoat": "शेळी जोडा",
+      "searchPlaceholder": "शेळ्या शोधा..."
+    },
+    "feedRecords": {
+      "title": "खाद्य नोंदी",
+      "addRecord": "खाद्य नोंद जोडा",
+      "feedTypes": {
+        "hay": "सुका चारा",
+        "grain": "धान्य",
+        "silage": "सायलेज",
+        "pasture": "चरण्याची जागा",
+        "concentrate": "संहत खाद्य",
+        "mineralSupplement": "खनिज पूरक",
+        "vitaminSupplement": "जीवनसत्व पूरक",
+        "other": "इतर"
+      }
+    },
+    "healthRecords": {
+      "title": "आरोग्य नोंदी",
+      "addRecord": "आरोग्य नोंद जोडा",
+      "searchPlaceholder": "नोंदी शोधा..."
+    },
+    "settings": {
+      "title": "सेटिंग्ज",
+      "general": "सामान्य",
+      "notifications": "सूचना",
+      "language": "भाषा",
+      "theme": "थीम"
+    }
+  }
+}

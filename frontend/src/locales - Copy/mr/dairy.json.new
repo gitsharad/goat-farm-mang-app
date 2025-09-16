@@ -1,0 +1,245 @@
+{
+  "dairy": {
+    "dairyFeedTitle": "डेअरी फीड रेकॉर्ड्स",
+    "dairyFeedSubtitle": "डेअरी प्राण्यांच्या खाद्य नोंदी व्यवस्थापित करा",
+    "addDairyFeedRecord": "नवीन फीड रेकॉर्ड जोडा",
+    "search": "शोध",
+    "searchRecordsPlaceholder": "फीड रेकॉर्ड शोधा...",
+    "animal": "प्राणी",
+    "allAnimals": "सर्व प्राणी",
+    "feedType": "खाद्य प्रकार",
+    "allTypes": "सर्व प्रकार",
+    "date": "तारीख",
+    "qty": "प्रमाण",
+    "unit": "एकक",
+    "costHeader": "खर्च",
+    "type": "प्रकार",
+    "edit": "सुधारा",
+    "delete": "हटवा",
+    "Grass": "गवत",
+    "Silage": "सायलेज",
+    "Hay": "वाळलेले चारा",
+    "Concentrate": "संकेंद्रित खाद्य",
+    "Mineral": "खनिजे",
+    "Water": "पाणी",
+    "Other": "इतर",
+    "kg": "किलो",
+    "g": "ग्रॅम",
+    "l": "लिटर",
+    "ml": "मिलीलीटर",
+    "selectAnimal": "प्राणी निवडा",
+    "selectType": "प्रकार निवडा",
+    "selectUnit": "एकक निवडा",
+    "quantity": "प्रमाण",
+    "costUSD": "खर्च (₹)",
+    "notes": "टिपा",
+    "cancel": "रद्द करा",
+    "lbs": "पौंड",
+    "liters": "लिटर",
+    "gallons": "गॅलन",
+    "bales": "गठ्ठे",
+    "scoops": "स्कूप",
+    
+    "healthRecords": {
+      "title": "डेअरी आरोग्य नोंदी",
+      "subtitle": "डेअरी प्राण्यांसाठी लसीकरणे आणि उपचार व्यवस्थापित करा",
+      "addHealthRecord": "आरोग्य नोंद जोडा",
+      "searchPlaceholder": "नोंदी शोधा...",
+      "allAnimals": "सर्व प्राणी",
+      "allTypes": "सर्व प्रकार",
+      "allDates": "सर्व तारखा",
+      "filters": {
+        "search": "शोध",
+        "animal": "प्राणी",
+        "type": "प्रकार",
+        "date": "तारीख"
+      },
+      "table": {
+        "date": "तारीख",
+        "animal": "प्राणी",
+        "type": "प्रकार",
+        "description": "वर्णन",
+        "veterinarian": "पशुवैद्य",
+        "cost": "खर्च",
+        "nextDueDate": "पुढील तारीख",
+        "actions": "क्रिया",
+        "noRecords": "कोणत्याही आरोग्य नोंदी सापडल्या नाहीत"
+      },
+      "form": {
+        "addTitle": "नवीन आरोग्य नोंद जोडा",
+        "editTitle": "आरोग्य नोंद संपादित करा",
+        "selectType": "प्रकार निवडा",
+        "selectAnimal": "प्राणी निवडा",
+        "description": "वर्णन",
+        "veterinarian": "पशुवैद्य",
+        "cost": "खर्च",
+        "nextDueDate": "पुढील तारीख",
+        "notes": "टिपा",
+        "medications": "औषधे",
+        "addMedication": "औषध जोडा",
+        "save": "जतन करा",
+        "cancel": "रद्द करा"
+      },
+      "types": {
+        "Vaccination": "लसीकरण",
+        "Deworming": "कृमिनाशक",
+        "Treatment": "उपचार",
+        "Checkup": "तपासणी",
+        "Surgery": "शस्त्रक्रिया",
+        "Other": "इतर"
+      },
+      "common": {
+        "save": "जतन करा",
+        "cancel": "रद्द करा",
+        "delete": "हटवा",
+        "edit": "सुधारा",
+        "loading": "लोड होत आहे...",
+        "unknown": "अज्ञात"
+      },
+      "deleteModal": {
+        "title": "नोंद हटवा",
+        "message": "तुम्हाला ही आरोग्य नोंद हटवायची आहे का?",
+        "confirm": "हटवा",
+        "cancel": "रद्द करा"
+      },
+      "notifications": {
+        "added": "आरोग्य नोंद यशस्वीरित्या जोडली",
+        "updated": "आरोग्य नोंद यशस्वीरित्या अद्यतनित केली",
+        "deleted": "आरोग्य नोंद यशस्वीरित्या हटवली"
+      }
+    },
+    
+    "quickActions": {
+      "manageDairy": {
+        "title": "डेअरी व्यवस्थापन",
+        "description": "तुमचे गुरेढोरे व्यवस्थापित करा"
+      },
+      "milkProduction": {
+        "title": "दुग्ध उत्पादन",
+        "description": "दुग्ध उत्पादनाची नोंद करा आणि विश्लेषण करा"
+      },
+      "healthRecords": {
+        "title": "आरोग्य नोंदी",
+        "description": "प्राण्यांच्या आरोग्याच्या नोंदी व्यवस्थापित करा"
+      },
+      "breeding": {
+        "title": "पैदास व्यवस्थापन",
+        "description": "पैदास कार्यक्रमाचे व्यवस्थापन करा"
+      }
+    },
+    
+    "form": {
+      "title": "नवीन डेअरी प्राणी जोडा",
+      "editTitle": "डेअरी प्राणी संपादित करा",
+      "animalId": "प्राण्याचा ID / टॅग क्रमांक",
+      "name": "नाव",
+      "breed": "जात",
+      "dateOfBirth": "जन्मतारीख",
+      "gender": "लिंग",
+      "male": "नर",
+      "female": "मादी",
+      "other": "इतर",
+      "purchaseDate": "खरेदीची तारीख",
+      "purchasePrice": "खरेदी किंमत",
+      "status": "स्थिती",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "sold": "विकले",
+      "deceased": "मृत",
+      "description": "वर्णन",
+      "save": "जतन करा",
+      "cancel": "रद्द करा"
+    },
+    
+    "breeding": {
+      "title": "डेअरी पैदास व्यवस्थापन",
+      "subtitle": "डेअरी गुरांच्या पैदास कार्यक्रमाचे व्यवस्थापन करा",
+      "selectAnimal": "प्राणी निवडा",
+      "choose": "निवडा",
+      "dateOfBreeding": "पैदासाची तारीख",
+      "expectedDeliveryDate": "अपेक्षित प्रसूती तारीख",
+      "actualDeliveryDate": "वास्तविक प्रसूती तारीख",
+      "breedingMethod": "पैदास पद्धत",
+      "natural": "नैसर्गिक",
+      "artificialInsemination": "कृत्रिम गर्भधारणा",
+      "embryoTransfer": "भ्रूण हस्तांतरण",
+      "sireId": "वडिलांचा ID",
+      "sireBreed": "वडिलांची जात",
+      "pregnancyStatus": "गर्भधारणेची स्थिती",
+      "pregnant": "गर्भवती",
+      "notPregnant": "गर्भवती नाही",
+      "aborted": "गर्भपात झाला",
+      "unknown": "अज्ञात",
+      "numberOfKids": "पिलांची संख्या",
+      "notes": "टिपा",
+      "addBreedingRecord": "पैदास नोंद जोडा",
+      "editBreedingRecord": "पैदास नोंद संपादित करा",
+      "deleteBreedingRecord": "पैदास नोंद हटवा",
+      "confirmDelete": "तुम्हाला ही पैदास नोंद हटवायची आहे का?",
+      "success": {
+        "added": "पैदास नोंद यशस्वीरित्या जोडली",
+        "updated": "पैदास नोंद यशस्वीरित्या अद्यतनित केली",
+        "deleted": "पैदास नोंद यशस्वीरित्या हटवली"
+      },
+      "error": {
+        "fetch": "पैदास नोंदी मिळवताना त्रुटी आली",
+        "add": "पैदास नोंद जोडताना त्रुटी आली",
+        "update": "पैदास नोंद अद्यतनित करताना त्रुटी आली",
+        "delete": "पैदास नोंद हटवताना त्रुटी आली"
+      },
+      "noRecords": "कोणत्याही पैदास नोंदी सापडल्या नाहीत",
+      "searchPlaceholder": "पैदास नोंदी शोधा...",
+      "filters": {
+        "all": "सर्व",
+        "pregnant": "गर्भवती",
+        "notPregnant": "गर्भवती नाही",
+        "delivered": "प्रसूती झाली",
+        "aborted": "गर्भपात झाला"
+      }
+    },
+    
+    "health": {
+      "title": "आरोग्य नोंदी",
+      "recordsWillBeDisplayed": "डेअरी आरोग्य नोंदी येथे दाखवल्या जातील.",
+      "addRecord": "आरोग्य नोंद जोडा",
+      "editRecord": "आरोग्य नोंद संपादित करा",
+      "deleteRecord": "आरोग्य नोंद हटवा",
+      "confirmDelete": "तुम्हाला ही आरोग्य नोंद हटवायची आहे का?",
+      "success": {
+        "added": "आरोग्य नोंद यशस्वीरित्या जोडली",
+        "updated": "आरोग्य नोंद यशस्वीरित्या अद्यतनित केली",
+        "deleted": "आरोग्य नोंद यशस्वीरित्या हटवली"
+      },
+      "error": {
+        "fetch": "आरोग्य नोंदी मिळवताना त्रुटी आली",
+        "add": "आरोग्य नोंद जोडताना त्रुटी आली",
+        "update": "आरोग्य नोंद अद्यतनित करताना त्रुटी आली",
+        "delete": "आरोग्य नोंद हटवताना त्रुटी आली"
+      },
+      "noRecords": "कोणत्याही आरोग्य नोंदी सापडल्या नाहीत"
+    },
+    
+    "alerts": {
+      "upcomingVaccinations": "आगामी लसीकरणे",
+      "upcomingDeworming": "आगामी कृमिनाशक",
+      "pregnancyChecks": "गर्भधारणा तपासणी बाकी",
+      "viewAll": "सर्व पहा",
+      "noAlerts": "या वेळी कोणत्याही सूचना नाहीत"
+    },
+    
+    "milkProductionOverview": "दुग्ध उत्पादनाचा आढावा",
+    "averageDailyProduction": "सरासरी दैनंदिन उत्पादन",
+    "currentlyMilking": "सध्या दुहत आहे",
+    "viewDetailedProduction": "तपशीलवार उत्पादन नोंदी पहा →",
+    
+    "settings": {
+      "title": "डेअरी सेटिंग्ज",
+      "breedManagement": "जात व्यवस्थापन",
+      "vaccineManagement": "लस व्यवस्थापन",
+      "treatmentProtocols": "उपचार प्रोटोकॉल",
+      "milkQualityStandards": "दुधाच्या गुणवत्तेचे मानके",
+      "breedingSettings": "पैदास सेटिंग्ज",
+      "notificationSettings": "सूचना सेटिंग्ज"
+    }
+  }
+}

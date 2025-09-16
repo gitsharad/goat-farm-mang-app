@@ -1,0 +1,77 @@
+{
+  "dairy": {
+    "dashboard": {
+      "title": "Dairy Dashboard",
+      "subtitle": "Overview of your dairy operations",
+      "totalAnimals": "Total Animals",
+      "lactatingAnimals": "Lactating Animals",
+      "pregnantAnimals": "Pregnant Animals",
+      "dailyMilkProduction": "Daily Milk Production",
+      "avgMilkYield": "Average Milk Yield",
+      "dueThisWeek": "Due This Week",
+      "recentActivity": "Recent Activity",
+      "milkProductionTrend": "Milk Production Trend",
+      "healthAlerts": "Health Alerts"
+    },
+    "quickActions": {
+      "manageDairy": {
+        "title": "Manage Dairy",
+        "description": "View and manage all dairy animals"
+      },
+      "health": {
+        "title": "Health Records",
+        "description": "Track animal health and treatments"
+      },
+      "milkProduction": {
+        "title": "Milk Production",
+        "description": "Record and track milk yields"
+      },
+      "breeding": {
+        "title": "Breeding",
+        "description": "Manage breeding records and schedules"
+      },
+      "feeding": {
+        "title": "Feeding",
+        "description": "Manage feeding schedules and nutrition"
+      },
+      "reports": {
+        "title": "Reports",
+        "description": "View detailed reports and analytics"
+      }
+    },
+    "milkProductionOverview": "Milk Production Overview",
+    "dailyMilkProduction": "{{liters}} L today",
+    "averageDailyProduction": "Average daily production",
+    "milkingCows": "Milking Cows",
+    "currentlyMilking": "Currently milking",
+    "viewDetailedProduction": "View detailed production report",
+    
+    "title": "Dairy Management",
+    "subtitle": "Manage your dairy animals",
+    "statusText": "Status",
+    "milkProduction1": "Milk Production",
+    "addAnimal": "Add Animal",
+    "animalId": "Animal ID",
+    "name": "Name",
+    "breed": "Breed",
+    "dateOfBirth": "Date of Birth",
+    "gender": "Gender",
+    "lastMilking": "Last Milking",
+    "avgMilkYield": "Avg. Milk Yield (L)",
+    "lastVaccination": "Last Vaccination",
+    "nextVaccination": "Next Vaccination Due",
+    "actions": "Actions",
+    "noAnimalsFound": "No dairy animals found",
+    "searchPlaceholder": "Search animals...",
+    "filterByStatus": "Filter by status",
+    "allStatuses": "All Statuses",
+    "lactating": "Lactating",
+    "dry": "Dry",
+    "pregnant": "Pregnant",
+    "heifer": "Heifer",
+    "bull": "Bull",
+    "sold": "Sold",
+    "deceased": "Deceased",
+    "addYourFirstAnimal": "Add Your First Animal"
+  }
+}

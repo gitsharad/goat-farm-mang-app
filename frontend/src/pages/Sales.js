@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
-import { useLanguage } from '../contexts/LanguageContext';
-import { getTranslation } from '../translations';
 import { Plus, Trash, ExternalLink } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Sales = ({ farmType = 'goat' }) => {
-  const { language } = useLanguage();
-  const t = (key) => getTranslation(language, key);
+  const { t, i18n } = useTranslation('goat');
+  const language = i18n.language;
   // Currency formatter based on language; currency configurable via env
   const CURRENCY = process.env.REACT_APP_CURRENCY || 'INR';
   const formatCurrency = (amount) => {
@@ -44,7 +43,7 @@ const Sales = ({ farmType = 'goat' }) => {
       const res = await api.get('/sales');
       setSales(res.data || []);
     } catch (e) {
-      toast.error(getTranslation(language, 'operationFailed'));
+      toast.error(t('operationFailed'));
     } finally {
       setLoading(false);
     }
@@ -61,7 +60,7 @@ const Sales = ({ farmType = 'goat' }) => {
       setActiveItems(list);
     } catch (error) {
       console.error('Error fetching active items:', error);
-      toast.error(getTranslation(language, 'operationFailed'));
+      toast.error(t('operationFailed'));
     }
   };
 
@@ -150,7 +149,7 @@ const Sales = ({ farmType = 'goat' }) => {
     try {
       // Buyer validation
       if (!buyer.name) {
-        toast.error(getTranslation(language, 'required'));
+        toast.error(t('required'));
         return;
       }
       // Items validation
@@ -162,15 +161,15 @@ const Sales = ({ farmType = 'goat' }) => {
         quantity: Number(it.quantity) || 1,
         unitPrice: Number(it.unitPrice) || 0,
       })).filter(it => it.description && (it.quantity * it.unitPrice) >= 0);
-      if (!sanitizedItems.length) return toast.error(getTranslation(language, 'noData'));
+      if (!sanitizedItems.length) return toast.error(t('noData'));
       const payload = { buyer, items: sanitizedItems, taxRate: Number(taxRate) || 0 };
       let res;
       if (editingId) {
         res = await api.put(`/sales/${editingId}`, payload);
-        toast.success(getTranslation(language, 'recordUpdated') || 'Record updated');
+        toast.success(t('recordUpdated') || 'Record updated');
       } else {
         res = await api.post('/sales', payload);
-        toast.success(getTranslation(language, 'recordAdded'));
+        toast.success(t('recordAdded'));
       }
       setBuyer({ name: '', phone: '', address: '' });
       setItems([emptyItem()]);
@@ -181,7 +180,7 @@ const Sales = ({ farmType = 'goat' }) => {
       fetchSales();
       fetchActiveItems();
     } catch (e) {
-      toast.error(getTranslation(language, 'operationFailed'));
+      toast.error(t('operationFailed'));
     } finally {
       setCreating(false);
     }
@@ -225,7 +224,7 @@ const Sales = ({ farmType = 'goat' }) => {
       // Refresh goats since stock changed
       fetchActiveItems();
     } catch (err) {
-      toast.error(getTranslation(language, 'operationFailed'));
+      toast.error(t('operationFailed'));
     }
   };
 
@@ -237,19 +236,19 @@ const Sales = ({ farmType = 'goat' }) => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-semibold text-gray-800">{t('createSale')}</h2>
+        <h2 className="text-2xl font-semibold text-gray-800">{t('pages.salesPage.createSale')}</h2>
         <form onSubmit={createSale} className="mt-4 space-y-6 bg-white p-4 rounded-md border">
           <div>
-            <h3 className="font-medium text-gray-700 mb-2">{t('buyer')}</h3>
+            <h3 className="font-medium text-gray-700 mb-2">{t('pages.salesPage.buyer')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <input className="input" placeholder={t('name')} value={buyer.name} onChange={e => setBuyer({ ...buyer, name: e.target.value })} required />
-              <input className="input" placeholder={t('phone')} value={buyer.phone} onChange={e => setBuyer({ ...buyer, phone: e.target.value })} />
-              <input className="input" placeholder={t('address')} value={buyer.address} onChange={e => setBuyer({ ...buyer, address: e.target.value })} />
+              <input className="input" placeholder={t('pages.salesPage.name')} value={buyer.name} onChange={e => setBuyer({ ...buyer, name: e.target.value })} required />
+              <input className="input" placeholder={t('pages.salesPage.phone')} value={buyer.phone} onChange={e => setBuyer({ ...buyer, phone: e.target.value })} />
+              <input className="input" placeholder={t('pages.salesPage.address')} value={buyer.address} onChange={e => setBuyer({ ...buyer, address: e.target.value })} />
             </div>
           </div>
 
           <div>
-            <h3 className="font-medium text-gray-700 mb-2">{t('items')}</h3>
+            <h3 className="font-medium text-gray-700 mb-2">{t('pages.salesPage.items')}</h3>
             <div className="space-y-3">
               {items.map((it, idx) => (
                 <div key={it.id} className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
@@ -260,7 +259,7 @@ const Sales = ({ farmType = 'goat' }) => {
                     className="w-full p-2 border rounded bg-white md:col-span-5"
                     disabled={Boolean(editingId && it[animalKey] && !activeItems.some(a => a._id === it[animalKey]))}
                   >
-                    <option value="">{farmType === 'goat' ? t('selectGoatOrEnterDesc') : (farmType === 'poultry' ? 'Select Poultry or enter description' : 'Select Dairy or enter description')}</option>
+                    <option value="">{farmType === 'goat' ? t('pages.salesPage.selectGoatOrEnterDesc') : (farmType === 'poultry' ? 'Select Poultry or enter description' : 'Select Dairy or enter description')}</option>
                     {/* Ensure current selected animal appears even if not active (e.g., editing a past sale) */}
                     {it[animalKey] && !activeItems.some(a => a._id === it[animalKey]) && (
                       <option value={it[animalKey]}>
@@ -282,7 +281,7 @@ const Sales = ({ farmType = 'goat' }) => {
                     name="description"
                     value={it.description}
                     onChange={(e) => handleItemChange(idx, e)}
-                    placeholder={t('description')}
+                    placeholder={t('pages.salesPage.description')}
                     className="w-full p-2 border rounded md:col-span-5"
                     disabled={!!it[animalKey]} // Disable if an animal is selected
                   />
@@ -292,37 +291,37 @@ const Sales = ({ farmType = 'goat' }) => {
                     min="1" 
                     max={it[animalKey] && farmType !== 'poultry' ? "1" : "999"} 
                     className="w-full p-2 border rounded md:col-span-2" 
-                    placeholder={t('quantity')} 
+                    placeholder={t('pages.salesPage.quantity')} 
                     value={it.quantity} 
                     onChange={(e) => handleItemChange(idx, e)} 
                     disabled={!!it[animalKey] && farmType !== 'poultry'}
                   />
-                  <input type="number" name="unitPrice" step="0.01" min="0.01" className="w-full p-2 border rounded md:col-span-2" placeholder={t('unitPrice')} value={it.unitPrice} onChange={(e) => handleItemChange(idx, e)} />
+                  <input type="number" name="unitPrice" step="0.01" min="0.01" className="w-full p-2 border rounded md:col-span-2" placeholder={t('pages.salesPage.unitPrice')} value={it.unitPrice} onChange={(e) => handleItemChange(idx, e)} />
                   <div className="w-full p-2 border rounded bg-gray-50 md:col-span-2 text-right font-semibold">
                     {formatCurrency(Number(it.quantity) * Number(it.unitPrice))}
                   </div>
                   <button type="button" onClick={() => removeItem(idx)} className="btn-danger md:col-span-1 flex items-center justify-center"><Trash className="h-4 w-4" /></button>
                 </div>
               ))}
-              <button type="button" onClick={addItem} className="btn-outline flex items-center gap-2"><Plus className="h-4 w-4" /> {t('addItem')}</button>
+              <button type="button" onClick={addItem} className="btn-outline flex items-center gap-2"><Plus className="h-4 w-4" /> {t('pages.salesPage.addItem')}</button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
             <div>
-              <label className="block text-sm text-gray-600 mb-1">{t('tax')} (%)</label>
+              <label className="block text-sm text-gray-600 mb-1">{t('pages.salesPage.tax')} (%)</label>
               <input type="number" step="0.01" className="input" value={taxRate} onChange={e => setTaxRate(e.target.value)} />
             </div>
             <div className="md:col-span-3 text-right space-y-1">
-              <p>{t('subTotal')}: <span className="font-bold">{formatCurrency(subTotal)}</span></p>
-              <p>{t('tax')}: <span className="font-bold">{formatCurrency(taxAmount)}</span></p>
-              <p className="text-lg">{t('total')}: <span className="font-bold">{formatCurrency(totalAmount)}</span></p>
+              <p>{t('pages.salesPage.subTotal')}: <span className="font-bold">{formatCurrency(subTotal)}</span></p>
+              <p>{t('pages.salesPage.tax')}: <span className="font-bold">{formatCurrency(taxAmount)}</span></p>
+              <p className="text-lg">{t('pages.salesPage.total')}: <span className="font-bold">{formatCurrency(totalAmount)}</span></p>
             </div>
           </div>
 
           <div className="flex justify-end gap-2">
             {editingId && (
-              <button type="button" onClick={cancelEdit} className="btn-outline">{getTranslation(language, 'cancel') || 'Cancel'}</button>
+              <button type="button" onClick={cancelEdit} className="btn-outline">{t('cancel') || 'Cancel'}</button>
             )}
             <button type="submit" disabled={creating || !hasPositiveTotals} aria-busy={creating} className="btn-primary inline-flex items-center gap-2" title={!hasPositiveTotals ? 'Add at least one item with a positive total' : ''}>
               {creating && (
@@ -331,29 +330,29 @@ const Sales = ({ farmType = 'goat' }) => {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
                 </svg>
               )}
-              {editingId ? (getTranslation(language, 'update') || 'Update') : t('createSale')}
+              {editingId ? (t('pages.salesPage.form.buttons.update') || 'Update') : t('pages.salesPage.form.buttons.save')}
             </button>
           </div>
         </form>
       </div>
 
       <div>
-        <h2 className="text-2xl font-bold mb-4">{t('sales')}</h2>
+        <h2 className="text-2xl font-bold mb-4">{t('pages.salesPage.sales')}</h2>
         <div className="mt-4 bg-white border rounded-md overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">#</th>
-                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">{t('buyer')}</th>
+                <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">{t('pages.salesPage.buyer')}</th>
                 <th className="px-4 py-2 text-left text-sm font-semibold text-gray-700">Date</th>
-                <th className="px-4 py-2 text-right text-sm font-semibold text-gray-700">{t('total')}</th>
-                <th className="px-4 py-2">{t('invoice')} #</th>
+                <th className="px-4 py-2 text-right text-sm font-semibold text-gray-700">{t('pages.salesPage.total')}</th>
+                <th className="px-4 py-2">{t('pages.salesPage.invoice')} #</th>
                 <th className="px-4 py-2 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {loading ? (
-                <tr><td colSpan="5" className="px-4 py-6 text-center text-gray-500">{getTranslation(language, 'loading')}</td></tr>
+                <tr><td colSpan="5" className="px-4 py-6 text-center text-gray-500">{t('loading')}</td></tr>
               ) : sales.length === 0 ? (
                 <tr><td colSpan="5" className="px-4 py-6 text-center text-gray-500">{t('noData')}</td></tr>
               ) : (
@@ -364,7 +363,7 @@ const Sales = ({ farmType = 'goat' }) => {
                     <td className="px-4 py-2 text-sm text-gray-700">{new Date(sale.date).toLocaleDateString()}</td>
                     <td className="px-4 py-2 text-sm text-gray-700 text-right">{formatCurrency(sale.totalAmount || 0)}</td>
                     <td className="px-4 py-2 text-right">
-                      <button onClick={() => openInvoice(sale._id)} className="btn-outline inline-flex items-center gap-2"><ExternalLink className="h-4 w-4"/> {t('invoice')}</button>
+                      <button onClick={() => openInvoice(sale._id)} className="btn-outline inline-flex items-center gap-2"><ExternalLink className="h-4 w-4"/> {t('pages.salesPage.invoice')}</button>
                     </td>
                     <td className="px-4 py-2 text-right space-x-2">
                       <button onClick={() => startEdit(sale)} className="btn-outline">Edit</button>

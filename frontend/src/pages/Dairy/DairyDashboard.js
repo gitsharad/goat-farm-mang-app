@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Users, Heart, Milk, Utensils, TrendingUp, AlertTriangle } from 'lucide-react';
 import api from '../../services/api';
 
 const DairyDashboard = () => {
+  const { t } = useTranslation('dairy');
+
   const [stats, setStats] = useState({
     totalCows: 0,
     milkingCows: 0,
@@ -22,7 +25,7 @@ const DairyDashboard = () => {
     try {
       setLoading(true);
       const [dairyRes] = await Promise.all([
-        api.get('/dairy?limit=1000')
+        api.get('/api/dairy?limit=1000')
       ]);
 
       const dairy = dairyRes.data.data || [];
@@ -69,139 +72,159 @@ const DairyDashboard = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dairy Farm Dashboard</h1>
-          <p className="text-gray-600">Overview of your dairy farm operations</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('pages.dashboard.title')}</h1>
+          <p className="text-gray-600">{t('pages.dashboard.subtitle')}</p>
         </div>
         <Link
           to="/dairy/new"
           className="btn-primary"
         >
-          Add New Cow
+          {t('pages.animals.addAnimal')}
         </Link>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
+        <Link to="/dairy" className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow">
           <div className="flex items-center">
             <Users className="h-8 w-8 text-blue-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Cows</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.totalAnimals')}</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.totalCows}</p>
             </div>
           </div>
-        </div>
+        </Link>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <Link to="/dairy/health" className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow">
           <div className="flex items-center">
-            <Milk className="h-8 w-8 text-blue-500" />
+            <Heart className="h-8 w-8 text-red-500" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Milking Cows</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.milkingCows}</p>
-            </div>
-          </div>
-        </div>
-
-        <Link 
-          to="/dairy/milk-production" 
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center">
-            <TrendingUp className="h-8 w-8 text-green-600" />
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Daily Milk (L)</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.dailyMilkProduction}</p>
+              <p className="text-sm font-medium text-gray-600">Health Records</p>
+              <p className="text-2xl font-semibold text-gray-900">{stats.milkingCows} Active</p>
             </div>
           </div>
         </Link>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <Link 
+          to="/dairy/milk" 
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+        >
+          <div className="flex items-center">
+            <Milk className="h-8 w-8 text-yellow-500" />
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Daily Milk Production</p>
+              <p className="text-2xl font-semibold text-gray-900">{stats.dailyMilkProduction} L</p>
+            </div>
+          </div>
+        </Link>
+
+        <Link to="/dairy/breeding" className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow">
           <div className="flex items-center">
             <Heart className="h-8 w-8 text-pink-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Pregnant Cows</p>
+              <p className="text-sm font-medium text-gray-600">Pregnant Animals</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.pregnantCows}</p>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <h2 className="text-xl font-semibold text-gray-800 col-span-full mb-2">Quick Actions</h2>
+        
+        {/* Manage Animals */}
         <Link
           to="/dairy"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-blue-500"
         >
           <div className="flex items-center">
-            <Users className="h-10 w-10 text-blue-600" />
+            <div className="p-2 rounded-full bg-blue-50">
+              <Users className="h-6 w-6 text-blue-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Manage Dairy</h3>
-              <p className="text-gray-600">View and manage your dairy cattle</p>
+              <h3 className="text-lg font-medium text-gray-900">Manage Animals</h3>
+              <p className="text-sm text-gray-500">View and manage your dairy animals</p>
             </div>
           </div>
         </Link>
 
+        {/* Health Records */}
         <Link
-          to="/dairy-health"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          to="/dairy/health"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-green-500"
         >
           <div className="flex items-center">
-            <Heart className="h-10 w-10 text-green-600" />
+            <div className="p-2 rounded-full bg-green-50">
+              <Heart className="h-6 w-6 text-green-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Health Records</h3>
-              <p className="text-gray-600">Track vaccinations and treatments</p>
+              <h3 className="text-lg font-medium text-gray-900">Health Records</h3>
+              <p className="text-sm text-gray-500">Track vaccinations and treatments</p>
             </div>
           </div>
         </Link>
 
+        {/* Milk Production */}
         <Link
-          to="/dairy-milk"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          to="/dairy/milk"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-yellow-500"
         >
           <div className="flex items-center">
-            <Milk className="h-10 w-10 text-blue-500" />
+            <div className="p-2 rounded-full bg-yellow-50">
+              <Milk className="h-6 w-6 text-yellow-500" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Milk Production</h3>
-              <p className="text-gray-600">Track daily milk records</p>
+              <h3 className="text-lg font-medium text-gray-900">Milk Production</h3>
+              <p className="text-sm text-gray-500">Record and track milk yields</p>
             </div>
           </div>
         </Link>
 
+        {/* Breeding */}
         <Link
-          to="/dairy-breeding"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          to="/dairy/breeding"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-pink-500"
         >
           <div className="flex items-center">
-            <Heart className="h-10 w-10 text-pink-600" />
+            <div className="p-2 rounded-full bg-pink-50">
+              <Heart className="h-6 w-6 text-pink-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Breeding</h3>
-              <p className="text-gray-600">Manage breeding programs</p>
+              <h3 className="text-lg font-medium text-gray-900">Breeding</h3>
+              <p className="text-sm text-gray-500">Track breeding and pregnancy</p>
             </div>
           </div>
         </Link>
 
+        {/* Feeding */}
         <Link
-          to="/dairy-feed-records"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          to="/dairy/feeding"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-purple-500"
         >
           <div className="flex items-center">
-            <Utensils className="h-10 w-10 text-orange-600" />
+            <div className="p-2 rounded-full bg-purple-50">
+              <Utensils className="h-6 w-6 text-purple-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Feed Management</h3>
-              <p className="text-gray-600">Track feeding schedules</p>
+              <h3 className="text-lg font-medium text-gray-900">Feeding</h3>
+              <p className="text-sm text-gray-500">Manage feed and nutrition</p>
             </div>
           </div>
         </Link>
 
+        {/* Reports */}
         <Link
-          to="/dairy-reports"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          to="/dairy/reports"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-indigo-500"
         >
           <div className="flex items-center">
-            <TrendingUp className="h-10 w-10 text-purple-600" />
+            <div className="p-2 rounded-full bg-indigo-50">
+              <TrendingUp className="h-6 w-6 text-indigo-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Reports</h3>
-              <p className="text-gray-600">View analytics and reports</p>
+              <h3 className="text-lg font-medium text-gray-900">Reports</h3>
+              <p className="text-sm text-gray-500">View farm analytics</p>
             </div>
           </div>
         </Link>
@@ -210,24 +233,26 @@ const DairyDashboard = () => {
       {/* Milk Production Chart Preview */}
       <div className="bg-white rounded-lg shadow">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Milk Production Overview</h3>
+          <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.milkProductionOverview')}</h3>
         </div>
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-3xl font-bold text-blue-600">{stats.dailyMilkProduction}L</p>
-              <p className="text-gray-600">Average daily production</p>
+              <p className="text-3xl font-bold text-blue-600">
+                {t('pages.dashboard.dailyMilkProduction', { liters: stats.dailyMilkProduction })}
+              </p>
+              <p className="text-gray-600">{t('pages.dashboard.averageDailyProduction')}</p>
             </div>
             <div className="text-right">
-              <p className="text-lg font-semibold text-gray-900">{stats.milkingCows} cows</p>
-              <p className="text-gray-600">Currently milking</p>
+              <p className="text-lg font-semibold text-gray-900">{t('pages.dashboard.milkingCows')} {stats.milkingCows} </p>
+              <p className="text-gray-600">{t('pages.dashboard.currentlyMilking')}</p>
             </div>
           </div>
           <Link
             to="/dairy/production"
             className="text-primary-600 hover:text-primary-700 font-medium"
           >
-            View detailed production records →
+            {t('pages.dashboard.viewDetailedProduction')}
           </Link>
         </div>
       </div>

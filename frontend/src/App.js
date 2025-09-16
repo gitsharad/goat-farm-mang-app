@@ -1,14 +1,33 @@
-import React, { useEffect } from 'react';
-import { testApiConnection } from './utils/testConnection';
+import React, { useEffect, Suspense } from 'react';
+import { I18nextProvider } from 'react-i18next';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from './lib/queryClient';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+
+// Utils & Config
+import { testApiConnection } from './utils/testConnection';
+import { languages } from './config/i18n';
+import { queryClient } from './lib/queryClient';
+import i18n from './config/i18n';
+
+// Contexts
 import { useAuth, usePermissions } from './contexts/AuthContext';
+
+// Components
 import Layout from './components/Layout';
 import SimpleLayout from './components/SimpleLayout';
+
+// Common Pages
 import Login from './pages/Login';
 import DashboardSelector from './pages/DashboardSelector';
 import Dashboard from './pages/Dashboard';
+import HealthRecords from './pages/HealthRecords';
+import BreedingRecords from './pages/BreedingRecords';
+import FeedRecords from './pages/FeedRecords';
+import Sales from './pages/Sales';
+import Reports from './pages/Reports';
+import Settings from './pages/Settings';
+import Subscription from './pages/Subscription';
+import LogViewer from './pages/LogViewer';
 
 // Goat Management
 import Goats from './pages/Goats';
@@ -17,10 +36,6 @@ import GoatForm from './pages/Goat/GoatForm';
 import GoatDashboard from './pages/Goat/GoatDashboard';
 import GoatProduction from './pages/Goat/GoatProduction';
 import MilkRecordForm from './pages/Goat/MilkRecordForm';
-import HealthRecords from './pages/HealthRecords';
-import BreedingRecords from './pages/BreedingRecords';
-import FeedRecords from './pages/FeedRecords';
-import Sales from './pages/Sales';
 
 // Poultry Management
 import PoultryDashboard from './pages/Poultry/PoultryDashboard';
@@ -28,6 +43,7 @@ import PoultryHealthRecords from './pages/Poultry/PoultryHealthRecords';
 import PoultryFeedRecords from './pages/Poultry/PoultryFeedRecords';
 import PoultrySales from './pages/Poultry/PoultrySales';
 import PoultryReports from './pages/Poultry/PoultryReports';
+import PoultryVaccinationReports from './pages/Poultry/PoultryVaccinationReports';
 import Poultry from './pages/Poultry/Poultry';
 import PoultryDetail from './pages/Poultry/PoultryDetail';
 import PoultryForm from './pages/Poultry/PoultryForm';
@@ -39,19 +55,22 @@ import DairyBreeding from './pages/Dairy/DairyBreeding';
 import DairyFeedRecords from './pages/Dairy/DairyFeedRecords';
 import DairySales from './pages/Dairy/DairySales';
 import DairyReports from './pages/Dairy/DairyReports';
+import Dairy from './pages/Dairy/Dairy';
+import DairyDetail from './pages/Dairy/DairyDetail';
+import DairyForm from './pages/Dairy/DairyForm';
 
-// Common
-import Reports from './pages/Reports';
-import Settings from './pages/Settings';
-import Subscription from './pages/Subscription';
-import LogViewer from './pages/LogViewer';
+// User Management
 import UserManagement from './pages/Users/UserManagement';
 import UserDetail from './pages/Users/UserDetail';
-import Dairy from './pages/Dairy/Dairy';
-import DairyForm from './pages/Dairy/DairyForm';
 
 // Development Tools (lazy loaded in production)
 const DevTools = React.lazy(() => import('./pages/DevTools'));
+
+// Set the language from localStorage
+const savedLanguage = localStorage.getItem('i18nextLng');
+if (savedLanguage) {
+  i18n.changeLanguage(savedLanguage);
+}
 
 
 function App() {
@@ -143,10 +162,14 @@ function App() {
             user ? <Layout /> : <Navigate to={`/login?redirect=${encodeURIComponent(window.location.pathname)}`} replace />
           }>
             {/* Dashboard routes */}
-            <Route path="/dashboard/goat" element={<GoatDashboard />} />
-            <Route path="/dashboard/poultry" element={<PoultryDashboard />} />
-            <Route path="/dashboard/dairy" element={<DairyDashboard />} />
-            <Route path="/dashboard/:farmType" element={<Dashboard />} />
+            <Route index element={<Navigate to="/dashboard/goat" replace />} />
+            <Route path="dashboard">
+              <Route index element={<Navigate to="/dashboard/goat" replace />} />
+              <Route path="goat" element={<GoatDashboard />} />
+              <Route path="poultry" element={<PoultryDashboard />} />
+              <Route path="dairy" element={<DairyDashboard />} />
+              <Route path=":farmType" element={<Dashboard />} />
+            </Route>
             
             {/* Development Tools */}
             {process.env.NODE_ENV === 'development' && (
@@ -158,11 +181,23 @@ function App() {
             )}
             
             {/* Goat Management */}
-            <Route path="/goats" element={<Goats />} />
-            <Route path="/goats/new" element={<GoatForm />} />
-            <Route path="/goats/:id" element={<GoatDetail />} />
-            <Route path="/goats/:id/edit" element={<GoatForm />} />
-            <Route path="/goat-health" element={<HealthRecords />} />
+            <Route path="goats">
+              <Route index element={<Goats />} />
+              <Route path="new" element={<GoatForm />} />
+              <Route path=":id" element={<GoatDetail />} />
+              <Route path=":id/edit" element={<GoatForm />} />
+              <Route path="health" element={<HealthRecords />} />
+              <Route path="breeding" element={<BreedingRecords />} />
+              <Route path="feed" element={<FeedRecords />} />
+              <Route path="milk/entry" element={<MilkRecordForm />} />
+              <Route path="milk/entry/:id" element={<MilkRecordForm />} />
+            </Route>
+            
+            {/* Goat Production */}
+            <Route path="goat-production" element={<GoatProduction />} />
+            
+            {/* Sales */}
+            <Route path="sales" element={<Sales />} />
             
             {/* Catch-all route - must be the last route */}
             <Route path="*" element={
@@ -173,32 +208,30 @@ function App() {
               )
             } />
             
-            <Route path="/goat-breeding" element={<BreedingRecords />} />
-            <Route path="/goat-feed" element={<FeedRecords />} />
-            <Route path="/sales" element={<Sales />} />
-            <Route path="/goat-production" element={<GoatProduction />} />
-            <Route path="/goats/milk/entry" element={<MilkRecordForm />} />
-            <Route path="/goats/milk/entry/:id" element={<MilkRecordForm />} />
-            
             {/* Poultry Routes */}
-            <Route path="/poultry" element={<Poultry />} />
-            <Route path="/poultry/new" element={<PoultryForm />} />
-            <Route path="/poultry/:id" element={<PoultryDetail />} />
-            <Route path="/poultry/:id/edit" element={<PoultryForm />} />
-            <Route path="/poultry-health" element={<PoultryHealthRecords />} />
-            <Route path="/poultry-feed-records" element={<PoultryFeedRecords />} />
-            <Route path="/poultry-sales" element={<PoultrySales />} />
-            <Route path="/poultry-reports" element={<PoultryReports />} />
+            <Route path="/dashboard/poultry/animals" element={<Poultry />} />
+            <Route path="/dashboard/poultry/animals/new" element={<PoultryForm />} />
+            <Route path="/dashboard/poultry/animals/:id" element={<PoultryDetail />} />
+            <Route path="/dashboard/poultry/animals/:id/edit" element={<PoultryForm />} />
+            <Route path="/dashboard/poultry/health" element={<PoultryHealthRecords />} />
+            <Route path="/dashboard/poultry/feed" element={<PoultryFeedRecords />} />
+            <Route path="/dashboard/poultry/sales" element={<PoultrySales />} />
+            <Route path="/dashboard/poultry/reports" element={<PoultryReports />}>
+              <Route path="vaccinations" element={<PoultryVaccinationReports />} />
+            </Route>
             
             {/* Dairy Management */}
-            <Route path="/dairy" element={<Dairy />} />
-            <Route path="/dairy/new" element={<DairyForm />} />
-            <Route path="/dairy/:id/edit" element={<DairyForm />} />
-            <Route path="/dairy-health" element={<DairyHealthRecords />} />
-            <Route path="/dairy-breeding" element={<DairyBreeding />} />
-            <Route path="/dairy-feed-records" element={<DairyFeedRecords />} />
-            <Route path="/dairy-sales" element={<DairySales />} />
-            <Route path="/dairy-reports" element={<DairyReports />} />
+            <Route path="/dairy">
+              <Route index element={<Dairy />} />
+              <Route path="new" element={<DairyForm />} />
+              <Route path=":id" element={<DairyDetail />} />
+              <Route path=":id/edit" element={<DairyForm />} />
+              <Route path="health" element={<DairyHealthRecords />} />
+              <Route path="breeding" element={<DairyBreeding />} />
+              <Route path="feed" element={<DairyFeedRecords />} />
+              <Route path="sales" element={<DairySales />} />
+              <Route path="reports" element={<DairyReports />} />
+            </Route>
             
             {/* Common Routes */}
             <Route path="/reports" element={<Reports />} />
@@ -216,8 +249,8 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
-      </div>
-    </QueryClientProvider>
+    </div>
+  </QueryClientProvider>
   );
 }
 

@@ -1,0 +1,124 @@
+{
+  "healthRecords": {
+    "title": "शेळ्यांच्या आरोग्याच्या नोंदी",
+    "addRecord": "आरोग्य नोंद जोडा",
+    "editRecord": "आरोग्य नोंद संपादित करा",
+    "noRecords": "कोणत्याही आरोग्य नोंदी सापडल्या नाहीत",
+    "tableHeaders": {
+      "goat": "शेळी",
+      "date": "तारीख",
+      "type": "प्रकार",
+      "description": "तपशील",
+      "veterinarian": "पशुवैद्यक",
+      "cost": "खर्च",
+      "nextDueDate": "पुढील तारीख",
+      "actions": "क्रिया"
+    },
+    "form": {
+      "selectGoat": "शेळी निवडा",
+      "date": "तारीख",
+      "type": "नोंदीचा प्रकार",
+      "typeOptions": {
+        "vaccination": "लसीकरण",
+        "deworming": "कृमिनाशक",
+        "treatment": "उपचार",
+        "checkup": "तपासणी",
+        "pregnancyCheck": "गरोदरपणाची तपासणी",
+        "delivery": "प्रसूती नोंद",
+        "hoofCare": "खुरांची काळजी",
+        "dental": "दातांची तपासणी"
+      },
+      "description": "तपशील",
+      "veterinarian": "पशुवैद्यकाचे नाव",
+      "nextVisitDate": "पुढील भेटीची तारीख",
+      "status": "स्थिती",
+      "statusOptions": {
+        "scheduled": "नियोजित",
+        "completed": "पूर्ण झाले",
+        "pending": "प्रलंबित",
+        "cancelled": "रद्द केले",
+        "inProgress": "चालू आहे"
+      },
+      "vitalSigns": {
+        "title": "महत्वाची चिन्हे",
+        "temperature": "तापमान (°C)",
+        "heartRate": "हृदय गती (bpm)",
+        "respirationRate": "श्वासोच्छवास दर",
+        "weight": "वजन (किलो)",
+        "bodyCondition": "शरीराची स्थिती गुण"
+      },
+      "medication": {
+        "name": "औषधाचे नाव",
+        "dosage": "डोस",
+        "frequency": "वारंवारता",
+        "duration": "कालावधी (दिवस)",
+        "addMedication": "औषध जोडा",
+        "route": "औषध देण्याची पद्धत",
+        "routeOptions": {
+          "oral": "तोंडाद्वारे",
+          "injection": "इंजेक्शन",
+          "topical": "बाह्य उपयोग",
+          "intramuscular": "स्नायूंमध्ये",
+          "subcutaneous": "त्वचेखाली"
+        }
+      },
+      "submit": "जतन करा",
+      "cancel": "रद्द करा"
+    },
+    "table": {
+      "date": "तारीख",
+      "goat": "शेळी",
+      "type": "प्रकार",
+      "description": "तपशील",
+      "status": "स्थिती",
+      "actions": "क्रिया",
+      "veterinarian": "पशुवैद्यक"
+    },
+    "deleteConfirm": "तुम्हाला ही आरोग्य नोंद हटवायची आहे का?",
+    "deleteSuccess": "आरोग्य नोंद यशस्वीरित्या हटवली",
+    "saveSuccess": "आरोग्य नोंद यशस्वीरित्या जतन केली",
+    "error": "आरोग्य नोंद प्रक्रिया करताना त्रुटी",
+    "filters": {
+      "all": "सर्व नोंदी",
+      "last30Days": "गेल्या ३० दिवसातील",
+      "last6Months": "गेल्या ६ महिन्यातील",
+      "thisYear": "या वर्षीच्या",
+      "byStatus": "स्थितीनुसार फिल्टर करा"
+    },
+    "export": {
+      "title": "निर्यात करा",
+      "format": "स्वरूप",
+      "dateRange": "तारखेची श्रेणी",
+      "download": "डाउनलोड करा"
+    }
+  },
+  "symptoms": {
+    "title": "लक्षणे",
+    "addSymptom": "लक्षण जोडा",
+    "commonSymptoms": "सामान्य लक्षणे",
+    "selectSymptom": "लक्षण निवडा",
+    "severity": "तीव्रता",
+    "severityLevels": {
+      "mild": "हलकी",
+      "moderate": "मध्यम",
+      "severe": "तीव्र"
+    },
+    "notes": "नोट्स"
+  },
+  "treatments": {
+    "title": "उपचार",
+    "addTreatment": "उपचार जोडा",
+    "treatmentType": "उपचाराचा प्रकार",
+    "medication": "औषध",
+    "dosage": "डोस",
+    "startDate": "सुरुवात तारीख",
+    "endDate": "समाप्ती तारीख",
+    "instructions": "सूचना"
+  },
+  "alerts": {
+    "upcomingTreatments": "आगामी उपचार",
+    "dueForVaccination": "लसीकरणासाठी वेळ आली आहे",
+    "dueForDeworming": "कृमिनाशकासाठी वेळ आली आहे",
+    "noAlerts": "कोणतेही आरोग्य सूचना नाहीत"
+  }
+}

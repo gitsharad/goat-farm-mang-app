@@ -1,0 +1,433 @@
+{ 
+"poultry": {
+  "dashboard": {
+    "title": "Poultry Dashboard",
+    "subtitle": "Manage your poultry farm operations",
+    "summary": "Poultry Farm Overview",
+    "totalBirds": "Total Birds",
+    "activeBirds": "Active Birds",
+    "eggProduction": "Egg Production",
+    "feedConsumption": "Feed Consumption",
+    "mortalityRate": "Mortality Rate",
+    "recentActivity": "Recent Activity",
+    "viewAll": "View All",
+    "viewSchedule": "View Vaccination Schedule",
+    "vaccinationAlert": "Upcoming Vaccinations",
+    "vaccinationMessage": "You have {{count}} vaccinations due soon. Please check the schedule.",
+    "managePoultry": "Manage your poultry inventory and records",
+    "healthRecords": "View and manage health records",
+    "feedManagement": "Track feed consumption and manage inventory",
+    "salesInventory": "View sales reports and inventory",
+    "addBatch": "Add New Batch",
+    "quickActions": "Quick Actions",
+    "healthAlerts": "Health Alerts",
+    "noAlerts": "No active alerts",
+    "noRecentActivity": "No recent activity"
+  },
+  "types": {
+    "Broiler": "Broiler",
+    "Layer": "Layer",
+    "Desi": "Desi",
+    "Kadaknath": "Kadaknath",
+    "Aseel": "Aseel",
+    "RhodeIslandRed": "Rhode Island Red",
+    "Other": "Other",
+    "DualPurpose": "Dual Purpose"
+  },
+  "sources": {
+    "Hatchery": "Hatchery",
+    "FarmRaised": "Farm Raised",
+    "LocalMarket": "Local Market",
+    "Other": "Other"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "sold": "Sold",
+    "deceased": "Deceased"
+  },
+  "healthStatus": {
+    "healthy": "Healthy",
+    "sick": "Sick",
+    "underTreatment": "Under Treatment",
+    "recovering": "Recovering"
+  },
+  "form": {
+    "sections": {
+      "basicInfo": "Basic Information",
+      "healthInfo": "Health Information",
+      "vaccination": "Vaccination"
+    },
+    "labels": {
+      "tagNumber": "Tag Number",
+      "batchNumber": "Batch Number",
+      "breed": "Breed",
+      "type": "Type",
+      "dateOfHatch": "Date of Hatch",
+      "source": "Source",
+      "status": "Status",
+      "location": "Location",
+      "healthStatus": "Health Status",
+      "lastCheckup": "Last Checkup",
+      "healthIssues": "Health Issues",
+      "lastVaccine": "Last Vaccine",
+      "vaccineDate": "Vaccine Date",
+      "nextVaccineDate": "Next Vaccine Date",
+      "notes": "Notes"
+    },
+    "placeholders": {
+      "tagNumber": "Enter tag number",
+      "batchNumber": "Enter batch number",
+      "location": "Enter location",
+      "healthIssues": "Any health issues or observations...",
+      "vaccineName": "Vaccine name",
+      "additionalNotes": "Additional notes..."
+    },
+    "validation": {
+      "tagNumberRequired": "Tag number is required",
+      "breedRequired": "Breed is required",
+      "vaccineNameRequired": "Vaccine name is required when date is provided",
+      "vaccineDateRequired": "Vaccine date is required when name is provided"
+    },
+    "selectBreed": "Select breed"
+  },
+  "buttons": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "update": "Update"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "flock": "Flock Management",
+    "eggs": "Egg Production",
+    "feed": "Feed Management",
+    "health": "Health Records",
+    "sales": "Sales & Inventory"
+  },
+  "healthPage": {
+    "title": "Poultry Health Records",
+    "subtitle": "Manage and track health records for your poultry",
+    "addRecord": "Add Health Record",
+    
+    "filters": {
+      "search": "Search records...",
+      "batch": "Filter by batch",
+      "type": "Filter by type",
+      "date": "Filter by date",
+      "allBatches": "All Batches",
+      "allTypes": "All Types",
+      "allDates": "All Dates"
+    },
+    "table": {
+      "date": "Date",
+      "poultryId": "Poultry ID",
+      "type": "Type",
+      "description": "Description",
+      "veterinarian": "Veterinarian",
+      "cost": "Cost",
+      "nextDue": "Next Due",
+      "actions": "Actions",
+      "noRecords": "No health records found",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "batch": "Batch",
+      "date": "Date",
+      "type": "Type",
+      "selectType": "Select Type",
+      "description": "Description",
+      "veterinarian": "Veterinarian",
+      "addTitle": "Add New Poultry",
+      "editTitle": "Edit Poultry",
+      "sections": {
+        "basicInfo": "Basic Information",
+        "healthInfo": "Health Information"
+      },
+      "labels": {
+        "tagNumber": "Tag Number",
+        "batchNumber": "Batch Number",
+        "breed": "Breed",
+        "type": "Type",
+        "dateOfHatch": "Date of Hatch",
+        "source": "Source",
+        "status": "Status",
+        "location": "Location",
+        "notes": "Notes",
+        "healthStatus": "Health Status",
+        "lastCheckup": "Last Checkup",
+        "healthIssues": "Health Issues",
+        "lastVaccine": "Last Vaccine",
+        "vaccineDate": "Vaccine Date",
+        "nextVaccineDate": "Next Due"
+      },
+      "placeholders": {
+        "tagNumber": "P-001",
+        "batchNumber": "B-2023-01",
+        "location": "e.g., Coop A, Pen 3",
+        "healthIssues": "Any health issues or observations...",
+        "vaccineName": "Vaccine name"
+      },
+      "validation": {
+        "tagNumberRequired": "Tag number is required",
+        "vaccineNameRequired": "Vaccine name is required if date is provided",
+        "vaccineDateRequired": "Date is required if vaccine name is provided"
+      },
+      "healthStatus": {
+        "healthy": "Healthy",
+        "sick": "Sick",
+        "underTreatment": "Under Treatment",
+        "recovering": "Recovering"
+      },
+      "selectBatch": "Select Batch",
+      "selectFeedType": "Select Feed Type",
+      "selectUnit": "Select Unit",
+      "costPlaceholder": "Enter amount",
+      "notesPlaceholder": "Add any additional notes here",
+      "consumed": "Amount Consumed",
+      "waste": "Amount Wasted",
+      "medications": "Medications",
+      "addMedication": "Add Medication",
+      "nextDueDate": "Next Due Date",
+      "attachments": "Attachments",
+      "addAttachment": "Add Attachment",
+      "save": "Save Record",
+      "update": "Update Record",
+      "cancel": "Cancel"
+    },
+    "types": {
+      "Vaccination": "Vaccination",
+      "Deworming": "Deworming",
+      "Treatment": "Treatment",
+      "Checkup": "Checkup",
+      "Surgery": "Surgery",
+      "Other": "Other"
+    },
+    "deleteConfirm": {
+      "title": "Delete Record",
+      "message": "Are you sure you want to delete this health record?",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "alerts": {
+      "addSuccess": "Health record added successfully",
+      "updateSuccess": "Health record updated successfully",
+      "deleteSuccess": "Health record deleted successfully",
+      "error": "An error occurred. Please try again.",
+      "loadError": "Failed to load health records"
+    }
+  },
+  "feedPage": {
+    "title": "Poultry Feed Records",
+    "subtitle": "Manage and track feed consumption and inventory",
+    "addRecord": "Add Feed Record",
+    "filters": {
+      "search": "Search records...",
+      "batch": "Filter by batch",
+      "feedType": "Filter by feed type",
+      "date": "Filter by date",
+      "allBatches": "All Batches",
+      "allTypes": "All Types",
+      "allDates": "All Dates"
+    },
+    "table": {
+      "batch": "Batch",
+      "date": "Date",
+      "feedType": "Feed Type",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "cost": "Cost",
+      "notes": "Notes",
+      "consumed": "Consumed",
+      "waste": "Waste",
+      "actions": "Actions",
+      "noRecords": "No feed records found",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "addTitle": "Add Feed Record",
+      "editTitle": "Edit Feed Record",
+      "batch": "Batch",
+      "selectBatch": "Select Batch",
+      "date": "Date",
+      "feedType": "Feed Type",
+      "selectFeedType": "Select Feed Type",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "selectUnit": "Select Unit",
+      "cost": "Cost (₹)",
+      "costPlaceholder": "Enter amount",
+      "notes": "Notes",
+      "notesPlaceholder": "Add any additional notes here",
+      "consumed": "Amount Consumed",
+      "waste": "Amount Wasted",
+      "save": "Save Record",
+      "update": "Update Record",
+      "cancel": "Cancel"
+    },
+    "types": {
+      "Starter": "Starter",
+      "Pre-Starter": "Pre-Starter",
+      "Grower": "Grower",
+      "Finisher": "Finisher",
+      "Layer": "Layer",
+      "Breeder": "Breeder",
+      "ChickStarter": "Chick Starter",
+      "BroilerStarter": "Broiler Starter",
+      "BroilerGrower": "Broiler Grower",
+      "BroilerFinisher": "Broiler Finisher",
+      "Grain": "Grain",
+      "MaizeCorn": "Maize/Corn",
+      "SoybeanMeal": "Soybean Meal",
+      "FishMeal": "Fish Meal",
+      "Vitamins": "Vitamins",
+      "Minerals": "Minerals",
+      "Grit": "Grit",
+      "OysterShell": "Oyster Shell",
+      "Mash": "Mash",
+      "Crumbles": "Crumbles",
+      "Pellets": "Pellets",
+      "Scratch": "Scratch",
+      "Greens": "Greens",
+      "Water": "Water",
+      "Probiotics": "Probiotics",
+      "Supplement": "Supplement",
+      "MedicatedFeed": "Medicated Feed",
+      "Other": "Other"
+    },
+    "deleteConfirm": {
+      "title": "Delete Record",
+      "message": "Are you sure you want to delete this feed record?",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "alerts": {
+      "addSuccess": "Feed record added successfully",
+      "updateSuccess": "Feed record updated successfully",
+      "deleteSuccess": "Feed record deleted successfully",
+      "error": "An error occurred. Please try again.",
+      "loadError": "Failed to load feed records"
+    }
+  },
+  "poultryPage": {
+    "title": "Poultry Management",
+    "subtitle": "Manage your poultry inventory and records",
+    "viewReports": "View Reports",
+    "addPoultry": "Add Poultry",
+    "filters": {
+      "title": "Filters",
+      "showFilters": "Show Filters",
+      "hideFilters": "Hide Filters",
+      "breed": "Breed",
+      "type": "Type",
+      "status": "Status",
+      "allBreeds": "All Breeds",
+      "allTypes": "All Types",
+      "allStatus": "All Status",
+      "resetFilters": "Reset Filters",
+      "searchPlaceholder": "Search by tag or batch number..."
+    },
+    "table": {
+      "tagNumber": "Tag #",
+      "batchNumber": "Batch #",
+      "breed": "Breed",
+      "type": "Type",
+      "age": "Age",
+      "status": "Status",
+      "actions": "Actions",
+      "noRecords": "No poultry records found",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "delete": "Delete",
+      "months": "{{count}} months",
+      "na": "N/A"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "showingPage": "Showing page {{current}} of {{total}}",
+      "previousPage": "Previous page",
+      "nextPage": "Next page"
+    },
+    "deleteConfirm": "Are you sure you want to delete this poultry record?",
+    "deleteSuccess": "Poultry record deleted successfully",
+    "deleteError": "Failed to delete poultry record",
+    "loadError": "Failed to load poultry data"
+  },
+  "reports": {
+    "title": "Poultry Analytics",
+    "subtitle": "Track and analyze your poultry farm performance",
+    "quickStats": "Quick Statistics",
+    "totalBirds": "Total Birds",
+    "totalEggs7d": "Eggs (7 Days)",
+    "vaccinations30d": "Vaccinations (30 Days)",
+    "sections": {
+      "eggProduction": "Egg Production",
+      "vaccinationSummary": "Vaccination Summary",
+      "inventoryStatus": "Inventory Status"
+    },
+    "labels": {
+      "eggsProduced": "Eggs Produced",
+      "eggsDamaged": "Eggs Damaged",
+      "vaccinationsAdministered": "Vaccinations Administered",
+      "numberOfBirds": "Number of Birds"
+    },
+    "messages": {
+      "exportingCSV": "Exporting data to CSV..."
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "unknown": "Unknown",
+    "unnamed": "Unnamed",
+    "batch": "Batch",
+    "previous": "Previous",
+    "next": "Next",
+    "quantity": "Qty",
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "sold": "Sold",
+      "deceased": "Deceased"
+    },
+    "timeRanges": {
+      "week": "Last 7 Days",
+      "month": "Last 30 Days",
+      "year": "Last 12 Months"
+    },
+    "sales": "Sales",
+    "buttons": {
+      "export": "Export",
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "view": "View"
+    },
+    "units": {
+      "kg": "kg",
+      "g": "g",
+      "lbs": "lbs",
+      "tonnes": "tonnes",
+      "liters": "liters",
+      "ml": "ml",
+      "gallons": "gallons",
+      "scoops": "scoops",
+      "bags": "bags"
+    }
+  },
+  "production": {
+    "title": "Poultry Production",
+    "subtitle": "Track egg production by batch",
+    "selectBatch": "Select Batch",
+    "noBatches": "No batches available",
+    "errors": {
+      "loadBatches": "Failed to load poultry batches"
+    }
+  }
+}
+}

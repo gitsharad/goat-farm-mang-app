@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Users, 
   Heart, 
@@ -30,6 +31,7 @@ const cache = {
 };
 
 const GoatDashboard = () => {
+  const { t } = useTranslation('goat');
   const [stats, setStats] = useState({
     totalGoats: 0,
     healthyGoats: 0,
@@ -72,17 +74,82 @@ const GoatDashboard = () => {
       };
 
       // Fetch data with staggered requests to avoid rate limiting
-      const goatsRes = await api.get('/goats?limit=500', config);
-      await new Promise(resolve => setTimeout(resolve, 300)); // Small delay between requests
-      
-      const healthRes = await api.get('/health?limit=50', config);
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
-      const breedingRes = await api.get('/breeding?limit=50', config);
+      let goats = [];
+      let healthRecords = [];
+      let breedingRecords = [];
 
-      const goats = goatsRes.data?.goats || [];
-      const healthRecords = healthRes.data?.records || healthRes.data?.data || [];
-      const breedingRecords = breedingRes.data?.records || breedingRes.data?.data || [];
+      try {
+        // Fetch goats
+        const goatsRes = await api.get('/goats?limit=500', config);
+        console.log('Goats response:', { status: goatsRes.status, data: goatsRes.data });
+        
+        // Handle different response structures for goats
+        if (Array.isArray(goatsRes.data)) {
+          goats = goatsRes.data;
+        } else if (goatsRes.data?.data) {
+          goats = Array.isArray(goatsRes.data.data) ? goatsRes.data.data : [];
+        } else if (goatsRes.data?.goats) {
+          goats = Array.isArray(goatsRes.data.goats) ? goatsRes.data.goats : [];
+        }
+        
+        // Fetch health records
+        try {
+          const healthRes = await api.get('/health?limit=50', config);
+          console.log('Health response:', { status: healthRes.status, data: healthRes.data });
+          
+          if (healthRes.data?.records) {
+            healthRecords = Array.isArray(healthRes.data.records) ? healthRes.data.records : [];
+          } else if (Array.isArray(healthRes.data)) {
+            healthRecords = healthRes.data;
+          } else if (healthRes.data?.data) {
+            healthRecords = Array.isArray(healthRes.data.data) ? healthRes.data.data : [];
+          }
+        } catch (healthError) {
+          console.error('Error fetching health records:', {
+            message: healthError.message,
+            response: healthError.response?.data,
+            status: healthError.response?.status
+          });
+        }
+        
+        // Fetch breeding records
+        try {
+          const breedingRes = await api.get('/breeding?limit=50', config);
+          console.log('Breeding response:', { status: breedingRes.status, data: breedingRes.data });
+          
+          if (breedingRes.data?.records) {
+            breedingRecords = Array.isArray(breedingRes.data.records) ? breedingRes.data.records : [];
+          } else if (Array.isArray(breedingRes.data)) {
+            breedingRecords = breedingRes.data;
+          } else if (breedingRes.data?.data) {
+            breedingRecords = Array.isArray(breedingRes.data.data) ? breedingRes.data.data : [];
+          }
+        } catch (breedingError) {
+          console.error('Error fetching breeding records:', {
+            message: breedingError.message,
+            response: breedingError.response?.data,
+            status: breedingError.response?.status
+          });
+        }
+        
+      } catch (error) {
+        console.error('Error fetching dashboard data:', {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status
+        });
+        
+        // If we have partial data, we can still proceed
+        if (!goats || !Array.isArray(goats)) goats = [];
+        if (!healthRecords || !Array.isArray(healthRecords)) healthRecords = [];
+        if (!breedingRecords || !Array.isArray(breedingRecords)) breedingRecords = [];
+      }
+      
+      console.log('Fetched data counts:', { 
+        goats: goats.length, 
+        healthRecords: healthRecords.length, 
+        breedingRecords: breedingRecords.length 
+      });
 
       // Calculate stats
       const now = new Date();
@@ -206,7 +273,7 @@ const GoatDashboard = () => {
       }`}
     >
       <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-      {loading ? 'Refreshing...' : 'Refresh Data'}
+      {loading ? t('common:refreshing') : t('common:refresh')}
     </button>
   );
 
@@ -216,7 +283,7 @@ const GoatDashboard = () => {
         <div className="p-4 text-red-600 bg-red-50 rounded-lg border border-red-200">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="font-medium">Error loading dashboard data</h3>
+              <h3 className="font-medium">{t('dashboard.error.loading')}</h3>
               <p className="text-sm">{error.message}</p>
             </div>
             {refreshButton}
@@ -224,7 +291,7 @@ const GoatDashboard = () => {
         </div>
         {!error.isRateLimit && cache.data && (
           <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-yellow-700">Showing cached data from {new Date(cache.timestamp).toLocaleString()}</p>
+            <p className="text-yellow-700">{t('dashboard.cachedData', { date: new Date(cache.timestamp).toLocaleString() })}</p>
           </div>
         )}
       </div>
@@ -236,26 +303,20 @@ const GoatDashboard = () => {
       <div className="p-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Goat Farm Dashboard</h1>
+            <h1 className="text-2xl font-bold text-gray-800">{t('pages.dashboard.goatFarmDashboard')}</h1>
             {lastUpdated && (
               <p className="text-xs text-gray-500 mt-1">
-                Last updated: {lastUpdated}
-                {loading && ' (updating...)'}
+                {t('pages.dashboard.lastUpdated', { date: lastUpdated })}
+                {loading && ` (${t('common.updating')}...)`}
               </p>
             )}
           </div>
           <div className="w-full sm:w-auto">
             {refreshButton}
           </div>
-          <p className="text-gray-600">Overview of your goat farming operations</p>
+          <p className="text-gray-600">{t('pages.dashboard.overview')}</p>
         </div>
-        <Link
-          to="/goat/new"
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          <Plus className="-ml-1 mr-2 h-5 w-5" />
-          Add New Goat
-        </Link>
+       
       </div>
 
       {/* Stats Grid */}
@@ -264,7 +325,7 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <Users className="h-8 w-8 text-blue-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Goats</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.totalGoats')}</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.totalGoats}</p>
             </div>
           </div>
@@ -274,7 +335,7 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <Heart className="h-8 w-8 text-green-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Healthy Goats</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.healthyGoats')}</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.healthyGoats}</p>
             </div>
           </div>
@@ -284,7 +345,7 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <Baby className="h-8 w-8 text-purple-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Pregnant Goats</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.pregnantGoats')}</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.pregnantGoats}</p>
             </div>
           </div>
@@ -294,7 +355,7 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <AlertTriangle className="h-8 w-8 text-yellow-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Upcoming Breeding</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.upcomingBreeding')}</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.upcomingBreeding}</p>
             </div>
           </div>
@@ -310,8 +371,8 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <DollarSign className="h-10 w-10 text-green-600" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Goat Sales</h3>
-              <p className="text-gray-600">Manage sales and transactions</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.sales.title')}</h3>
+              <p className="text-gray-600">{t('pages.dashboard.quickActions.sales.description')}</p>
             </div>
           </div>
         </Link>
@@ -322,47 +383,47 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <Users className="h-10 w-10 text-blue-600" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Manage Goats</h3>
-              <p className="text-gray-600">View and manage your goats</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.manageGoats.title')}</h3>
+              <p className="text-gray-600">{t('pages.dashboard.quickActions.manageGoats.description')}</p>
             </div>
           </div>
         </Link>
 
         <Link
-          to="/goat-health"
+          to="/goats/health"
           className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
         >
           <div className="flex items-center">
             <Heart className="h-10 w-10 text-green-600" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Health Records</h3>
-              <p className="text-gray-600">Track health and treatments</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.health.title')}</h3>
+              <p className="text-gray-600">{t('pages.dashboard.quickActions.health.description')}</p>
             </div>
           </div>
         </Link>
 
         <Link
-          to="/goat-breeding"
+          to="/goats/breeding"
           className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
         >
           <div className="flex items-center">
             <Baby className="h-10 w-10 text-purple-600" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Breeding</h3>
-              <p className="text-gray-600">Manage breeding records</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.breeding.title')}</h3>
+              <p className="text-gray-600">{t('pages.dashboard.quickActions.breeding.description')}</p>
             </div>
           </div>
         </Link>
 
         <Link
-          to="/goat-feed"
+          to="/goats/feed"
           className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
         >
           <div className="flex items-center">
             <Utensils className="h-10 w-10 text-orange-600" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Feed Management</h3>
-              <p className="text-gray-600">Track feeding schedules</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.feeding.title')}</h3>
+              <p className="text-gray-600">{t('pages.dashboard.quickActions.feeding.description')}</p>
             </div>
           </div>
         </Link>
@@ -374,8 +435,8 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <Milk className="h-10 w-10 text-pink-600" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Milk Production</h3>
-              <p className="text-gray-600">Track daily milk production</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.milkProduction.title')}</h3>
+              <p className="text-gray-600">{t('pages.dashboard.quickActions.milkProduction.description')}</p>
             </div>
           </div>
         </Link>
@@ -387,8 +448,8 @@ const GoatDashboard = () => {
           <div className="flex items-center">
             <TrendingUp className="h-10 w-10 text-indigo-600" />
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">Reports</h3>
-              <p className="text-gray-600">View analytics and reports</p>
+              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.reports.title')}</h3>
+              <p className="text-gray-600">{t('pages.dashboard.quickActions.reports.description')}</p>
             </div>
           </div>
         </Link>
@@ -399,11 +460,13 @@ const GoatDashboard = () => {
 
 // Wrap the component with error boundary for export
 export default function GoatDashboardWithBoundary() {
+  const { t } = useTranslation();
+  
   return (
     <ErrorBoundary 
-      fallbackMessage="Unable to load the dashboard. Please try again."
+      fallbackMessage={t('dashboard.unableToLoad')}
       onRetry={() => window.location.reload()}
-      retryLabel="Reload Dashboard"
+      retryLabel={t('dashboard.reloadDashboard')}
     >
       <GoatDashboard />
     </ErrorBoundary>

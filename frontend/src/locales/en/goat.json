@@ -1,0 +1,770 @@
+{
+  "goat": {
+    "pages": {
+      "reports": {
+        "title": "Goat Management Reports",
+        "subtitle": "View and download detailed reports of your goat farm",
+        "generateReport": "Generate Report",
+        "export": "Export",
+        "dateRange": "Select Date Range",
+        "reportType": "Select Report Type",
+        "filters": {
+          "applyFilters": "Apply Filters",
+          "clearFilters": "Clear Filters",
+          "showFilters": "Show Filters",
+          "hideFilters": "Hide Filters"
+        },
+        "buyer": "Buyer",
+        "buyerPlaceholder": "Buyer name",
+        "noData": "No data available for selected filters",
+        "loading": "Generating report...",
+        "error": "Error loading report",
+        "table": {
+          "period": "Period",
+          "invoices": "Invoices",
+          "quantity": "Quantity (Goats)",
+          "revenue": "Revenue",
+          "totals": "Totals",
+          "records": "Records",
+          "totalQuantity": "Total Qty",
+          "totalCost": "Total Cost",
+          "income": "Income",
+          "expenses": "Expenses",
+          "net": "Net",
+          "balance": "Balance",
+          "totalGoats": "Total Goats",
+          "successRate": "Success Rate"
+        },
+        "type": "Type",
+        "feedType": "Feed Type",
+        "feedTypePlaceholder": "e.g. Hay",
+        "unit": "Unit",
+        "unitPlaceholder": "e.g. kg",
+        "overdue": "Overdue",
+        "upcoming": "Upcoming ({days}d)",
+        "totalPregnancies": "Total Pregnancies",
+        "totalKiddings": "Total Kiddings",
+        "totalKids": "Total Kids",
+        "overallSuccess": "Overall Success",
+        "totals": "Totals"
+      },
+      "goatProduction": {
+        "title": "Goat Milk Production",
+        "subtitle": "Track and analyze milk production records",
+        "newRecord": "New Record",
+        "totalProduction": "Total Production (Liters)",
+        "avgPerGoat": "Average per Goat (Liters)",
+        "dateRange": "Date Range",
+        "to": "to",
+        "searchPlaceholder": "Search records...",
+        "export": "Export",
+        "table": {
+          "title": "Milk Records",
+          "date": "Date",
+          "goatId": "Goat ID",
+          "quantity": "Quantity (Liters)",
+          "fat": "Fat %",
+          "snf": "SNF %",
+          "time": "Time",
+          "notes": "Notes"
+        },
+        "milk": {
+          "title": {
+            "add": "Add Milk Record",
+            "edit": "Edit Milk Record"
+          },
+          "form": {
+            "goat": {
+              "label": "Goat",
+              "placeholder": "Select a goat",
+              "required": "Goat is required"
+            },
+            "date": "Date",
+            "timeOfDay": {
+              "label": "Time of Day",
+              "options": {
+                "morning": "Morning",
+                "afternoon": "Afternoon",
+                "evening": "Evening",
+                "night": "Night"
+              }
+            },
+            "quantity": {
+              "label": "Quantity (L)",
+              "placeholder": "0.00",
+              "required": "Quantity is required"
+            },
+            "fat": {
+              "label": "Fat %",
+              "placeholder": "0.0"
+            },
+            "snf": {
+              "label": "SNF %",
+              "placeholder": "0.0"
+            },
+            "notes": {
+              "label": "Notes",
+              "placeholder": "Any additional notes about this milk record..."
+            },
+            "buttons": {
+              "cancel": "Cancel",
+              "save": "Save Record",
+              "update": "Update Record",
+              "saving": "Saving..."
+            }
+          },
+          "errors": {
+            "saveMilkRecord": "Error saving milk record",
+            "loadMilkRecord": "Error loading milk record",
+            "loadGoats": "Error loading goats"
+          },
+          "success": {
+            "milkRecordAdded": "Milk record added successfully",
+            "milkRecordUpdated": "Milk record updated successfully"
+          }
+        }
+      },
+      "dashboard": {
+        "goatFarmDashboard": "Goat Farm Dashboard",
+        "lastUpdated": "Last updated",
+        "overview": "Overview",
+        "stats": {
+          "totalGoats": "Total Goats",
+          "healthyGoats": "Healthy Goats",
+          "pregnantGoats": "Pregnant Goats",
+          "upcomingBreeding": "Upcoming Breeding"
+        },
+        "quickActions": {
+          "sales": {
+            "title": "Record Sale",
+            "description": "Record a new goat sale"
+          },
+          "manageGoats": {
+            "title": "Manage Goats",
+            "description": "View and manage your goats"
+          },
+          "health": {
+            "title": "Health Records",
+            "description": "Manage health checkups and treatments"
+          },
+          "breeding": {
+            "title": "Breeding",
+            "description": "Track breeding and pregnancy"
+          },
+          "feeding": {
+            "title": "Feeding",
+            "description": "Manage feed and nutrition"
+          },
+          "milkProduction": {
+            "title": "Milk Production",
+            "description": "Track milk yields and records"
+          },
+          "reports": {
+            "title": "Reports",
+            "description": "View farm reports and analytics"
+          }
+        }
+      },
+      "feedRecords": {
+        "title": "Feed Management",
+        "subtitle": "Manage goat feed records and schedules",
+        "addRecord": "Add Feed Record",
+        "summary": {
+          "totalRecords": "Total Records",
+          "totalCost": "Total Cost",
+          "todaysRecords": "Today's Records"
+        },
+        "filters": {
+          "title": "Filters",
+          "search": "Search",
+          "searchPlaceholder": "Search records...",
+          "goat": "Goat",
+          "feedType": "Feed Type",
+          "date": "Date",
+          "allGoats": "All Goats",
+          "allTypes": "All Types",
+          "allDates": "All Dates"
+        },
+        "table": {
+          "goat": "Goat",
+          "date": "Date",
+          "feedType": "Feed Type",
+          "quantity": "Quantity",
+          "cost": "Cost",
+          "feedingTime": "Feeding Time",
+          "consumed": "Consumed",
+          "actions": "Actions",
+          "edit": "Edit",
+          "delete": "Delete",
+          "generalFeeding": "General Feeding"
+        },
+        "tableHeaders": {
+          "date": "Date",
+          "goat": "Goat",
+          "feedType": "Feed Type",
+          "quantity": "Quantity",
+          "unit": "Unit",
+          "feedingTime": "Feeding Time",
+          "notes": "Notes",
+          "actions": "Actions"
+        },
+        "form": {
+          "titleAdd": "Add Feed Record",
+          "titleEdit": "Edit Feed Record",
+          "fields": {
+            "goat": "Goat",
+            "selectGoat": "Select Goat",
+            "generalFeeding": "General Feeding (No Specific Goat)",
+            "pen": "Pen/Group",
+            "penPlaceholder": "Enter pen or group name",
+            "feedType": "Feed Type",
+            "selectFeedType": "Select Feed Type",
+            "quantity": "Quantity",
+            "unit": "Unit",
+            "feedingDate": "Feeding Date",
+            "feedingTime": "Feeding Time",
+            "notes": "Notes",
+            "notesPlaceholder": "Enter any additional notes..."
+          },
+          "validation": {
+            "required": "This field is required",
+            "positiveNumber": "Please enter a positive number"
+          },
+          "buttons": {
+            "save": "Save Record",
+            "update": "Update Record",
+            "cancel": "Cancel"
+          }
+        },
+        "feedTypes": {
+          "hay": "Hay",
+          "grain": "Grain",
+          "silage": "Silage",
+          "pasture": "Pasture",
+          "concentrate": "Concentrate",
+          "mineralSupplement": "Mineral Supplement",
+          "vitaminSupplement": "Vitamin Supplement",
+          "other": "Other"
+        },
+        "units": {
+          "kg": "kg",
+          "lbs": "lbs",
+          "grams": "grams",
+          "bales": "bales",
+          "scoops": "scoops",
+          "handfuls": "handfuls"
+        },
+        "feedingTimes": {
+          "morning": "Morning",
+          "afternoon": "Afternoon",
+          "evening": "Evening",
+          "night": "Night",
+          "allDay": "All Day"
+        },
+        "success": {
+          "create": "Feed record added successfully",
+          "update": "Feed record updated successfully",
+          "delete": "Feed record deleted successfully"
+        },
+        "error": {
+          "fetch": "Failed to fetch feed records",
+          "fetchGoats": "Failed to fetch goats",
+          "create": "Failed to create feed record",
+          "update": "Failed to update feed record",
+          "delete": "Failed to delete feed record"
+        },
+        "deleteModal": {
+          "title": "Delete Feed Record",
+          "message": "Are you sure you want to delete this feed record? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "breedingPage": {
+        "title": "Breeding Management",
+        "subtitle": "Manage goat breeding records and breeding cycles",
+        "addRecord": "Add Breeding Record",
+        "searchPlaceholder": "Search breeding records...",
+        "filters": {
+          "title": "Filters",
+          "allGoats": "All Goats",
+          "allStatus": "All Status",
+          "allTypes": "All Types",
+          "allDates": "All Dates",
+          "goat": "Goat",
+          "matingDate": "Mating Date"
+        },
+        "kidsBorn": "{{count}} born",
+        "kidsSurvived": "{{count}} survived",
+        "tableHeaders": {
+          "doe": "Doe",
+          "buck": "Buck",
+          "breedingDate": "Breeding Date",
+          "expectedKiddingDate": "Expected Kidding",
+          "actualKiddingDate": "Actual Kidding",
+          "status": "Status",
+          "kids": "Kids",
+          "notes": "Notes",
+          "actions": "Actions"
+        },
+        "status": {
+          "healthy": "Healthy",
+          "monitoring": "Under Monitoring",
+          "treatment": "Under Treatment",
+          "critical": "Critical Condition",
+          "pregnant": "Pregnant",
+          "notPregnant": "Not Pregnant",
+          "kidded": "Kidded",
+          "aborted": "Aborted",
+          "mated": "Mated",
+          "delivered": "Delivered",
+          "failed": "Failed"
+        },
+        "actions": {
+          "edit": "Edit",
+          "delete": "Delete",
+          "viewKids": "View Kids",
+          "addPregnancyCheck": "Add Pregnancy Check",
+          "addKiddingRecord": "Add Kidding Record"
+        },
+        "form": {
+          "titleAdd": "Add Breeding Record",
+          "titleEdit": "Edit Breeding Record",
+          "fields": {
+            "breedingMethod": {
+              "label": "Breeding Method",
+              "options": {
+                "natural": "Natural Mating",
+                "artificial": "Artificial Insemination",
+                "embryoTransfer": "Embryo Transfer"
+              }
+            },
+            "doe": "Doe",
+            "selectDoe": "Select Doe",
+            "buck": "Buck",
+            "selectBuck": "Select Buck",
+            "matingDate": "Mating Date",
+            "breedingDate": "Breeding Date",
+            "status": "Status",
+            "expectedDueDate": "Expected Due Date",
+            "breedingLocation": "Breeding Location",
+            "breedingLocationPlaceholder": "Enter breeding location",
+            "gestationPeriod": "Gestation Period (days)",
+            "healthStatus": "Health Status",
+            "pregnancyCheckDate": "Pregnancy Check Date",
+            "pregnancyStatus": "Pregnancy Status",
+            "pregnancyConfirmed": "Pregnancy Confirmed",
+            "expectedKiddingDate": "Expected Kidding Date",
+            "kiddingDate": "Kidding Date",
+            "actualKiddingDate": "Actual Kidding Date",
+            "kidsBorn": "Kids Born",
+            "kidsSurvived": "Kids Survived",
+            "numberOfKids": "Number of Kids",
+            "breedingCost": "Breeding Cost",
+            "expectedValue": "Expected Value",
+            "veterinaryCost": "Veterinary Cost",
+            "lastCheckupDate": "Last Checkup Date",
+            "nextCheckupDate": "Next Checkup Date",
+            "expectedBreed": "Expected Breed",
+            "expectedBreedPlaceholder": "Enter expected breed",
+            "doeAge": "Doe's Age (months)",
+            "buckAge": "Buck's Age (months)",
+            "inbreedingCoefficient": "Inbreeding Coefficient",
+            "pedigreeNotes": "Pedigree Notes",
+            "pedigreeNotesPlaceholder": "Enter pedigree notes",
+            "notes": "Notes",
+            "notesPlaceholder": "Enter additional notes...",
+            "amountPlaceholder": "0.00"
+          },
+          "validation": {
+            "required": "This field is required",
+            "dateInvalid": "Invalid date format",
+            "numberInvalid": "Must be a number",
+            "invalidEmail": "Invalid email format"
+          },
+          "buttons": {
+            "save": "Save Record",
+            "cancel": "Cancel",
+            "update": "Update Record"
+          },
+          "breedingMethod": {
+            "natural": "Natural Mating",
+            "artificial": "Artificial Insemination",
+            "embryoTransfer": "Embryo Transfer"
+          }
+        },
+        "deleteModal": {
+          "title": "Delete Breeding Record",
+          "message": "Are you sure you want to delete this breeding record? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        },
+        "alerts": {
+          "addSuccess": "Breeding record added successfully",
+          "updateSuccess": "Breeding record updated successfully",
+          "deleteSuccess": "Breeding record deleted successfully",
+          "error": "An error occurred. Please try again."
+        }
+      },
+      "goatHealthPage": {
+        "title": "Goat Health",
+        "subtitle": "Manage health records and treatments",
+        "addRecord": "Add Health Record",
+        "searchPlaceholder": "Search health records...",
+        "filters": {
+          "title": "Filters",
+          "status": "Health Status",
+          "allStatuses": "All Statuses",
+          "allGoats": "All Goats",
+          "allTypes": "All Types",
+          "allDates": "All Dates",
+          "dateRange": "Date Range",
+          "type": "Record Type"
+        },
+        "status": {
+          "healthy": "Healthy",
+          "sick": "Sick",
+          "underTreatment": "Under Treatment",
+          "recovered": "Recovered",
+          "chronic": "Chronic Condition"
+        },
+        "types": {
+          "vaccination": "Vaccination",
+          "deworming": "Deworming",
+          "treatment": "Treatment",
+          "checkup": "Routine Checkup",
+          "other": "Other"
+        },
+        "fields": {
+          "date": "Date",
+          "goatId": "Goat ID",
+          "type": "Record Type",
+          "description": "Description",
+          "diagnosis": "Diagnosis",
+          "treatment": "Treatment",
+          "medication": "Medication",
+          "dosage": "Dosage",
+          "nextCheckup": "Next Checkup",
+          "veterinarian": "Veterinarian",
+          "notes": "Notes",
+          "status": "Status",
+          "cost": "Cost",
+          "selectGoat": "Select a goat",
+          "selectType": "Select a type"
+        },
+        "tableHeaders": {
+          "goat": "Goat",
+          "date": "Date",
+          "type": "Type",
+          "description": "Description",
+          "veterinarian": "Veterinarian",
+          "actions": "Actions"
+        },
+        "actions": {
+          "edit": "Edit",
+          "delete": "Delete",
+          "save": "Save",
+          "update": "Update",
+          "cancel": "Cancel",
+          "print": "Print",
+          "editRecord": "Edit Record",
+          "addRecord": "Add Record",
+          "deleteRecord": "Delete Record"
+        },
+        "deleteModal": {
+          "title": "Delete Record",
+          "message": "Are you sure you want to delete this health record? This action cannot be undone."
+        },
+        "pagination": {
+          "previous": "Previous",
+          "next": "Next",
+          "showingPage": "Page {current} of {total}"
+        },
+        "validation": {
+          "required": "{{field}} is required",
+          "invalidDate": "Please enter a valid date",
+          "futureDate": "Date cannot be in the future"
+        },
+        "alerts": {
+          "recordSaved": "Health record saved successfully",
+          "recordDeleted": "Health record deleted successfully",
+          "confirmDelete": "Are you sure you want to delete this health record?"
+        }
+      },
+      "goats": {
+        "common": {
+          "search": "Search",
+          "years": "years"
+        },
+        "genderOptions": {
+          "Male": "Male",
+          "Female": "Female"
+        },
+        "activeStatus": {
+          "Active": "Active",
+          "Sold": "Sold"
+        },
+        "breeds": {
+          "jamunapari": "Jamunapari",
+          "sirohi": "Sirohi",
+          "barbari": "Barbari",
+          "osmanabadi": "Osmanabadi"
+        },
+        "title": "Goats",
+        "subtitle": "Manage your goat herd",
+        "addGoat": "Add Goat",
+        "searchPlaceholder": "Search goats...",
+        "filters": {
+          "title": "Filters",
+          "show": "Show",
+          "breed": "Breed",
+          "allBreeds": "All Breeds",
+          "status": "Status",
+          "allStatuses": "All Statuses",
+          "gender": "Gender",
+          "allGenders": "All Genders",
+          "breeds": {
+            "boer": "Boer",
+            "nubian": "Nubian",
+            "alpine": "Alpine",
+            "saanen": "Saanen",
+            "toggenburg": "Toggenburg",
+            "lamancha": "LaMancha",
+            "jamunapari": "Jamunapari",
+            "sirohi": "Sirohi",
+            "barbari": "Barbari",
+            "osmanabadi": "Osmanabadi",
+            "malabari": "Malabari",
+            "surti": "Surti",
+            "jakhrana": "Jakhrana",
+            "marwari": "Marwari",
+            "mixed": "Mixed",
+            "other": "Other"
+          }
+        },
+        "statusOption": {
+          "Active": "Active",
+          "Sold": "Sold",
+          "deceased": "Deceased",
+          "retired": "Retired"
+        },
+        "gender": {
+          "castrated": "Castrated"
+        },
+        "table": {
+          "selectAll": "Select all",
+          "id": "ID",
+          "name": "Name",
+          "breed": "Breed",
+          "gender": "Gender",
+          "age": "Age",
+          "weight": "Weight",
+          "status": "Status",
+          "actions": "Actions"
+        }
+       },
+      "goatForm": {
+          "title": "Add New Goat",
+          "editTitle": "Edit Goat",
+          "fields": {
+            "name": "Name",
+            "tagNumber": "Tag Number",
+            "breed": "Breed",
+            "dateOfBirth": "Date of Birth",
+            "gender": "Gender",
+            "color": "Color",
+            "weight": "Weight (kg)",
+            "status": "Status",
+            "notes": "Notes"
+          },
+         
+      "goats": {
+        "filters": {
+          "breeds": {
+            "boer": "Boer",
+            "nubian": "Nubian",
+            "alpine": "Alpine",
+            "saanen": "Saanen",
+            "toggenburg": "Toggenburg",
+            "lamancha": "LaMancha",
+            "jamunapari": "Jamunapari",
+            "sirohi": "Sirohi",
+            "barbari": "Barbari",
+            "osmanabadi": "Osmanabadi",
+            "malabari": "Malabari",
+            "surti": "Surti",
+            "jakhrana": "Jakhrana",
+            "marwari": "Marwari",
+            "mixed": "Mixed",
+            "other": "Other"
+          },
+          "genders": {
+            "male": "Male",
+            "female": "Female"
+          },
+          "statuses": {
+            "active": "Active",
+            "sold": "Sold",
+            "deceased": "Deceased",
+            "transferred": "Transferred"
+          }
+        },
+        "form": {
+          "title": {
+            "add": "Add New Goat",
+            "edit": "Edit Goat"
+          },
+          "fields": {
+            "tagNumber": "Tag Number",
+            "name": "Name",
+            "breed": "Breed",
+            "gender": "Gender",
+            "dateOfBirth": "Date of Birth",
+            "weight": "Weight (kg)",
+            "status": "Status",
+            "selectBreed": "Select Breed",
+            "selectGender": "Select Gender",
+            "selectStatus": "Select Status"
+          },
+          "buttons": {
+            "save": "Save",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "confirmDelete": "Confirm Delete"
+          },
+          "validation": {
+            "required": "{{field}} is required",
+            "invalidDate": "Invalid date",
+            "invalidNumber": "Please enter a valid number"
+          },
+          "deleteConfirmation": "Are you sure you want to delete this goat? This action cannot be undone.",
+          "deleteSuccess": "Goat deleted successfully",
+          "saveSuccess": "Goat saved successfully"
+        },
+        "table": {
+          "columns": {
+            "tagNumber": "Tag #",
+            "name": "Name",
+            "breed": "Breed",
+            "gender": "Gender",
+            "age": "Age",
+            "weight": "Weight",
+            "status": "Status",
+            "actions": "Actions"
+          },
+          "noData": "No goats found"
+        }
+      },
+      "common": {
+        "title": "Goat Management",
+        "subtitle": "Manage your goats and their records",
+        "goatId": "Goat ID",
+        "name": "Name",
+        "gender": "Gender",
+        "breed": "Breed",
+        "dateOfBirth": "Date of Birth",
+        "age": "Age",
+        "weight": "Weight (kg)",
+        "color": "Color",
+        "purchaseDate": "Purchase Date",
+        "purchasePrice": "Purchase Price",
+        "status": "Status",
+        "notes": "Notes",
+        "parentInfo": "Parent Information",
+        "sire": "Sire",
+        "dam": "Dam",
+        "actions": "Actions",
+        "lastUpdated": "Last Updated",
+        "createdAt": "Created At",
+        "refresh": "Refresh",
+        "refreshing": "Refreshing...",
+        "updating": "Updating..."
+      },
+      "breedOptions": {
+        "Jamunapari": "Jamunapari",
+        "Sirohi": "Sirohi",
+        "Barbari": "Barbari",
+        "Osmanabadi": "Osmanabadi",
+        "Malabari": "Malabari",
+        "Surti": "Surti",
+        "Jakhrana": "Jakhrana",
+        "Marwari": "Marwari",
+        "Boer": "Boer",
+        "Nubian": "Nubian",
+        "Alpine": "Alpine",
+        "Saanen": "Saanen",
+        "Toggenburg": "Toggenburg",
+        "LaMancha": "LaMancha",
+        "Oberhasli": "Oberhasli",
+        "Nigerian Dwarf": "Nigerian Dwarf",
+        "Pygmy": "Pygmy",
+        "Other": "Other"
+      },
+      "genderOptions": {
+        "Male": "Male",
+        "Female": "Female"
+      },
+      "statusOptions": {
+        "Active": "Active",
+        "Sold": "Sold",
+        "Deceased": "Deceased",
+        "Transferred": "Transferred"
+      },
+      "colors": {
+        "white": "White",
+        "black": "Black",
+        "brown": "Brown",
+        "gray": "Gray",
+        "red": "Red",
+        "tan": "Tan",
+        "spotted": "Spotted",
+        "multiColored": "Multi-colored"
+      },
+      "validation": {
+        "required": "This field is required",
+        "invalidDate": "Invalid date",
+        "invalidNumber": "Please enter a valid number",
+        "futureDate": "Date cannot be in the future"
+      }
+      },
+      "salesPage": {
+        "title": "Sales Management",
+        "subtitle": "Manage goat sales and invoices",
+        "createSale": "Create Sale",
+        "buyer": "Buyer",
+        "name": "Name",
+        "phone": "Phone",
+        "address": "Address",
+        "items": "Items",
+        "selectGoatOrEnterDesc": "Select a goat or enter description",
+        "description": "Description",
+        "quantity": "Quantity",
+        "unitPrice": "Unit Price",
+        "addItem": "Add Item",
+        "tax": "Tax",
+        "subTotal": "Subtotal",
+        "total": "Total",
+        "sales": "Sales",
+        "invoice": "Invoice",
+        "form": {
+          "titleAdd": "New Sale",
+          "titleEdit": "Edit Sale",
+          "fields": {
+            "buyerName": "Buyer Name",
+            "buyerPhone": "Phone Number",
+            "buyerAddress": "Address",
+            "saleDate": "Sale Date",
+            "paymentMethod": "Payment Method",
+            "notes": "Notes"
+          },
+          "buttons": {
+            "save": "Save Sale",
+            "update": "Update Sale",
+            "cancel": "Cancel"
+          }
+        }
+      }
+  }
+}
+}
+  

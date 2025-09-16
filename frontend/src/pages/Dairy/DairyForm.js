@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import api from '../../services/api';
 import { ArrowLeft } from 'lucide-react';
 
 const DairyForm = () => {
+  // Initialize form with values that match translation keys exactly
+  // Initialize form with default values that match the translation keys exactly
   const [formData, setFormData] = useState({
     animalId: '',
     name: '',
     breed: 'Holstein Friesian',
     dateOfBirth: '',
     gender: 'Female',
-    status: 'Active',
+    status: 'Active'
   });
   const [loading, setLoading] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { t } = useTranslation('dairy');
+  const tForm = (key) => t(`pages.animals.form.${key}`);
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -82,68 +87,62 @@ const DairyForm = () => {
         <button onClick={() => navigate('/dairy')} className="btn-icon mr-4">
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <h1 className="text-2xl font-bold">{isEditMode ? 'Edit Dairy Animal' : 'Add New Dairy Animal'}</h1>
+        <h1 className="text-2xl font-bold">{isEditMode ? tForm('editTitle') : tForm('title')}</h1>
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="label">Animal ID / Tag Number</label>
+              <label className="label">{tForm('animalId')}</label>
               <input type="text" name="animalId" value={formData.animalId} onChange={handleChange} className="input" required />
             </div>
             <div>
-              <label className="label">Name</label>
+              <label className="label">{tForm('name')}</label>
               <input type="text" name="name" value={formData.name} onChange={handleChange} className="input" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="label">Breed</label>
+              <label className="label">{tForm('breed')}</label>
               <select name="breed" value={formData.breed} onChange={handleChange} className="input" required>
-                <option>Holstein Friesian</option>
-                <option>Jersey</option>
-                <option>Sahiwal</option>
-                <option>Gir</option>
-                <option>Red Sindhi</option>
-                <option>Tharparkar</option>
-                <option>Other</option>
+                {Object.entries(t('pages.animals.form.breedOptions', { returnObjects: true })).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
               </select>
             </div>
             <div>
-              <label className="label">Date of Birth</label>
+              <label className="label">{tForm('dateOfBirth')}</label>
               <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className="input" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="label">Gender</label>
+              <label className="label">{tForm('gender')}</label>
               <select name="gender" value={formData.gender} onChange={handleChange} className="input" required>
-                <option>Female</option>
-                <option>Male</option>
+                {Object.entries(t('pages.animals.form.genderOptions', { returnObjects: true })).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
               </select>
             </div>
             <div>
-              <label className="label">Status</label>
+              <label className="label">{tForm('status')}</label>
               <select name="status" value={formData.status} onChange={handleChange} className="input" required>
-                <option>Active</option>
-                <option>Dry</option>
-                <option>Pregnant</option>
-                <option>Sick</option>
-                <option>Sold</option>
-                <option>Deceased</option>
+                {Object.entries(t('pages.animals.form.statusOptions', { returnObjects: true })).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
               </select>
             </div>
           </div>
 
           <div className="flex justify-end pt-4">
             <button type="button" onClick={() => navigate('/dairy')} className="btn-secondary mr-4" disabled={loading}>
-              Cancel
+              {tForm('cancel')}
             </button>
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Saving...' : (isEditMode ? 'Update Animal' : 'Add Animal')}
+              {loading ? tForm('saving') : (isEditMode ? tForm('updateAnimal') : tForm('addAnimal'))}
             </button>
           </div>
         </form>

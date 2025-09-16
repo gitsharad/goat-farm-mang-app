@@ -1,0 +1,214 @@
+{
+  "all": "सर्व",
+  "male": "नर",
+  "female": "मादी",
+  "treatment": "उपचार",
+  "vaccination": "लसीकरण",
+  "count": "संख्या",
+  "status": {
+    "active": "सक्रिय",
+    "sold": "विक्री केली"
+  },
+  "common": {
+    "search": "शोधा",
+    "filters": {
+      "start": "प्रारंभ तारीख",
+      "end": "समाप्ती तारीख",
+      "group": "गट",
+      "groupOptions": {
+        "day": "दैनंदिन",
+        "week": "साप्ताहिक",
+        "month": "मासिक"
+      }
+    },
+    "count": "संख्या",
+    "refresh": "रिफ्रेश",
+    "refreshing": "रिफ्रेश होत आहे...",
+    "time": {
+      "thisWeek": "या आठवड्यात",
+      "thisMonth": "या महिन्यात",
+      "last3Months": "गेल्या ३ महिने"
+    },
+    "navigation": {
+      "dashboard": "डॅशबोर्ड",
+      "animals": "प्राणी",
+      "goats": "शेळ्या",
+      "health": "आरोग्य",
+      "feed": "खाद्य",
+      "breeding": "प्रजनन",
+      "sales": "विक्री",
+      "reports": "अहवाल",
+      "settings": "सेटिंग्ज",
+      "users": "वापरकर्ते",
+      "devTools": "विकास साधने",
+      "help": "मदत",
+      "logout": "बाहेर पडा",
+      "profile": "प्रोफाइल",
+      "notifications": "सूचना",
+      "switchDashboard": "डॅशबोर्ड बदला",
+      
+      "goat": {
+        "dashboard": "शेळी डॅशबोर्ड",
+        "animals": "शेळ्या",
+        "health": "शेळ्यांचे आरोग्य",
+        "feed": "शेळ्यांचे खाद्य",
+        "breeding": "प्रजनन",
+        "sales": "शेळ्यांची विक्री",
+        "reports": "शेळ्यांचे अहवाल"
+      },
+      "dairy": {
+        "dashboard": "डेअरी डॅशबोर्ड",
+        "animals": "डेअरी प्राणी",
+        "health": "डेअरी आरोग्य",
+        "feed": "डेअरी खाद्य",
+        "breeding": "डेअरी प्रजनन",
+        "sales": "डेअरी विक्री",
+        "reports": "डेअरी अहवाल"
+      },
+      "poultry": {
+        "dashboard": "पोल्ट्री डॅशबोर्ड",
+        "animals": "पोल्ट्री",
+        "health": "पोल्ट्री आरोग्य",
+        "feed": "पोल्ट्री खाद्य",
+        "breeding": "पोल्ट्री प्रजनन",
+        "sales": "पोल्ट्री विक्री",
+        "reports": "पोल्ट्री अहवाल"
+      },
+      
+      "dashboard_goat": "शेळी डॅशबोर्ड",
+      "dashboard_poultry": "पोल्ट्री डॅशबोर्ड",
+      "dashboard_dairy": "डेअरी डॅशबोर्ड",
+      "healthRecords": "आरोग्य नोंदी",
+      "feedRecords": "खाद्य नोंदी",
+      "breedingRecords": "प्रजनन नोंदी",
+      "milkProduction": "दुध उत्पादन"
+    },
+    "menu": {
+      "dashboard": "डॅशबोर्ड",
+      "goats": "शेळ्या",
+      "breeding": "प्रजनन",
+      "health": "आरोग्य",
+      "milkProduction": "दुग्ध व्यवस्थापन",
+      "feeding": "खाद्य व्यवस्थापन",
+      "sales": "विक्री आणि खरेदी",
+      "inventory": "इन्व्हेंटरी",
+      "reports": "अहवाल",
+      "settings": "सेटिंग्ज",
+      "users": "वापरकर्ते",
+      "help": "मदत"
+    },
+    "header": {
+      "profile": "प्रोफाइल",
+      "settings": "सेटिंग्ज",
+      "logout": "बाहेर पडा",
+      "notifications": "सूचना",
+      "searchPlaceholder": "शोधा..."
+    },
+    "footer": {
+      "copyright": "© {{year}} बकरी पालन व्यवस्थापन. सर्व हक्क राखीव.",
+      "privacyPolicy": "गोपनीयता धोरण",
+      "termsOfService": "सेवा अटी",
+      "contactUs": "आमच्याशी संपर्क साधा"
+    },
+    "actions": {
+      "add": "जोडा",
+      "edit": "सुधारणे",
+      "delete": "हटवा",
+      "view": "पहा",
+      "save": "जतन करा",
+      "cancel": "रद्द करा",
+      "update": "अद्यतनित करा",
+      "back": "मागे जा",
+      "export": "निर्यात करा",
+      "next": "पुढे",
+      "previous": "मागे",
+      "search": "शोधा",
+      "filter": "फिल्टर",
+      "clear": "साफ करा",
+      "submit": "सबमिट करा",
+      "reset": "रीसेट करा",
+      "close": "बंद करा"
+    },
+    "all": "सर्व",
+    "male": "नर",
+    "female": "मादी",
+    "status": {
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "pending": "प्रलंबित",
+      "completed": "पूर्ण झाले",
+      "sold": "विकले गेले",
+      "success": "यशस्वी",
+      "error": "त्रुटी",
+      "warning": "चेतावणी",
+      "info": "माहिती"
+    },
+    "validation": {
+      "required": "हे फील्ड आवश्यक आहे",
+      "email": "कृपया वैध ईमेल पत्ता प्रविष्ट करा",
+      "minLength": "किमान {{count} वर्ण असणे आवश्यक आहे",
+      "maxLength": "जास्तीत जास्त {{count} वर्ण असू शकतात",
+      "number": "संख्या असणे आवश्यक आहे",
+      "integer": "पूर्णांक असणे आवश्यक आहे",
+      "url": "वैध URL असणे आवश्यक आहे"
+    },
+    "date": {
+      "today": "आज",
+      "yesterday": "काल",
+      "tomorrow": "उद्या",
+      "thisWeek": "या आठवड्यात",
+      "lastWeek": "मागील आठवड्यात",
+      "thisMonth": "या महिन्यात",
+      "lastMonth": "मागील महिन्यात",
+      "thisYear": "या वर्षी",
+      "lastYear": "मागील वर्षी"
+    },
+    "pagination": {
+      "previous": "मागे",
+      "next": "पुढे",
+      "first": "पहिले",
+      "last": "शेवटचे",
+      "page": "पृष्ठ",
+      "of": "पैकी",
+      "itemsPerPage": "दर पृष्ठी आयटम",
+      "totalItems": "एकूण आयटम"
+    },
+    "messages": {
+      "loading": "लोड होत आहे...",
+      "saving": "जतन होत आहे...",
+      "deleting": "हटवत आहे...",
+      "noData": "कोणताही डेटा उपलब्ध नाही",
+      "error": "एक त्रुटी आली. कृपया पुन्हा प्रयत्न करा.",
+      "success": "ऑपरेशन यशस्वीरित्या पूर्ण झाले",
+      "selectOption": "एक पर्याय निवडा",
+      "noOptions": "कोणतेही पर्याय उपलब्ध नाहीत",
+      "searchNoResults": "कोणतेही निकाल सापडले नाहीत"
+    },
+    "form": {
+      "submit": "सबमिट करा",
+      "reset": "रीसेट करा",
+      "back": "मागे जा",
+      "next": "पुढे",
+      "previous": "मागे",
+      "cancel": "रद्द करा",
+      "save": "जतन करा",
+      "update": "अद्यतनित करा",
+      "delete": "हटवा",
+      "confirmDelete": "तुम्हाला हे हटवायचे आहे याची खात्री आहे का?",
+      "yes": "होय",
+      "no": "नाही"
+    },
+    "dashboardloading": {
+      "unableToLoad": "डॅशबोर्ड लोड करण्यात अडचण आली",
+      "reloadDashboard": "डॅशबोर्ड पुन्हा लोड करा"
+    },
+    "confirmation": {
+      "title": "तुम्हाला खात्री आहे का?",
+      "message": "ही क्रिया पूर्ववत केली जाऊ शकत नाही.",
+      "confirm": "पुष्टी करा",
+      "cancel": "रद्द करा"
+    },
+    "treatment": "उपचार",
+    "vaccination": "लसीकरण"
+  }
+}

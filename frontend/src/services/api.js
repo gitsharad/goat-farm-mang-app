@@ -1,54 +1,106 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import API_CONFIG, { requiresAuth, shouldIncludeCredentials } from '../config/api.config';
+import API_CONFIG, { requiresAuth, shouldIncludeCredentials, ensureApiPrefix } from '../config/api.config';
+
+// Queue for rate-limited requests
+const requestQueue = [];
+let isProcessingQueue = false;
+let lastRequestTime = 0;
+const MIN_REQUEST_INTERVAL = 300; // 300ms between requests to avoid rate limiting
 
 // Create axios instance with default config
 const api = axios.create({
-  baseURL: API_CONFIG.BASE_URL,
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
   timeout: API_CONFIG.TIMEOUT,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    // Remove Cache-Control from default headers as it can cause CORS issues
+    // Cache control should be handled per-request instead
   },
-  withCredentials: true, // Important for cookies/sessions
+  withCredentials: true,
+  crossDomain: true,
+  responseType: 'json',
+  responseEncoding: 'utf8',
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+  // Cache-busting will be handled in the request interceptor for GET requests only
+  validateStatus: function (status) {
+    return status >= 200 && status < 500; // Resolve only if the status code is less than 500
+  }
 });
 
-const MAX_RETRIES = 2;
-const RETRY_DELAY = 1000; // 1 second
+// Process the request queue
+const processQueue = async () => {
+  if (isProcessingQueue || requestQueue.length === 0) return;
+  
+  isProcessingQueue = true;
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastRequestTime;
+  
+  // Wait if needed to respect minimum interval
+  if (timeSinceLastRequest < MIN_REQUEST_INTERVAL) {
+    await new Promise(resolve => setTimeout(resolve, MIN_REQUEST_INTERVAL - timeSinceLastRequest));
+  }
+  
+  const { config, resolve, reject } = requestQueue.shift();
+  lastRequestTime = Date.now();
+  
+  try {
+    const response = await axios.request(config);
+    resolve(response);
+  } catch (error) {
+    reject(error);
+  } finally {
+    isProcessingQueue = false;
+    processQueue(); // Process next request in queue
+  }
+};
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// Add request to queue and process it
+const enqueueRequest = (config) => {
+  return new Promise((resolve, reject) => {
+    requestQueue.push({ config, resolve, reject });
+    processQueue();
+  });
+};
 
-// Request interceptor for adding auth token and handling CORS
+// Single request interceptor for all request modifications
 api.interceptors.request.use(
-  (config) => {
-    // Log request details in development
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`, {
-        baseURL: config.baseURL,
-        withCredentials: config.withCredentials,
-        headers: config.headers
-      });
+  async (config) => {
+    // Ensure the URL is properly formatted with /api prefix for all relative URLs
+    if (!config.url.startsWith('http')) {
+      // Always ensure the URL has the /api prefix for relative URLs
+      config.url = ensureApiPrefix(config.url);
     }
-
+    
     // Add auth token if required
     if (requiresAuth(config.url)) {
       const token = localStorage.getItem('token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-      } else if (process.env.NODE_ENV === 'development') {
-        console.warn('[API] No auth token found for protected endpoint:', config.url);
       }
     }
 
-    // Ensure credentials are included for all requests
-    config.withCredentials = true;
+    // Handle CORS
+    config.withCredentials = shouldIncludeCredentials(config.url);
     
-    // Add cache-busting for GET requests
+    // Add cache-busting for GET requests only
     if (config.method === 'get') {
       config.params = {
         ...config.params,
         _t: Date.now(),
       };
+    }
+
+    // Ensure proper content type for non-GET requests with data
+    if (config.data && config.method !== 'get') {
+      config.headers['Content-Type'] = 'application/json';
+      // Ensure data is properly stringified for JSON requests
+      if (typeof config.data === 'object' && !(config.data instanceof FormData)) {
+        config.data = JSON.stringify(config.data);
+      }
     }
 
     // Log request config in development
@@ -57,6 +109,7 @@ api.interceptors.request.use(
         url: config.url,
         method: config.method,
         headers: config.headers,
+        data: config.data,
         withCredentials: config.withCredentials
       });
     }
@@ -70,8 +123,20 @@ api.interceptors.request.use(
 );
 
 // Response interceptor for handling errors and CORS
+// Response interceptor for handling errors and rate limiting
 api.interceptors.response.use(
   (response) => {
+    // Log response details in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Response received:', {
+        url: response.config.url,
+        status: response.status,
+        statusText: response.statusText,
+        data: response.data,
+        headers: response.headers
+      });
+    }
+    
     // Log CORS headers in development
     if (process.env.NODE_ENV === 'development') {
       const corsHeaders = {
@@ -123,60 +188,99 @@ api.interceptors.response.use(
       }
     }
     
+    // Handle rate limiting (429) with retry logic
+    if (error.response?.status === 429 && !originalRequest._retry) {
+      const retryAfter = error.response.headers['retry-after'] || 1;
+      console.warn(`Rate limited. Retrying after ${retryAfter} seconds...`);
+      
+      // Mark request as retried
+      originalRequest._retry = true;
+      
+      // Wait before retrying
+      await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+      
+      // Retry the request
+      return api(originalRequest);
+    }
+    
     // Handle other errors
     if (error.response) {
-      // Server responded with a status code outside 2xx
       const { status, data } = error.response;
       
+      // Log detailed error in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error('API Error:', {
+          status,
+          url: originalRequest.url,
+          method: originalRequest.method,
+          error: data?.message || 'Unknown error',
+        });
+      }
+
+      // Handle specific status codes
       switch (status) {
-        case 400:
-          toast.error(data.message || 'Bad request');
+        case 401: // Unauthorized
+          if (window.location.pathname !== '/login') {
+            localStorage.setItem('redirectAfterLogin', window.location.pathname);
+            window.location.href = '/login';
+          }
           break;
           
-        case 403:
-          toast.error('You do not have permission to perform this action');
+        case 403: // Forbidden
+          toast.error(data?.message || 'You do not have permission to perform this action.');
           break;
           
-        case 404:
-          toast.error('The requested resource was not found');
+        case 404: // Not Found
+          console.error('Resource not found:', originalRequest.url);
           break;
           
-        case 429: {
-          const retryAfter = error.response.headers['retry-after'] || 1;
-          toast.error(`Too many requests. Please wait ${retryAfter} seconds.`);
-          break;
-        }
-        
-        case 500:
-          toast.error('Server error. Please try again later.');
+        case 500: // Server Error
+          toast.error('A server error occurred. Please try again later.');
           break;
           
         default:
-          toast.error(data?.message || 'An error occurred');
+          toast.error(data?.message || 'An error occurred. Please try again.');
       }
       
-      // Log CORS errors
-      if (status === 0) {
-        console.error('CORS Error - Request was blocked:', {
-          url: originalRequest.url,
-          method: originalRequest.method,
-          withCredentials: originalRequest.withCredentials,
-          headers: originalRequest.headers,
-        });
+      // For 401 and 403, clear any cached data
+      if ([401, 403].includes(status)) {
+        // Clear sensitive data from localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
       }
-      
     } else if (error.request) {
-      // Request was made but no response received
+      // The request was made but no response was received
       console.error('No response received:', error.request);
-      toast.error('No response from server. Please check your connection.');
+      toast.error('Unable to connect to the server. Please check your internet connection.');
     } else {
       // Something happened in setting up the request
       console.error('Request setup error:', error.message);
-      toast.error('Error setting up request');
+      toast.error('An error occurred while setting up the request.');
     }
-    
+
     return Promise.reject(error);
   }
 );
 
+// Helper function for making API calls with retry logic
+export const apiRequest = async (config, maxRetries = 3, retryCount = 0) => {
+  try {
+    return await api(config);
+  } catch (error) {
+    // Only retry on network errors or 5xx server errors
+    const shouldRetry = 
+      !error.response || 
+      (error.response.status >= 500 && error.response.status < 600);
+      
+    if (shouldRetry && retryCount < maxRetries) {
+      const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+      console.log(`Retry ${retryCount + 1}/${maxRetries} after ${delay}ms`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return apiRequest(config, maxRetries, retryCount + 1);
+    }
+    throw error;
+  }
+};
+
+// Export the enhanced API instance
 export default api;

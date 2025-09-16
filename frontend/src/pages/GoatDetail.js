@@ -3,13 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Edit, Calendar, Weight, FileText, Heart, Baby, Utensils, MapPin } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import api from '../services/api';
-import { useLanguage } from '../contexts/LanguageContext';
-import { getTranslation } from '../translations';
+import { useTranslation } from 'react-i18next';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 const GoatDetail = () => {
   const { id } = useParams();
-  const { language } = useLanguage();
+  const { t } = useTranslation('goat');
   const [goat, setGoat] = useState(null);
   const [healthRecords, setHealthRecords] = useState([]);
   const [breedingRecords, setBreedingRecords] = useState([]);
@@ -52,7 +51,7 @@ const GoatDetail = () => {
       setWeightSummary(weightsRes.data.summary || null);
       setLoading(false);
     } catch (error) {
-      toast.error(getTranslation(language, 'operationFailed'));
+      toast.error(t('errors.operationFailed'));
       setLoading(false);
     }
   }, [id]);
@@ -60,7 +59,7 @@ const GoatDetail = () => {
   const submitWeight = async (e) => {
     e.preventDefault();
     if (!weightForm.weight) {
-      toast.error(getTranslation(language, 'weight') + ' ' + getTranslation(language, 'required'));
+      toast.error(`${t('form.fields.weight')} ${t('form.validation.required')}`);
       return;
     }
     // Client-side duplicate date guard
@@ -87,9 +86,9 @@ const GoatDetail = () => {
       });
       setWeightForm({ date: '', weight: '', source: 'scale', notes: '' });
       await fetchGoatDetails();
-      toast.success(getTranslation(language, 'saved'));
+      toast.success(t('saved'));
     } catch (error) {
-      toast.error(getTranslation(language, 'operationFailed'));
+      toast.error(t('operationFailed'));
     } finally {
       setAddingWeight(false);
     }
@@ -136,14 +135,14 @@ const GoatDetail = () => {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return getTranslation(language, 'na');
+    if (!dateString) return t('common.na');
     return new Date(dateString).toLocaleDateString();
   };
 
   const calculateAge = (dateOfBirth) => {
-    if (!dateOfBirth) return getTranslation(language, 'na');
+    if (!dateOfBirth) return t('common.na');
     const age = Math.floor((new Date() - new Date(dateOfBirth)) / (1000 * 60 * 60 * 24 * 365));
-    return `${age} ${getTranslation(language, 'years')}`;
+    return `${age} ${t('common.years')}`;
   };
 
   if (loading) {
@@ -151,7 +150,7 @@ const GoatDetail = () => {
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">{getTranslation(language, 'loading')}</p>
+          <p className="text-gray-600">{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -160,10 +159,10 @@ const GoatDetail = () => {
   if (!goat) {
     return (
       <div className="text-center py-12">
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">{getTranslation(language, 'goatDetails')}</h2>
-        <p className="text-gray-600 mb-4">{getTranslation(language, 'noData')}</p>
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">{t('goat.details.title')}</h2>
+        <p className="text-gray-600 mb-4">{t('common.noData')}</p>
         <Link to="/goats" className="btn-primary">
-          {getTranslation(language, 'back')} {getTranslation(language, 'goats')}
+          {t('common.back')} {t('common.goats')}
         </Link>
       </div>
     );
@@ -173,17 +172,17 @@ const GoatDetail = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Link to="/goats" className="btn-icon btn-icon-secondary" title={getTranslation(language, 'back')}>
+        <Link to="/goats" className="btn-icon btn-icon-secondary" title={t('common.back')}>
           <ArrowLeft className="w-4 h-4" />
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{goat.name}</h1>
-          <p className="text-gray-600">Tag #{goat.tagNumber} • {goat.breed}</p>
+          <p className="text-gray-600">{t('goat.fields.tagNumber')} #{goat.tagNumber} • {goat.breed}</p>
         </div>
         <div className="ml-auto">
           <Link to={`/goats/${id}/edit`} className="btn-secondary">
             <Edit className="w-4 h-4 mr-2" />
-            {getTranslation(language, 'edit')}
+            {t('common.edit')}
           </Link>
         </div>
       </div>
@@ -196,7 +195,7 @@ const GoatDetail = () => {
               <Calendar className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">{getTranslation(language, 'dateOfBirth')}</p>
+              <p className="text-sm text-gray-600">{t('goat.fields.dateOfBirth')}</p>
               <p className="font-semibold text-gray-900">{calculateAge(goat.dateOfBirth)}</p>
             </div>
           </div>
@@ -208,8 +207,8 @@ const GoatDetail = () => {
               <Weight className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">{getTranslation(language, 'weight')}</p>
-              <p className="font-semibold text-gray-900">{goat.weight?.current ?? goat.weight ?? 0} {getTranslation(language, 'kg')}</p>
+              <p className="text-sm text-gray-600">{t('goat.fields.weight')}</p>
+              <p className="font-semibold text-gray-900">{goat.weight?.current ?? goat.weight ?? 0} {t('common.kg')}</p>
             </div>
           </div>
         </div>
@@ -220,8 +219,8 @@ const GoatDetail = () => {
               <MapPin className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">{getTranslation(language, 'location')}</p>
-              <p className="font-semibold text-gray-900">{goat.location || getTranslation(language, 'na')}</p>
+              <p className="text-sm text-gray-600">{t('goat.fields.location')}</p>
+              <p className="font-semibold text-gray-900">{goat.location || t('common.na')}</p>
             </div>
           </div>
         </div>
@@ -232,9 +231,9 @@ const GoatDetail = () => {
               <FileText className="w-5 h-5 text-orange-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">{getTranslation(language, 'status')}</p>
+              <p className="text-sm text-gray-600">{t('goat.fields.status')}</p>
               <span className={`badge ${getStatusColor(goat.status)}`}>
-                {getTranslation(language, goat.status)}
+                {t(`goat.status.${goat.status}`)}
               </span>
             </div>
           </div>
@@ -246,10 +245,10 @@ const GoatDetail = () => {
         <div className="border-b border-gray-200">
           <nav className="-mb-px flex space-x-8 px-6">
             {[
-              { id: 'overview', label: getTranslation(language, 'overview'), icon: FileText },
-              { id: 'health', label: getTranslation(language, 'health'), icon: Heart },
-              { id: 'breeding', label: getTranslation(language, 'breeding'), icon: Baby },
-              { id: 'feed', label: getTranslation(language, 'feed'), icon: Utensils }
+              { id: 'overview', label: t('tabs.overview'), icon: FileText },
+              { id: 'health', label: t('tabs.health'), icon: Heart },
+              { id: 'breeding', label: t('tabs.breeding'), icon: Baby },
+              { id: 'feed', label: t('tabs.feed'), icon: Utensils }
             ].map((tab) => {
               const Icon = tab.icon;
               return (
@@ -275,79 +274,79 @@ const GoatDetail = () => {
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">{getTranslation(language, 'basicInformation')}</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">{t('goat.sections.basicInformation')}</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'tagNumber')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.tagNumber')}:</span>
                       <span className="font-medium">{goat.tagNumber}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'name')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.name')}:</span>
                       <span className="font-medium">{goat.name}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'breed')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.breed')}:</span>
                       <span className="font-medium">{goat.breed}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'gender')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.gender')}:</span>
                       <span className={`badge ${getGenderColor(goat.gender)}`}>
-                        {getTranslation(language, goat.gender)}
+                        {t(`goat.gender.${goat.gender}`)}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'dateOfBirth')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.dateOfBirth')}:</span>
                       <span className="font-medium">{formatDate(goat.dateOfBirth)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'weight')}:</span>
-                      <span className="font-medium">{goat.weight?.current ?? goat.weight ?? 0} {getTranslation(language, 'kg')}</span>
+                      <span className="text-gray-600">{t('goat.fields.weight')}:</span>
+                      <span className="font-medium">{goat.weight?.current ?? goat.weight ?? 0} {t('common.kg')}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'status')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.status')}:</span>
                       <span className={`badge ${getStatusColor(goat.status)}`}>
-                        {getTranslation(language, goat.status)}
+                        {t(`goat.status.${goat.status}`)}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'location')}:</span>
-                      <span className="font-medium">{goat.location || getTranslation(language, 'na')}</span>
+                      <span className="text-gray-600">{t('goat.fields.location')}:</span>
+                      <span className="font-medium">{goat.location || t('common.na')}</span>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">{getTranslation(language, 'healthBreedingStatus')}</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">{t('goat.sections.healthBreedingStatus')}</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'vaccinated')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.vaccinated')}:</span>
                       <span className={`badge ${goat.health?.vaccinated ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        {goat.health?.vaccinated ? getTranslation(language, 'yes') : getTranslation(language, 'no')}
+                        {goat.health?.vaccinated ? t('common.yes') : t('common.no')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'dewormed')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.dewormed')}:</span>
                       <span className={`badge ${goat.health?.dewormed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                        {goat.health?.dewormed ? getTranslation(language, 'yes') : getTranslation(language, 'no')}
+                        {goat.health?.dewormed ? t('common.yes') : t('common.no')}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'lastVaccination')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.lastVaccination')}:</span>
                       <span className="font-medium">{formatDate(goat.health?.lastVaccination)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'lastDeworming')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.lastDeworming')}:</span>
                       <span className="font-medium">{formatDate(goat.health?.lastDeworming)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'breedingStatus')}:</span>
+                      <span className="text-gray-600">{t('goat.fields.breedingStatus')}:</span>
                       <span className={`badge ${getBreedingStatusColor(goat.breeding?.status)}`}>
-                        {getTranslation(language, goat.breeding?.status)}
+                        {t(`goat.breedingStatus.${goat.breeding?.status}`)}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">{getTranslation(language, 'pregnancyStatus')}:</span>
-                      <span className="font-medium">{goat.breeding?.pregnancyStatus || getTranslation(language, 'na')}</span>
+                      <span className="text-gray-600">{t('goat.fields.pregnancyStatus')}:</span>
+                      <span className="font-medium">{goat.breeding?.pregnancyStatus || t('common.na')}</span>
                     </div>
                   </div>
                 </div>
@@ -357,7 +356,7 @@ const GoatDetail = () => {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="bg-white p-4 rounded-lg shadow-sm border lg:col-span-2">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-medium text-gray-900">{getTranslation(language, 'growth') || 'Growth'}</h3>
+                    <h3 className="text-lg font-medium text-gray-900">{t('goat.sections.growth')}</h3>
                     {weightSummary && (
                       <div className="text-sm text-gray-600">
                         <span className="mr-4">Start: <strong>{weightSummary.startWeight?.toFixed(2)} kg</strong></span>
@@ -374,7 +373,7 @@ const GoatDetail = () => {
                     <button className={`px-3 py-1 rounded text-sm ${weightFilter==='90' ? 'bg-primary-600 text-white' : 'bg-gray-100 text-gray-700'}`} onClick={() => setWeightFilter('90')}>90d</button>
                   </div>
                   {weightSeriesFiltered.length === 0 ? (
-                    <p className="text-gray-500 text-center py-8">{getTranslation(language, 'noData')}</p>
+                    <p className="text-gray-500 text-center py-8">{t('common.noData')}</p>
                   ) : (
                     <div style={{ width: '100%', height: 280 }}>
                       <ResponsiveContainer>
@@ -382,7 +381,7 @@ const GoatDetail = () => {
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="dateLabel" minTickGap={20} />
                           <YAxis unit=" kg" allowDecimals domain={['dataMin - 2', 'dataMax + 2']} />
-                          <Tooltip formatter={(v) => [`${v} kg`, getTranslation(language, 'weight')]} labelFormatter={(l) => l} />
+                          <Tooltip formatter={(v) => [`${v} kg`, t('goat.fields.weight')]} labelFormatter={(l) => l} />
                           <Line type="monotone" dataKey="weight" stroke="#2563eb" strokeWidth={2} dot={{ r: 3 }} />
                         </LineChart>
                       </ResponsiveContainer>
@@ -391,18 +390,18 @@ const GoatDetail = () => {
                 </div>
 
                 <div className="bg-white p-4 rounded-lg shadow-sm border">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">{getTranslation(language, 'add')} {getTranslation(language, 'weight')}</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">{t('common.add')} {t('goat.fields.weight')}</h3>
                   <form onSubmit={submitWeight} className="space-y-3">
                     <div>
-                      <label className="label">{getTranslation(language, 'date')}</label>
+                      <label className="label">{t('common.date')}</label>
                       <input type="date" className="input" value={weightForm.date} onChange={(e) => setWeightForm({ ...weightForm, date: e.target.value })} />
                     </div>
                     <div>
-                      <label className="label">{getTranslation(language, 'weight')} (kg)</label>
+                      <label className="label">{t('goat.fields.weight')} (kg)</label>
                       <input type="number" step="0.01" min="0" className="input" value={weightForm.weight} onChange={(e) => setWeightForm({ ...weightForm, weight: e.target.value })} required />
                     </div>
                     <div>
-                      <label className="label">{getTranslation(language, 'source') || 'Source'}</label>
+                      <label className="label">{t('common.source')}</label>
                       <select className="input" value={weightForm.source} onChange={(e) => setWeightForm({ ...weightForm, source: e.target.value })}>
                         <option value="scale">Scale</option>
                         <option value="estimate">Estimate</option>
@@ -410,11 +409,11 @@ const GoatDetail = () => {
                       </select>
                     </div>
                     <div>
-                      <label className="label">{getTranslation(language, 'notes')}</label>
+                      <label className="label">{t('common.notes')}</label>
                       <textarea className="input" rows={3} value={weightForm.notes} onChange={(e) => setWeightForm({ ...weightForm, notes: e.target.value })} />
                     </div>
                     <button type="submit" className="btn-primary w-full" disabled={addingWeight}>
-                      {addingWeight ? getTranslation(language, 'saving') : getTranslation(language, 'save')}
+                      {addingWeight ? t('common.saving') : t('common.save')}
                     </button>
                   </form>
                 </div>
@@ -422,7 +421,7 @@ const GoatDetail = () => {
 
               {goat.notes && (
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-3">{getTranslation(language, 'notes')}</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-3">{t('common.notes')}</h3>
                   <p className="text-gray-700 bg-gray-50 p-4 rounded-lg">{goat.notes}</p>
                 </div>
               )}
@@ -433,13 +432,13 @@ const GoatDetail = () => {
           {activeTab === 'health' && (
             <div>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">{getTranslation(language, 'health')}</h3>
+                <h3 className="text-lg font-medium text-gray-900">{t('tabs.health')}</h3>
                 <Link to="/health" className="btn-primary">
-                  {getTranslation(language, 'addHealthRecord')}
+                  {t('actions.addHealthRecord')}
                 </Link>
               </div>
               {healthRecords.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">{getTranslation(language, 'noData')}</p>
+                <p className="text-gray-500 text-center py-8">{t('common.noData')}</p>
               ) : (
                 <div className="space-y-4">
                   {healthRecords.map((record) => (
@@ -465,13 +464,13 @@ const GoatDetail = () => {
           {activeTab === 'breeding' && (
             <div>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">{getTranslation(language, 'breeding')}</h3>
+                <h3 className="text-lg font-medium text-gray-900">{t('tabs.breeding')}</h3>
                 <Link to="/breeding" className="btn-primary">
-                  {getTranslation(language, 'addBreedingRecord')}
+                  {t('actions.addBreedingRecord')}
                 </Link>
               </div>
               {breedingRecords.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">{getTranslation(language, 'noData')}</p>
+                <p className="text-gray-500 text-center py-8">{t('common.noData')}</p>
               ) : (
                 <div className="space-y-4">
                   {breedingRecords.map((record) => (
@@ -505,13 +504,13 @@ const GoatDetail = () => {
           {activeTab === 'feed' && (
             <div>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-medium text-gray-900">{getTranslation(language, 'feed')}</h3>
+                <h3 className="text-lg font-medium text-gray-900">{t('tabs.feed')}</h3>
                 <Link to="/feed" className="btn-primary">
-                  {getTranslation(language, 'addFeedRecord')}
+                  {t('actions.addFeedRecord')}
                 </Link>
               </div>
               {feedRecords.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">{getTranslation(language, 'noData')}</p>
+                <p className="text-gray-500 text-center py-8">{t('common.noData')}</p>
               ) : (
                 <div className="space-y-4">
                   {feedRecords.map((record) => (

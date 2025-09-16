@@ -1,13 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 import 'chart.js/auto';
 import { Line, Bar } from 'react-chartjs-2';
 
-const groupOptions = [
-  { value: 'day', label: 'Daily' },
-  { value: 'week', label: 'Weekly' },
-  { value: 'month', label: 'Monthly' },
-];
+const useGroupOptions = () => {
+  const { t } = useTranslation('common');
+  return useMemo(() => [
+    { value: 'day', label: t('filters.groupOptions.day') },
+    { value: 'week', label: t('filters.groupOptions.week') },
+    { value: 'month', label: t('filters.groupOptions.month') },
+  ], [t]);
+};
 
 function useDateRange(initialDays = 30) {
   const [start, setStart] = useState(() => {
@@ -85,22 +89,27 @@ function Table({ cols, rows, empty = 'No data' }) {
 }
 
 function DateGroupFilters({ start, end, setStart, setEnd, group, setGroup, extra }) {
+  const { t } = useTranslation('goat');
+  const groupOptions = useGroupOptions();
+  const { t: tCommon } = useTranslation('common');
   return (
     <div className="flex flex-wrap items-end gap-3 mb-4">
       <div>
-        <label className="block text-xs text-gray-500">Start</label>
+        <label className="block text-xs text-gray-500">{tCommon('filters.start')}</label>
         <input type="date" value={start} onChange={(e) => setStart(e.target.value)} className="border rounded px-2 py-1" />
       </div>
       <div>
-        <label className="block text-xs text-gray-500">End</label>
+        <label className="block text-xs text-gray-500">{tCommon('filters.end')}</label>
         <input type="date" value={end} onChange={(e) => setEnd(e.target.value)} className="border rounded px-2 py-1" />
       </div>
       {group !== undefined && (
         <div>
-          <label className="block text-xs text-gray-500">Group</label>
-          <select value={group} onChange={(e) => setGroup(e.target.value)} className="border rounded px-2 py-1">
+          <label className="block text-xs text-gray-500">{tCommon('filters.group')}</label>
+          <select value={group} onChange={(e) => setGroup(e.target.value)} className="input border rounded px-2 py-1">
             {groupOptions.map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
             ))}
           </select>
         </div>
@@ -111,6 +120,7 @@ function DateGroupFilters({ start, end, setStart, setEnd, group, setGroup, extra
 }
 
 export default function Reports() {
+  const { t } = useTranslation(['goat', 'common']);
   const base = api.defaults.baseURL?.replace(/\/$/, '') || '';
 
   const downloadCsv = async (url, filename) => {
@@ -156,7 +166,7 @@ export default function Reports() {
         datasets: [
           {
             type: 'bar',
-            label: 'Qty (Goats)',
+            label: t('pages.reports.charts.quantity'),
             data: salesRows.map(r => r.goatQuantity || 0),
             backgroundColor: 'rgba(59, 130, 246, 0.4)',
             borderColor: 'rgba(59, 130, 246, 1)',
@@ -164,7 +174,7 @@ export default function Reports() {
           },
           {
             type: 'line',
-            label: 'Revenue',
+            label: t('pages.reports.charts.revenue'),
             data: salesRows.map(r => r.revenue || 0),
             borderColor: 'rgba(16, 185, 129, 1)',
             backgroundColor: 'rgba(16, 185, 129, 0.2)',
@@ -182,8 +192,8 @@ export default function Reports() {
         },
         interaction: { mode: 'index', intersect: false },
         scales: {
-          y: { beginAtZero: true, title: { display: true, text: 'Qty' } },
-          y1: { beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Revenue' } },
+          y: { beginAtZero: true, title: { display: true, text: t('pages.reports.charts.quantityShort') } },
+          y1: { beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: t('pages.reports.charts.revenueShort') } },
         },
       },
     };
@@ -230,7 +240,7 @@ export default function Reports() {
         datasets: [
           {
             type: 'bar',
-            label: 'Records',
+            label: t('pages.reports.table.records'),
             data: healthRows.map(r => r.records || 0),
             backgroundColor: 'rgba(99, 102, 241, 0.4)',
             borderColor: 'rgba(99, 102, 241, 1)',
@@ -238,7 +248,7 @@ export default function Reports() {
           },
           {
             type: 'line',
-            label: 'Total Cost',
+            label: t('pages.reports.charts.totalCost'),
             data: healthRows.map(r => r.totalCost || 0),
             borderColor: 'rgba(239, 68, 68, 1)',
             backgroundColor: 'rgba(239, 68, 68, 0.2)',
@@ -359,14 +369,14 @@ export default function Reports() {
         datasets: [
           {
             type: 'bar',
-            label: 'Total Qty',
+            label: t('pages.reports.table.totalQuantity'),
             data: feedRows.map(r => r.totalQuantity || 0),
             backgroundColor: 'rgba(234, 88, 12, 0.6)',
             yAxisID: 'y',
           },
           {
             type: 'line',
-            label: 'Total Cost',
+            label: t('pages.reports.charts.totalCost'),
             data: feedRows.map(r => r.totalCost || 0),
             borderColor: 'rgba(239, 68, 68, 1)',
             backgroundColor: 'rgba(239, 68, 68, 0.2)',
@@ -411,21 +421,21 @@ export default function Reports() {
         labels,
         datasets: [
           {
-            label: 'Revenue',
+            label: t('pages.reports.charts.revenue'),
             data: finRows.map(r => r.revenue || 0),
             borderColor: 'rgba(16, 185, 129, 1)',
             backgroundColor: 'rgba(16, 185, 129, 0.2)',
             tension: 0.25,
           },
           {
-            label: 'Total Cost',
+            label: t('pages.reports.charts.totalCost'),
             data: finRows.map(r => r.totalCost || 0),
             borderColor: 'rgba(239, 68, 68, 1)',
             backgroundColor: 'rgba(239, 68, 68, 0.2)',
             tension: 0.25,
           },
           {
-            label: 'Net',
+            label: t('pages.reports.table.net'),
             data: finRows.map(r => r.net || 0),
             borderColor: 'rgba(59, 130, 246, 1)',
             backgroundColor: 'rgba(59, 130, 246, 0.2)',
@@ -450,14 +460,33 @@ export default function Reports() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Reports</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('pages.reports.title')}</h1>
+      <p className="text-gray-600 mb-6">{t('pages.reports.subtitle')}</p>
 
-      <Section title="Sales" right={<div className="flex items-center gap-3"><button className="text-gray-600 text-sm md:hidden" onClick={() => setShowSalesFilters((s) => !s)}>{showSalesFilters ? 'Hide Filters' : 'Filters'}</button><button className="text-primary-600 text-sm" onClick={() => downloadCsv(salesCsvUrl, `sales-${salesGroup}.csv`)}>Download CSV</button></div>}>
+      <Section 
+        title={t('pages.reports.reportTypes.sales')} 
+        right={
+          <div className="flex items-center gap-3">
+            <button 
+              className="text-gray-600 text-sm md:hidden" 
+              onClick={() => setShowSalesFilters((s) => !s)}
+            >
+              {showSalesFilters ? t('pages.reports.filters.hideFilters') : t('pages.reports.filters.showFilters')}
+            </button>
+            <button 
+              className="text-primary-600 text-sm" 
+              onClick={() => downloadCsv(salesCsvUrl, `sales-${salesGroup}.csv`)}
+            >
+              {t('pages.reports.export')}
+            </button>
+          </div>
+        }
+      >  
         <div className={(showSalesFilters ? 'block' : 'hidden') + ' md:block'}>
         <DateGroupFilters {...sales} group={salesGroup} setGroup={setSalesGroup} extra={
           <div>
-            <label className="block text-xs text-gray-500">Buyer</label>
-            <input type="text" value={buyer} onChange={(e) => setBuyer(e.target.value)} className="border rounded px-2 py-1" placeholder="Buyer name" />
+            <label className="block text-xs text-gray-500">{t('pages.reports.buyer')}</label>
+            <input type="text" value={buyer} onChange={(e) => setBuyer(e.target.value)} className="border rounded px-2 py-1" placeholder={t('pages.reports.buyerPlaceholder')} />
           </div>
         } />
         </div>
@@ -466,161 +495,273 @@ export default function Reports() {
         </div>
         <Table
           cols={[
-            { key: 'period', label: 'Period' },
-            { key: 'invoicesCount', label: 'Invoices' },
-            { key: 'goatQuantity', label: 'Qty (Goats)' },
-            { key: 'revenue', label: 'Revenue' },
+            { key: 'period', label: t('pages.reports.table.period') },
+            { key: 'invoicesCount', label: t('pages.reports.table.invoices') },
+            { key: 'goatQuantity', label: t('pages.reports.table.quantity') },
+            { key: 'revenue', label: t('pages.reports.table.revenue') },
           ]}
           rows={salesRows}
         />
         {salesTotals && (
-          <div className="text-sm text-gray-700 mt-2">Totals: Invoices {salesTotals.invoicesCount} · Qty {salesTotals.goatQuantity} · Revenue {salesTotals.revenue}</div>
+          <div className="text-sm text-gray-700 mt-2">
+            {t('pages.reports.table.totals')}: {t('pages.reports.table.invoices')} {salesTotals.invoicesCount} · 
+            {t('pages.reports.table.quantity')} {salesTotals.goatQuantity} · 
+            {t('pages.reports.table.revenue')} {salesTotals.revenue}
+          </div>
         )}
       </Section>
 
-      <Section title="Inventory" right={<button className="text-primary-600 text-sm" onClick={() => downloadCsv(invCsvUrl, 'inventory.csv')}>Download CSV</button>}>
+      <Section 
+        title={t('pages.reports.types.inventory')} 
+        right={
+          <button 
+            className="text-primary-600 text-sm" 
+            onClick={() => downloadCsv(invCsvUrl, 'inventory.csv')}
+          >
+            {t('pages.reports.export')}
+          </button>
+        }
+      >
         <div className="flex flex-wrap items-end gap-3 mb-4">
           <div>
-            <label className="block text-xs text-gray-500">Breed</label>
-            <input value={invBreed} onChange={(e) => setInvBreed(e.target.value)} className="border rounded px-2 py-1" placeholder="Breed" />
+            <label className="block text-xs text-gray-500">{t('pages.goats.filters.breed')}</label>
+            <input 
+              value={invBreed} 
+              onChange={(e) => setInvBreed(e.target.value)} 
+              className="border rounded px-2 py-1" 
+              placeholder={t('pages.goats.filters.breed')} 
+            />
           </div>
           <div>
-            <label className="block text-xs text-gray-500">Gender</label>
-            <select value={invGender} onChange={(e) => setInvGender(e.target.value)} className="border rounded px-2 py-1">
-              <option value="">All</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+            <label className="block text-xs text-gray-500">{t('pages.goats.filters.gender')}</label>
+            <select 
+              value={invGender} 
+              onChange={(e) => setInvGender(e.target.value)} 
+              className="input border rounded px-2 py-1"
+            >
+              <option value="">{t('all')}</option>
+              <option value="male">{t('male')}</option>
+              <option value="female">{t('female')}</option>
             </select>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div className="p-3 bg-gray-50 rounded">
-            <div className="text-xs text-gray-500">Total Goats</div>
-            <div className="text-lg font-semibold">{inv.totalGoats}</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-gray-50 p-4 rounded">
+            <div className="text-3xl font-bold text-gray-900">{inv.totalGoats}</div>
+            <div className="text-sm text-gray-500">{t('pages.reports.table.totalGoats')}</div>
           </div>
-          <div className="p-3 bg-gray-50 rounded">
-            <div className="text-xs text-gray-500">By Status</div>
-            <ul className="text-sm text-gray-700 list-disc ml-5">
-              {inv.statusCounts?.map((s) => (
-                <li key={s.status || 'Unknown'}>{s.status || 'Unknown'}: {s.count}</li>
-              ))}
-            </ul>
+          <div className="bg-gray-50 p-4 rounded">
+            <div className="text-3xl font-bold text-gray-900">{inv.statusCounts?.find(s => s._id === 'Active')?.count || 0}</div>
+            <div className="text-sm text-gray-500">{t('status.active')}</div>
           </div>
-          <div className="p-3 bg-gray-50 rounded">
-            <div className="text-xs text-gray-500">Age Buckets</div>
-            <ul className="text-sm text-gray-700 list-disc ml-5">
-              {inv.ageBuckets?.map((a) => (
-                <li key={a.bucket}>{a.bucket}: {a.count}</li>
-              ))}
-            </ul>
+          <div className="bg-gray-50 p-4 rounded">
+            <div className="text-3xl font-bold text-gray-900">{inv.statusCounts?.find(s => s._id === 'Sold')?.count || 0}</div>
+            <div className="text-sm text-gray-500">{t('status.sold')}</div>
           </div>
         </div>
+        {inv.ageBuckets?.length > 0 && (
+          <div className="mt-6">
+            <h3 className="text-sm font-medium text-gray-900 mb-2">
+              {t('pages.reports.ageDistribution')}
+            </h3>
+            <div className="h-48">
+              <Bar 
+                data={{
+                  labels: inv.ageBuckets.map(b => b._id),
+                  datasets: [{
+                    label: t('count'),
+                    data: inv.ageBuckets.map(b => b.count),
+                    backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                  }]
+                }} 
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: { y: { beginAtZero: true } },
+                }} 
+              />
+            </div>
+          </div>
+        )}
       </Section>
 
-      <Section title="Health" right={<div className="flex items-center gap-3"><button className="text-gray-600 text-sm md:hidden" onClick={() => setShowHealthFilters((s) => !s)}>{showHealthFilters ? 'Hide Filters' : 'Filters'}</button><button className="text-primary-600 text-sm" onClick={() => downloadCsv(healthCsvUrl, `health-${healthGroup}.csv`)}>Download CSV</button></div>}>
-        <div className={(showHealthFilters ? 'block' : 'hidden') + ' md:block'}>
-        <DateGroupFilters {...health} group={healthGroup} setGroup={setHealthGroup} extra={
-          <div>
-            <label className="block text-xs text-gray-500">Type</label>
-            <select value={healthType} onChange={(e) => setHealthType(e.target.value)} className="border rounded px-2 py-1">
-              <option>All</option>
-              <option>Treatment</option>
-              <option>Vaccination</option>
-            </select>
+      <Section 
+        title={t('pages.reports.reportTypes.health')} 
+        right={
+          <div className="flex items-center gap-3">
+            <button 
+              className="text-gray-600 text-sm md:hidden" 
+              onClick={() => setShowHealthFilters((s) => !s)}
+            >
+              {showHealthFilters ? t('pages.reports.filters.hideFilters') : t('pages.reports.filters.showFilters')}
+            </button>
+            <button 
+              className="text-primary-600 text-sm" 
+              onClick={() => downloadCsv(healthCsvUrl, `health-${healthGroup}.csv`)}
+            >
+              {t('pages.reports.export')}
+            </button>
           </div>
-        } />
+        }
+      >
+        <div className={(showHealthFilters ? 'block' : 'hidden') + ' md:block'}>
+          <DateGroupFilters 
+            {...health} 
+            group={healthGroup} 
+            setGroup={setHealthGroup} 
+            extra={
+              <div>
+                <label className="block text-xs text-gray-500">
+                  {t('pages.reports.type')}
+                </label>
+                <select 
+                  value={healthType} 
+                  onChange={(e) => setHealthType(e.target.value)} 
+                  className="input border rounded px-2 py-1"
+                >
+                  <option value="all">{t('all')}</option>
+                  <option value="treatment">{t('treatment')}</option>
+                  <option value="vaccination">{t('vaccination')}</option>
+                </select>
+              </div>
+            } 
+          />
         </div>
         <div className="w-full h-48 md:h-64 mb-4">
           <Bar data={healthChart.data} options={healthChart.options} />
         </div>
-        <Table cols={[
-          { key: 'period', label: 'Period' },
-          { key: 'records', label: 'Records' },
-          { key: 'totalCost', label: 'Total Cost' },
-        ]} rows={healthRows} />
-        <div className="flex items-center gap-4 text-sm text-gray-700 mt-2">
-          <div>Totals: Records {healthTotals?.records || 0} · Cost {healthTotals?.totalCost || 0}</div>
-          <div className="text-amber-700">Overdue: {overdueUpcoming.overdueCount}</div>
-          <div className="text-emerald-700">Upcoming (30d): {overdueUpcoming.upcomingCount}</div>
-        </div>
-      </Section>
-
-      <Section title="Breeding" right={<div className="flex items-center gap-3"><button className="text-gray-600 text-sm md:hidden" onClick={() => setShowBreedFilters((s) => !s)}>{showBreedFilters ? 'Hide Filters' : 'Filters'}</button><button className="text-primary-600 text-sm" onClick={() => downloadCsv(breedCsvUrl, `breeding-${breedGroup}-${breedType}.csv`)}>Download CSV</button></div>}>
-        <div className={(showBreedFilters ? 'block' : 'hidden') + ' md:block'}>
-        <DateGroupFilters {...breeding} group={breedGroup} setGroup={setBreedGroup} extra={
+        <Table 
+          cols={[
+            { key: 'period', label: t('pages.reports.table.period') },
+            { key: 'records', label: t('pages.reports.table.records') },
+            { key: 'totalCost', label: t('pages.reports.table.totalCost') },
+          ]} 
+          rows={healthRows} 
+        />
+        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 mt-2">
           <div>
-            <label className="block text-xs text-gray-500">Type</label>
-            <select value={breedType} onChange={(e) => setBreedType(e.target.value)} className="border rounded px-2 py-1">
-              <option value="all">All</option>
-              <option value="matings">Matings</option>
-              <option value="pregnancies">Pregnancies</option>
-              <option value="kiddings">Kiddings</option>
-            </select>
+            {t('pages.reports.table.totals')}: {t('pages.reports.table.records')} {healthTotals?.records || 0} · 
+            {t('pages.reports.table.totalCost')} {healthTotals?.totalCost || 0}
           </div>
-        } />
+          <div className="text-amber-700">
+            {t('pages.reports.overdue')}: {overdueUpcoming.overdueCount}
+          </div>
+          <div className="text-emerald-700">
+            {t('pages.reports.upcoming', { days: 30 })}: {overdueUpcoming.upcomingCount}
+          </div>
         </div>
-        <div className="w-full h-48 md:h-64 mb-4">
-          <Bar data={breedingChart.data} options={breedingChart.options} />
-        </div>
-        <Table cols={[
-          { key: 'period', label: 'Period' },
-          { key: 'matings', label: 'Matings' },
-          { key: 'pregnancies', label: 'Pregnancies' },
-          { key: 'kiddings', label: 'Kiddings' },
-          { key: 'kidsBorn', label: 'Kids Born' },
-          { key: 'kidsSurvived', label: 'Kids Survived' },
-          { key: 'avgLitterSize', label: 'Avg Litter Size' },
-        ]} rows={breedRows} />
-        {breedTotals && (
-          <div className="text-sm text-gray-700 mt-2">Totals: Matings {breedTotals.matings} · Preg {breedTotals.pregnancies} · Kiddings {breedTotals.kiddings} · Kids {breedTotals.kidsBorn} · Survived {breedTotals.kidsSurvived} · Avg Litter {Number(breedTotals.avgLitterSize || 0).toFixed(2)}</div>
-        )}
       </Section>
 
-      <Section title="Feed" right={<div className="flex items-center gap-3"><button className="text-gray-600 text-sm md:hidden" onClick={() => setShowFeedFilters((s) => !s)}>{showFeedFilters ? 'Hide Filters' : 'Filters'}</button><button className="text-primary-600 text-sm" onClick={() => downloadCsv(feedCsvUrl, `feed-${feedGroup}.csv`)}>Download CSV</button></div>}>
-        <div className={(showFeedFilters ? 'block' : 'hidden') + ' md:block'}>
-        <DateGroupFilters {...feed} group={feedGroup} setGroup={setFeedGroup} extra={
-          <div className="flex gap-3">
-            <div>
-              <label className="block text-xs text-gray-500">Feed Type</label>
-              <input value={feedType} onChange={(e) => setFeedType(e.target.value)} className="border rounded px-2 py-1" placeholder="e.g. Hay" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500">Unit</label>
-              <input value={unit} onChange={(e) => setUnit(e.target.value)} className="border rounded px-2 py-1" placeholder="e.g. kg" />
-            </div>
+      <Section 
+        title={t('pages.reports.reportTypes.feed')} 
+        right={
+          <div className="flex items-center gap-3">
+            <button 
+              className="text-gray-600 text-sm md:hidden" 
+              onClick={() => setShowFeedFilters((s) => !s)}
+            >
+              {showFeedFilters ? t('pages.reports.filters.hideFilters') : t('pages.reports.filters.showFilters')}
+            </button>
+            <button 
+              className="text-primary-600 text-sm" 
+              onClick={() => downloadCsv(feedCsvUrl, `feed-${feedGroup}.csv`)}
+            >
+              {t('pages.reports.export')}
+            </button>
           </div>
-        } />
+        }
+      >
+        <div className={(showFeedFilters ? 'block' : 'hidden') + ' md:block'}>
+          <DateGroupFilters 
+            {...feed} 
+            group={feedGroup} 
+            setGroup={setFeedGroup} 
+            extra={
+              <div className="flex gap-3">
+                <div>
+                  <label className="block text-xs text-gray-500">
+                    {t('pages.reports.feedType')}
+                  </label>
+                  <input 
+                    value={feedType} 
+                    onChange={(e) => setFeedType(e.target.value)} 
+                    className="border rounded px-2 py-1" 
+                    placeholder={t('pages.reports.feedTypePlaceholder')} 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500">
+                    {t('pages.reports.unit')}
+                  </label>
+                  <input 
+                    value={unit} 
+                    onChange={(e) => setUnit(e.target.value)} 
+                    className="border rounded px-2 py-1" 
+                    placeholder={t('pages.reports.unitPlaceholder')} 
+                  />
+                </div>
+              </div>
+            } 
+          />
         </div>
         <div className="w-full h-48 md:h-64 mb-4">
           <Bar data={feedChart.data} options={feedChart.options} />
         </div>
-        <Table cols={[
-          { key: 'period', label: 'Period' },
-          { key: 'records', label: 'Records' },
-          { key: 'totalQuantity', label: 'Total Qty' },
-          { key: 'totalCost', label: 'Total Cost' },
-        ]} rows={feedRows} />
+        <Table 
+          cols={[
+            { key: 'period', label: t('pages.reports.table.period') },
+            { key: 'records', label: t('pages.reports.table.records') },
+            { key: 'totalQuantity', label: t('pages.reports.table.totalQuantity') },
+            { key: 'totalCost', label: t('pages.reports.table.totalCost') },
+          ]} 
+          rows={feedRows} 
+          empty={t('pages.reports.noData')}
+        />
         {feedTotals && (
-          <div className="text-sm text-gray-700 mt-2">Totals: Records {feedTotals.records} · Qty {feedTotals.totalQuantity} · Cost {feedTotals.totalCost}</div>
+          <div className="text-sm text-gray-700 mt-2">
+            {t('pages.reports.totals')}: {t('pages.reports.table.records')} {feedTotals.records} · 
+            {t('pages.reports.table.totalQuantity')} {feedTotals.totalQuantity} · 
+            {t('pages.reports.table.totalCost')} {feedTotals.totalCost}
+          </div>
         )}
       </Section>
 
-      <Section title="Finance" right={<button className="text-primary-600 text-sm" onClick={() => downloadCsv(finCsvUrl, `finance-${finGroup}.csv`)}>Download CSV</button>}>
-        <DateGroupFilters {...finance} group={finGroup} setGroup={setFinGroup} />
+      <Section 
+        title={t('pages.reports.reportTypes.finance')} 
+        right={
+          <button 
+            className="text-primary-600 text-sm" 
+            onClick={() => downloadCsv(finCsvUrl, `finance-${finGroup}.csv`)}
+          >
+            {t('pages.reports.export')}
+          </button>
+        }
+      >
+        <DateGroupFilters 
+          {...finance} 
+          group={finGroup} 
+          setGroup={setFinGroup} 
+        />
         <div className="w-full h-48 md:h-64 mb-4">
           <Line data={finChart.data} options={finChart.options} />
         </div>
-        <Table cols={[
-          { key: 'period', label: 'Period' },
-          { key: 'revenue', label: 'Revenue' },
-          { key: 'feedCost', label: 'Feed Cost' },
-          { key: 'healthCost', label: 'Health Cost' },
-          { key: 'breedingCost', label: 'Breeding Cost' },
-          { key: 'totalCost', label: 'Total Cost' },
-          { key: 'net', label: 'Net' },
-        ]} rows={finRows} />
+        <Table 
+          cols={[
+            { key: 'period', label: t('pages.reports.table.period') },
+            { key: 'income', label: t('pages.reports.income') },
+            { key: 'expenses', label: t('pages.reports.expenses') },
+            { key: 'net', label: t('pages.reports.net') },
+            { key: 'balance', label: t('pages.reports.balance') },
+          ]} 
+          rows={finRows} 
+        />
         {finTotals && (
-          <div className="text-sm text-gray-700 mt-2">Totals: Revenue {finTotals.revenue} · Feed {finTotals.feedCost} · Health {finTotals.healthCost} · Breeding {finTotals.breedingCost} · Cost {finTotals.totalCost} · Net {finTotals.net}</div>
+          <div className="text-sm text-gray-700 mt-2">
+            {t('pages.reports.totals')}: {t('pages.reports.income')} {finTotals.income} · 
+            {t('pages.reports.expenses')} {finTotals.expenses} · 
+            {t('pages.reports.net')} {finTotals.net} · 
+            {t('pages.reports.balance')} {finTotals.balance}
+          </div>
         )}
       </Section>
     </div>

@@ -1,0 +1,117 @@
+{
+  "title": "पैदास नोंदी",
+  "form": {
+    "selectDoe": "शेळी निवडा",
+    "selectBuck": "बोकडा निवडा",
+    "doe": "शेळी",
+    "buck": "बोकडा",
+    "matingDate": "जुळवणीची तारीख",
+    "expectedDueDate": "अपेक्षित प्रसूतीची तारीख",
+    "actualDueDate": "वास्तविक प्रसूतीची तारीख",
+    "breedingMethod": "पैदास पद्धत",
+    "breedingLocation": "पैदास स्थळ",
+    "breedingLocationPlaceholder": "पैदास स्थळ प्रविष्ट करा",
+    "gestationPeriod": "गर्भकाळ (दिवस)",
+    "healthStatus": "आरोग्य स्थिती",
+    "status": "स्थिती",
+    "notes": "टीपा",
+    "notesPlaceholder": "अतिरिक्त टीपा जोडा",
+    "pregnancyConfirmed": "गर्भधारणा निश्चित",
+    "kiddingDate": "बाळंतपण तारीख",
+    "kidsBorn": "जन्मलेली बाळे",
+    "kidsSurvived": "जिवंत राहिलेली बाळे",
+    "isOverdue": "वेळेपेक्षा जास्त झाला आहे",
+    "breedingCost": "पैदास खर्च",
+    "expectedValue": "अपेक्षित मूल्य",
+    "expectedBreed": "अपेक्षित जात",
+    "expectedBreedPlaceholder": "अपेक्षित जात प्रविष्ट करा",
+    "veterinaryCost": "पशुवैद्यकीय खर्च",
+    "lastCheckupDate": "शेवटची तपासणी तारीख",
+    "nextCheckupDate": "पुढील तपासणी तारीख",
+    "complications": "अडचणी",
+    "pedigreeNotes": "वंशावळीच्या टिपा",
+    "pedigreeNotesPlaceholder": "वंशावळीच्या टिपा प्रविष्ट करा",
+    "inbreedingCoefficient": "आतूनवंशीयतेचा गुणांक",
+    "inbreedingCoefficientPlaceholder": "०.००",
+    "doeAge": "शेळीचे वय (महिने)",
+    "buckAge": "बोकड्याचे वय (महिने)",
+    "amountPlaceholder": "०.००",
+    "methodOptions": {
+      "natural": "नैसर्गिक जुळवणूक",
+      "artificial": "कृत्रिम गर्भाधान",
+      "embryoTransfer": "गर्भ स्थानांतरण"
+    },
+    "healthStatusOptions": {
+      "healthy": "निरोगी",
+      "monitoring": "निरीक्षणाखाली",
+      "treatment": "उपचार चालू",
+      "critical": "गंभीर"
+    },
+    "statusOptions": {
+      "mated": "जुळवले",
+      "pregnant": "गरोदर",
+      "delivered": "बाळंतपण झाले",
+      "failed": "अयशस्वी",
+      "aborted": "गर्भपात झाला"
+    }
+  },
+  "breedingRecords": {
+    "title": "पैदास नोंदी",
+    "filters": {
+      "allStatus": "सर्व स्थिती",
+      "matingDate": "जुळवणीची तारीख",
+      "goat": "शेळी/बोकडा",
+      "allGoats": "सर्व शेळ्या/बोकडे",
+      "search": "शोधा",
+      "searchPlaceholder": "शोधा..."
+    },
+    "addRecord": "पैदास नोंद जोडा",
+    "editRecord": "पैदास नोंद संपादित करा",
+    "noRecords": "कोणत्याही पैदास नोंदी सापडल्या नाहीत",
+    "kidsBorn": "{{count}} बाळे जन्मली",
+    "kidsSurvived": "{{count}} जिवंत",
+    "notAvailable": "उपलब्ध नाही",
+    "delete": "हटवा",
+    "error": "पैदास नोंद प्रक्रिया करताना त्रुटी",
+    "saveSuccess": "पैदास नोंद यशस्वीरित्या जतन केली",
+    "deleteSuccess": "पैदास नोंद यशस्वीरित्या हटवली",
+    "deleteConfirm": {
+      "title": "पैदास नोंद हटवा",
+      "message": "तुम्हाला ही पैदास नोंद हटवायची आहे का? ही क्रिया पूर्ववत करता येणार नाही."
+    },
+    "buttons": {
+      "add": "नोंद जोडा",
+      "addRecord": "नवीन नोंद जोडा",
+      "edit": "संपादित करा",
+      "delete": "हटवा",
+      "save": "जतन करा",
+      "cancel": "रद्द करा",
+      "close": "बंद करा"
+    },
+    "columns": {
+      "doe": "शेळी",
+      "buck": "बोकडा",
+      "matingDate": "जुळवणीची तारीख",
+      "expectedDue": "अपेक्षित तारीख",
+      "status": "स्थिती",
+      "kiddingDate": "बाळंतपण तारीख",
+      "kids": "बाळे",
+      "actions": "क्रिया"
+    },
+    "form": {
+    },
+    "modals": {
+      "titleAdd": "पैदास नोंद जोडा",
+      "titleEdit": "पैदास नोंद संपादित करा",
+      "cancel": "रद्द करा",
+      "save": "जतन करा",
+      "delete": "हटवा",
+      "confirmDelete": "तुम्हाला ही नोंद हटवायची आहे का?"
+    },
+    "validation": {
+      "required": "ही फील्ड आवश्यक आहे",
+      "invalidDate": "अवैध तारीख",
+      "invalidNumber": "अवैध संख्या"
+    }
+  }
+}

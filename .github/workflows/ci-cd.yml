@@ -44,17 +44,30 @@ jobs:
       run: |
         npm ci
         cd frontend && npm ci
+        # Install performance testing tools
+        npm install --save-dev reassure
         cd ../backend && npm ci
       working-directory: ./
     
     # Lint and test frontend
     - name: Lint frontend
       run: cd frontend && npm run lint
-      
     - name: Test frontend
       run: |
         cd frontend
-        npm test -- --coverage --watchAll=false
+        npm test -- --coverage --watchAll=false --testPathIgnorePatterns=performance
+        
+    # Run performance tests
+    - name: Performance tests
+      run: |
+        cd frontend
+        npm test -- --testPathPattern=performance --runInBand --detectOpenHandles
+        
+    # Generate coverage report
+    - name: Generate coverage report
+      run: |
+        cd frontend
+        node ../scripts/test-coverage.js
         
     # Upload frontend coverage to Codecov
     - name: Upload frontend coverage to Codecov

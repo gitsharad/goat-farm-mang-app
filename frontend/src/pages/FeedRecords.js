@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Plus, Search, Edit, Trash2, Calendar, DollarSign, Utensils } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import api from '../services/api';
 
 const FeedRecords = () => {
+  const { t } = useTranslation('goat');
+  const ns = 'pages.feedRecords';
   const [records, setRecords] = useState([]);
   const [goats, setGoats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,31 +36,31 @@ const FeedRecords = () => {
   });
 
   const feedTypes = [
-    'Hay',
-    'Grain',
-    'Silage',
-    'Pasture',
-    'Concentrate',
-    'Mineral Supplement',
-    'Vitamin Supplement',
-    'Other'
+    { value: 'hay', label: t(`${ns}.feedTypes.hay`) },
+    { value: 'grain', label: t(`${ns}.feedTypes.grain`) },
+    { value: 'silage', label: t(`${ns}.feedTypes.silage`) },
+    { value: 'pasture', label: t(`${ns}.feedTypes.pasture`) },
+    { value: 'concentrate', label: t(`${ns}.feedTypes.concentrate`) },
+    { value: 'mineralSupplement', label: t(`${ns}.feedTypes.mineralSupplement`) },
+    { value: 'vitaminSupplement', label: t(`${ns}.feedTypes.vitaminSupplement`) },
+    { value: 'other', label: t(`${ns}.feedTypes.other`) }
   ];
 
   const units = [
-    'kg',
-    'lbs',
-    'grams',
-    'bales',
-    'scoops',
-    'handfuls'
+    { value: 'kg', label: t(`${ns}.units.kg`) },
+    { value: 'lbs', label: t(`${ns}.units.lbs`) },
+    { value: 'grams', label: t(`${ns}.units.grams`) },
+    { value: 'bales', label: t(`${ns}.units.bales`) },
+    { value: 'scoops', label: t(`${ns}.units.scoops`) },
+    { value: 'handfuls', label: t(`${ns}.units.handfuls`) }
   ];
 
   const feedingTimes = [
-    'Morning',
-    'Afternoon',
-    'Evening',
-    'Night',
-    'All Day'
+    { value: 'morning', label: t(`${ns}.feedingTimes.morning`) },
+    { value: 'afternoon', label: t(`${ns}.feedingTimes.afternoon`) },
+    { value: 'evening', label: t(`${ns}.feedingTimes.evening`) },
+    { value: 'night', label: t(`${ns}.feedingTimes.night`) },
+    { value: 'allDay', label: t(`${ns}.feedingTimes.allDay`) }
   ];
 
   useEffect(() => {
@@ -81,7 +84,7 @@ const FeedRecords = () => {
       setTotalPages(Math.ceil(response.data.total / 10));
       setLoading(false);
     } catch (error) {
-      toast.error('Failed to fetch feed records');
+      toast.error(t(`${ns}.error.fetch`));
       setLoading(false);
     }
   }, [currentPage, searchTerm, filterGoat, filterFeedType, filterDate]);
@@ -91,57 +94,72 @@ const FeedRecords = () => {
       const response = await api.get('/goats');
       setGoats(response.data.goats);
     } catch (error) {
-      console.error('Failed to fetch goats');
+      console.error(t(`${ns}.error.fetchGoats`));
     }
   }, []);
+
+  // Update the form data when dropdown values change
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value // Store only the selected value
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // No need to clean the data here since we're handling it in the change handlers
       if (selectedRecord) {
         await api.put(`/feed/${selectedRecord._id}`, formData);
-        toast.success('Feed record updated successfully');
+        toast.success(t(`${ns}.success.update`));
       } else {
         await api.post('/feed', formData);
-        toast.success('Feed record added successfully');
+        toast.success(t(`${ns}.success.create`));
       }
       setShowAddModal(false);
-      setSelectedRecord(null);
-      resetForm();
       fetchRecords();
+      resetForm();
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Operation failed');
+      toast.error(
+        error.response?.data?.message || 
+        (selectedRecord ? t(`${ns}.error.update`) : t(`${ns}.error.create`))
+      );
     }
   };
 
   const handleDelete = async () => {
     try {
       await api.delete(`/feed/${selectedRecord._id}`);
-      toast.success('Feed record deleted successfully');
+      toast.success(t(`${ns}.success.delete`));
       setShowDeleteModal(false);
-      setSelectedRecord(null);
       fetchRecords();
     } catch (error) {
-      toast.error('Failed to delete feed record');
+      toast.error(t(`${ns}.error.delete`));
     }
   };
 
   const handleEdit = (record) => {
     setSelectedRecord(record);
-    setFormData({
+    
+    // Ensure we're only using primitive values in formData
+    const formDataUpdate = {
       goat: record.goat?._id || record.goat || '',
       pen: record.pen || '',
-      date: record.date ? record.date.split('T')[0] : '',
-      feedType: record.feedType,
+      date: record.date ? (typeof record.date === 'string' ? record.date.split('T')[0] : record.date) : '',
+      feedType: record.feedType?.value || record.feedType || '',
       quantity: record.quantity || '',
-      unit: record.unit || '',
+      unit: record.unit?.value || record.unit || '',
       cost: record.cost || '',
       supplier: record.supplier || '',
       notes: record.notes || '',
-      feedingTime: record.feedingTime || '',
+      feedingTime: record.feedingTime?.value || record.feedingTime || '',
       consumed: record.consumed || '',
       waste: record.waste || ''
-    });
+    };
+    
+    setFormData(formDataUpdate);
     setShowAddModal(true);
   };
 
@@ -162,23 +180,24 @@ const FeedRecords = () => {
     });
   };
 
-  const getFeedTypeColor = (type) => {
-    const colors = {
-      'Hay': 'bg-green-100 text-green-800',
-      'Grain': 'bg-yellow-100 text-yellow-800',
-      'Silage': 'bg-blue-100 text-blue-800',
-      'Pasture': 'bg-emerald-100 text-emerald-800',
-      'Concentrate': 'bg-purple-100 text-purple-800',
-      'Mineral Supplement': 'bg-indigo-100 text-indigo-800',
-      'Vitamin Supplement': 'bg-pink-100 text-pink-800',
-      'Other': 'bg-gray-100 text-gray-800'
-    };
-    return colors[type] || 'bg-gray-100 text-gray-800';
+  const getFeedTypeColor = (feedType) => {
+    const type = typeof feedType === 'object' ? feedType.value : feedType;
+    switch (type) {
+      case 'hay': return 'bg-yellow-100 text-yellow-800';
+      case 'grain': return 'bg-amber-100 text-amber-800';
+      case 'silage': return 'bg-green-100 text-green-800';
+      case 'pasture': return 'bg-emerald-100 text-emerald-800';
+      case 'concentrate': return 'bg-blue-100 text-blue-800';
+      case 'mineralSupplement': return 'bg-purple-100 text-purple-800';
+      case 'vitaminSupplement': return 'bg-indigo-100 text-indigo-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString();
+    if (!dateString) return t('common.NA');
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   const calculateTotalCost = () => {
@@ -198,8 +217,8 @@ const FeedRecords = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Feed Records</h1>
-          <p className="text-gray-600">Manage goat feeding schedules and feed inventory</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t(`${ns}.title`)}</h1>
+          <p className="text-gray-600">{t(`${ns}.subtitle`)}</p>
         </div>
         <button
           onClick={() => {
@@ -210,7 +229,7 @@ const FeedRecords = () => {
           className="btn-primary flex items-center gap-2"
         >
           <Plus className="w-4 h-4" />
-          Add Feed Record
+          {t(`${ns}.addRecord`)}
         </button>
       </div>
 
@@ -222,7 +241,7 @@ const FeedRecords = () => {
               <Utensils className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Records</p>
+              <p className="text-sm text-gray-600">{t(`${ns}.summary.totalRecords`)}</p>
               <p className="font-semibold text-gray-900">{records.length}</p>
             </div>
           </div>
@@ -233,7 +252,7 @@ const FeedRecords = () => {
               <DollarSign className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Cost</p>
+              <p className="text-sm text-gray-600">{t(`${ns}.summary.totalCost`)}</p>
               <p className="font-semibold text-gray-900">${calculateTotalCost().toFixed(2)}</p>
             </div>
           </div>
@@ -244,7 +263,7 @@ const FeedRecords = () => {
               <Calendar className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Today's Records</p>
+              <p className="text-sm text-gray-600">{t(`${ns}.summary.todaysRecords`)}</p>
               <p className="font-semibold text-gray-900">
                 {records.filter(r => {
                   const today = new Date().toDateString();
@@ -261,12 +280,12 @@ const FeedRecords = () => {
       <div className="bg-white p-4 rounded-lg shadow-sm border">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="label">Search</label>
+            <label className="label">{t(`${ns}.filters.search`)}</label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder="Search records..."
+                placeholder={t(`${ns}.filters.searchPlaceholder`)}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="input pl-10"
@@ -274,33 +293,33 @@ const FeedRecords = () => {
             </div>
           </div>
           <div>
-            <label className="label">Goat</label>
+            <label className="label">{t(`${ns}.filters.goat`)}</label>
             <select
               value={filterGoat}
               onChange={(e) => setFilterGoat(e.target.value)}
               className="input"
             >
-              <option value="">All Goats</option>
+              <option value="">{t(`${ns}.filters.allGoats`)}</option>
               {goats.map(goat => (
                 <option key={goat._id} value={goat._id}>{goat.name} ({goat.tagNumber})</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="label">Feed Type</label>
+            <label className="label">{t(`${ns}.filters.feedType`)}</label>
             <select
               value={filterFeedType}
               onChange={(e) => setFilterFeedType(e.target.value)}
               className="input"
             >
-              <option value="">All Types</option>
+              <option value="">{t(`${ns}.filters.allTypes`)}</option>
               {feedTypes.map(type => (
-                <option key={type} value={type}>{type}</option>
+                <option key={type.value} value={type.value}>{type.label}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="label">Date</label>
+            <label className="label">{t(`${ns}.filters.date`)}</label>
             <input
               type="date"
               value={filterDate}
@@ -317,14 +336,14 @@ const FeedRecords = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="table-header">Goat</th>
-                <th className="table-header">Date</th>
-                <th className="table-header">Feed Type</th>
-                <th className="table-header">Quantity</th>
-                <th className="table-header">Cost</th>
-                <th className="table-header">Feeding Time</th>
-                <th className="table-header">Consumed</th>
-                <th className="table-header">Actions</th>
+                <th className="table-header">{t(`${ns}.table.goat`)}</th>
+                <th className="table-header">{t(`${ns}.table.date`)}</th>
+                <th className="table-header">{t(`${ns}.table.feedType`)}</th>
+                <th className="table-header">{t(`${ns}.table.quantity`)}</th>
+                <th className="table-header">{t(`${ns}.table.cost`)}</th>
+                <th className="table-header">{t(`${ns}.table.feedingTime`)}</th>
+                <th className="table-header">{t(`${ns}.table.consumed`)}</th>
+                <th className="table-header">{t(`${ns}.table.actions`)}</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -334,29 +353,37 @@ const FeedRecords = () => {
                     {record.goat ? (
                       <div>
                         <div className="font-medium text-gray-900">
-                          {record.goat.name || record.goat.tagNumber}
+                          {record.goat.name} ({record.goat.tagNumber})
                         </div>
                         <div className="text-sm text-gray-500">
                           Tag #{record.goat.tagNumber}
                         </div>
                       </div>
                     ) : (
-                      <div className="text-gray-500">General Feeding</div>
+                      <div className="text-gray-500">{t(`${ns}.table.generalFeeding`)}</div>
                     )}
                   </td>
                   <td className="table-cell">{formatDate(record.date)}</td>
                   <td className="table-cell">
                     <span className={`badge ${getFeedTypeColor(record.feedType)}`}>
-                      {record.feedType}
+                      {typeof record.feedType === 'object' 
+                        ? record.feedType.label || ''
+                        : (feedTypes.find(ft => ft.value === record.feedType)?.label || record.feedType || 'N/A')}
                     </span>
                   </td>
                   <td className="table-cell">
-                    {record.quantity} {record.unit}
+                    {record.quantity} {typeof record.unit === 'object' ? record.unit.label : record.unit}
                   </td>
                   <td className="table-cell">
                     {record.cost ? `$${record.cost}` : 'N/A'}
                   </td>
-                  <td className="table-cell">{record.feedingTime || 'N/A'}</td>
+                  <td className="table-cell">
+                    {record.feedingTime 
+                      ? (typeof record.feedingTime === 'object' 
+                          ? record.feedingTime.label 
+                          : (feedingTimes.find(ft => ft.value === record.feedingTime)?.label || record.feedingTime))
+                      : 'N/A'}
+                  </td>
                   <td className="table-cell">
                     {record.consumed ? `${record.consumed} ${record.unit}` : 'N/A'}
                   </td>
@@ -365,7 +392,7 @@ const FeedRecords = () => {
                       <button
                         onClick={() => handleEdit(record)}
                         className="btn-icon btn-icon-secondary"
-                        title="Edit"
+                        title={t(`${ns}.table.edit`)}
                       >
                         <Edit className="w-4 h-4" />
                       </button>
@@ -441,17 +468,17 @@ const FeedRecords = () => {
           <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <h3 className="text-lg font-medium text-gray-900 mb-4">
-                {selectedRecord ? 'Edit Feed Record' : 'Add Feed Record'}
+                {selectedRecord ? t(`${ns}.form.titleEdit`) : t(`${ns}.form.titleAdd`)}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="label">Goat (Optional)</label>
+                  <label className="label">{t(`${ns}.form.fields.selectGoat`)}</label>
                   <select
                     value={formData.goat}
                     onChange={(e) => setFormData({...formData, goat: e.target.value})}
                     className="input"
                   >
-                    <option value="">General Feeding</option>
+                    <option value="">{t(`${ns}.form.fields.generalFeeding`)}</option>
                     {goats.map(goat => (
                       <option key={goat._id} value={goat._id}>
                         {goat.name} ({goat.tagNumber})
@@ -460,145 +487,25 @@ const FeedRecords = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="label">Pen/Location</label>
+                  <label className="label">{t(`${ns}.form.fields.pen`)}</label>
                   <input
                     type="text"
                     value={formData.pen}
                     onChange={(e) => setFormData({...formData, pen: e.target.value})}
                     className="input"
-                    placeholder="e.g., Pen A, Field 1"
+                    placeholder={t(`${ns}.form.fields.penPlaceholder`)}
                   />
                 </div>
-                <div>
-                  <label className="label">Date</label>
-                  <input
-                    type="date"
-                    value={formData.date}
-                    onChange={(e) => setFormData({...formData, date: e.target.value})}
-                    className="input"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="label">Feed Type</label>
-                    <select
-                      value={formData.feedType}
-                      onChange={(e) => setFormData({...formData, feedType: e.target.value})}
-                      className="input"
-                      required
-                    >
-                      <option value="">Select Type</option>
-                      {feedTypes.map(type => (
-                        <option key={type} value={type}>{type}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="label">Quantity</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={formData.quantity}
-                      onChange={(e) => setFormData({...formData, quantity: e.target.value})}
-                      className="input"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="label">Unit</label>
-                    <select
-                      value={formData.unit}
-                      onChange={(e) => setFormData({...formData, unit: e.target.value})}
-                      className="input"
-                      required
-                    >
-                      <option value="">Select Unit</option>
-                      {units.map(unit => (
-                        <option key={unit} value={unit}>{unit}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="label">Cost ($)</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      value={formData.cost}
-                      onChange={(e) => setFormData({...formData, cost: e.target.value})}
-                      className="input"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="label">Supplier</label>
-                  <input
-                    type="text"
-                    value={formData.supplier}
-                    onChange={(e) => setFormData({...formData, supplier: e.target.value})}
-                    className="input"
-                    placeholder="e.g., Local Farm Supply"
-                  />
-                </div>
-                <div>
-                  <label className="label">Feeding Time</label>
-                  <select
-                    value={formData.feedingTime}
-                    onChange={(e) => setFormData({...formData, feedingTime: e.target.value})}
-                    className="input"
-                  >
-                    <option value="">Select Time</option>
-                    {feedingTimes.map(time => (
-                      <option key={time} value={time}>{time}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="label">Consumed</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={formData.consumed}
-                      onChange={(e) => setFormData({...formData, consumed: e.target.value})}
-                      className="input"
-                      placeholder="Amount eaten"
-                    />
-                  </div>
-                  <div>
-                    <label className="label">Waste</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={formData.waste}
-                      onChange={(e) => setFormData({...formData, waste: e.target.value})}
-                      className="input"
-                      placeholder="Amount wasted"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="label">Notes</label>
-                  <textarea
-                    value={formData.notes}
-                    onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                    className="input"
-                    rows="3"
-                    placeholder="Additional notes about feeding..."
-                  />
-                </div>
-                <div className="flex justify-end gap-3">
+                <div className="flex justify-end space-x-3 pt-4">
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
                     className="btn-secondary"
                   >
-                    Cancel
+                    {t(`${ns}.form.buttons.cancel`)}
                   </button>
                   <button type="submit" className="btn-primary">
-                    {selectedRecord ? 'Update' : 'Add'} Record
+                    {selectedRecord ? t(`${ns}.form.buttons.update`) : t(`${ns}.form.buttons.save`)}
                   </button>
                 </div>
               </form>

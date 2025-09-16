@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import { Calendar, Filter, Download } from 'lucide-react';
 import api from '../../services/api';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { getTranslation } from '../../translations';
+import { useTranslation } from 'react-i18next';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -31,8 +30,7 @@ ChartJS.register(
 );
 
 const PoultryReports = () => {
-  const { language } = useLanguage();
-  const t = (key) => getTranslation(language, key);
+  const { t } = useTranslation(['poultry', 'common']);
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState('week');
   const [reportData, setReportData] = useState({
@@ -101,7 +99,7 @@ const PoultryReports = () => {
         ...(Array.isArray(vaccData.recent) ? vaccData.recent : []),
       ];
       const vaccCounts = vaccAll.reduce((acc, v) => {
-        const vaccine = (v.vaccination && v.vaccination[0]?.vaccine) || v.vaccine || t('unknown');
+        const vaccine = (v.vaccination && v.vaccination[0]?.vaccine) || v.vaccine || t('common.unknown');
         acc[vaccine] = (acc[vaccine] || 0) + 1;
         return acc;
       }, {});
@@ -136,14 +134,14 @@ const PoultryReports = () => {
     labels: reportData.production.map(item => item.date),
     datasets: [
       {
-        label: t('eggsProduced'),
+        label: t('pages.reportsPage.labels.eggsProduced'),
         data: reportData.production.map(item => item.eggsProduced),
         backgroundColor: 'rgba(59, 130, 246, 0.5)',
         borderColor: 'rgba(59, 130, 246, 1)',
         borderWidth: 1,
       },
       {
-        label: t('eggsDamaged'),
+        label: t('pages.reportsPage.labels.eggsDamaged'),
         data: reportData.production.map(item => item.eggsDamaged || 0),
         backgroundColor: 'rgba(239, 68, 68, 0.5)',
         borderColor: 'rgba(239, 68, 68, 1)',
@@ -156,7 +154,7 @@ const PoultryReports = () => {
     labels: reportData.vaccinations.map(item => item.vaccine),
     datasets: [
       {
-        label: t('vaccinationsAdministered'),
+        label: t('pages.reportsPage.labels.vaccinationsAdministered'),
         data: reportData.vaccinations.map(item => item.count),
         backgroundColor: [
           'rgba(16, 185, 129, 0.5)',
@@ -178,10 +176,10 @@ const PoultryReports = () => {
   };
 
   const inventoryChartData = {
-    labels: reportData.inventory.map(item => item.status),
+    labels: reportData.inventory.map(item => t(`status.${item.status.toLowerCase()}`, { ns: 'poultry' })),
     datasets: [
       {
-        label: t('numberOfBirds'),
+        label: t('pages.reportsPage.labels.numberOfBirds'),
         data: reportData.inventory.map(item => item.count),
         backgroundColor: [
           'rgba(59, 130, 246, 0.5)',
@@ -201,7 +199,7 @@ const PoultryReports = () => {
   const exportToCSV = () => {
     // This is a placeholder for CSV export functionality
     // In a real app, you would generate and download a CSV file
-    console.log('Exporting data to CSV...');
+    console.log(t('pages.reportsPage.messages.exportingCSV'));
   };
 
   if (loading) {
@@ -216,8 +214,8 @@ const PoultryReports = () => {
     <div className="container mx-auto p-4">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">{t('poultryAnalytics')}</h1>
-          <p className="text-gray-600">{t('poultryAnalyticsSubtitle')}</p>
+          <h1 className="text-2xl font-bold text-gray-800">{t('pages.reportsPage.title')}</h1>
+          <p className="text-gray-600">{t('pages.reportsPage.subtitle')}</p>
         </div>
         <div className="flex items-center space-x-4 mt-4 md:mt-0">
           <div className="relative">
@@ -226,9 +224,9 @@ const PoultryReports = () => {
               onChange={(e) => setTimeRange(e.target.value)}
               className="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
             >
-              <option value="week">{t('last7Days')}</option>
-              <option value="month">{t('last30Days')}</option>
-              <option value="year">{t('last12Months')}</option>
+              <option value="week">{t('time.thisWeek', { ns: 'common' })}</option>
+              <option value="month">{t('time.thisMonth', { ns: 'common' })}</option>
+              <option value="year">{t('time.last3Months', { ns: 'common' })}</option>
             </select>
             <Filter className="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
           </div>
@@ -237,14 +235,14 @@ const PoultryReports = () => {
             className="btn-secondary flex items-center"
           >
             <Download className="w-4 h-4 mr-1" />
-            {t('export')}
+            {t('export', { ns: 'common' })}
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-lg font-medium mb-4">{t('eggProduction')}</h2>
+          <h2 className="text-lg font-medium mb-4">{t('pages.reportsPage.sections.eggProduction')}</h2>
           <div className="h-64">
             <Line
               data={productionChartData}
@@ -262,7 +260,7 @@ const PoultryReports = () => {
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-lg font-medium mb-4">{t('vaccinationSummary')}</h2>
+          <h2 className="text-lg font-medium mb-4">{t('pages.reportsPage.sections.vaccinationSummary')}</h2>
           <div className="h-64">
             <Pie
               data={vaccinationChartData}
@@ -282,7 +280,7 @@ const PoultryReports = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="bg-white p-4 rounded-lg shadow lg:col-span-2">
-          <h2 className="text-lg font-medium mb-4">{t('inventoryStatus')}</h2>
+          <h2 className="text-lg font-medium mb-4">{t('pages.reportsPage.sections.inventoryStatus')}</h2>
           <div className="h-64">
             <Bar
               data={inventoryChartData}
@@ -308,16 +306,16 @@ const PoultryReports = () => {
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-lg font-medium mb-4">{t('quickStats')}</h2>
+          <h2 className="text-lg font-medium mb-4">{t('pages.reportsPage.quickStats')}</h2>
           <div className="space-y-4">
             <div className="p-3 bg-blue-50 rounded-lg">
-              <p className="text-sm text-gray-500">{t('totalBirds')}</p>
+              <p className="text-sm text-gray-500">{t('pages.reportsPage.totalBirds')}</p>
               <p className="text-2xl font-semibold">
                 {reportData.inventory.reduce((sum, item) => sum + item.count, 0)}
               </p>
             </div>
             <div className="p-3 bg-green-50 rounded-lg">
-              <p className="text-sm text-gray-500">{t('totalEggs7d')}</p>
+              <p className="text-sm text-gray-500">{t('pages.reportsPage.totalEggs7d')}</p>
               <p className="text-2xl font-semibold">
                 {reportData.production
                   .slice(-7)
@@ -325,7 +323,7 @@ const PoultryReports = () => {
               </p>
             </div>
             <div className="p-3 bg-yellow-50 rounded-lg">
-              <p className="text-sm text-gray-500">{t('vaccinations30d')}</p>
+              <p className="text-sm text-gray-500">{t('pages.reportsPage.vaccinations30d')}</p>
               <p className="text-2xl font-semibold">
                 {reportData.vaccinations.reduce((sum, item) => sum + item.count, 0)}
               </p>
@@ -337,20 +335,20 @@ const PoultryReports = () => {
       {/* Feed Consumption Section */}
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="bg-white p-4 rounded-lg shadow lg:col-span-2">
-          <h2 className="text-lg font-medium mb-4">Poultry Feed Daily Trend</h2>
+          <h2 className="text-lg font-medium mb-4">{t('pages.reportsPage.sections.feedTrend')}</h2>
           <div className="h-64">
             <Line
               data={{
                 labels: reportData.feed.dailyTrend.map(d => d._id?.date || d._id || ''),
                 datasets: [
                   {
-                    label: 'Quantity',
+                    label: t('pages.reportsPage.labels.quantity'),
                     data: reportData.feed.dailyTrend.map(d => d.quantity || d.totalQuantity || 0),
                     borderColor: 'rgba(59, 130, 246, 1)',
                     backgroundColor: 'rgba(59, 130, 246, 0.4)'
                   },
                   {
-                    label: 'Cost',
+                    label: t('pages.reportsPage.labels.cost'),
                     data: reportData.feed.dailyTrend.map(d => d.cost || 0),
                     borderColor: 'rgba(16, 185, 129, 1)',
                     backgroundColor: 'rgba(16, 185, 129, 0.4)'
@@ -362,13 +360,13 @@ const PoultryReports = () => {
           </div>
         </div>
         <div className="bg-white p-4 rounded-lg shadow">
-          <h2 className="text-lg font-medium mb-4">Feed by Type</h2>
+          <h2 className="text-lg font-medium mb-4">{t('pages.reportsPage.sections.feedByType')}</h2>
           <div className="h-64">
             <Pie
               data={{
                 labels: reportData.feed.consumption.map(c => c._id),
                 datasets: [{
-                  label: 'Quantity',
+                  label: t('pages.reportsPage.labels.quantity'),
                   data: reportData.feed.consumption.map(c => c.totalQuantity || 0),
                   backgroundColor: [
                     'rgba(59, 130, 246, 0.5)',
@@ -396,7 +394,7 @@ const PoultryReports = () => {
       {/* Recent Feed Records */}
       <div className="mt-6 bg-white p-4 rounded-lg shadow">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-medium">Recent Feed Records</h2>
+          <h2 className="text-lg font-medium">{t('pages.reportsPage.recentFeedRecords')}</h2>
           <button
             onClick={() => {
               const headers = ['date','poultry','feedType','quantity','unit','cost','coop','notes'];
@@ -414,21 +412,21 @@ const PoultryReports = () => {
             }}
             className="btn-secondary text-sm"
           >
-            Export CSV
+            {t('exportCSV', { ns: 'common' })}
           </button>
         </div>
         <div className="overflow-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Poultry</th>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feed Type</th>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Unit</th>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Cost</th>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Coop</th>
-                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('pages.reportsPage.tableHeaders.date')}</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">{t('pages.reportsPage.tableHeaders.poultry')}</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('pages.reportsPage.tableHeaders.feedType')}</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('pages.reportsPage.tableHeaders.quantity')}</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">{t('pages.reportsPage.tableHeaders.unit')}</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">{t('pages.reportsPage.tableHeaders.cost')}</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">{t('pages.reportsPage.tableHeaders.coop')}</th>
+                <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('pages.reportsPage.tableHeaders.notes')}</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100">
@@ -445,7 +443,7 @@ const PoultryReports = () => {
                 </tr>
               ))}
               {(!reportData.feed.recent || reportData.feed.recent.length === 0) && (
-                <tr><td colSpan={8} className="px-3 py-6 text-center text-sm text-gray-500">No records</td></tr>
+                <tr><td colSpan={8} className="px-3 py-6 text-center text-sm text-gray-500">{t('noRecords', { ns: 'common' })}</td></tr>
               )}
             </tbody>
           </table>

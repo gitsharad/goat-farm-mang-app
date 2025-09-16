@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Plus, Search, Edit, Trash2 } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, X, PlusCircle, Upload } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { format } from 'date-fns';
 import api from '../../services/api';
 
 const PoultryHealthRecords = () => {
+  const { t, i18n } = useTranslation(['poultry', 'common']);
   const [records, setRecords] = useState([]);
   const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,13 +33,19 @@ const PoultryHealthRecords = () => {
     attachments: []
   });
 
+  // Debug logging for translations
+  useEffect(() => {
+    console.log('Current language:', i18n.language);
+    console.log('Poultry translations:', i18n.getResourceBundle(i18n.language, 'poultry') || 'Not loaded');
+  }, [i18n]);
+
   const healthTypes = [
-    'Vaccination',
-    'Deworming',
-    'Treatment',
-    'Checkup',
-    'Surgery',
-    'Other'
+    { value: 'Vaccination', label: t('pages.healthPage.types.vaccination') },
+    { value: 'Deworming', label: t('pages.healthPage.types.deworming') },
+    { value: 'Treatment', label: t('pages.healthPage.types.treatment') },
+    { value: 'Checkup', label: t('pages.healthPage.types.checkup') },
+    { value: 'Surgery', label: t('pages.healthPage.types.surgery') },
+    { value: 'Other', label: t('common:other') }
   ];
 
   useEffect(() => {
@@ -61,7 +70,7 @@ const PoultryHealthRecords = () => {
       setTotalPages(Math.max(1, Math.ceil(total / 10)));
       setLoading(false);
     } catch (error) {
-      toast.error('Failed to fetch poultry health records');
+      toast.error(t('pages.healthPage.error.loadFailed'));
       setLoading(false);
     }
   }, [currentPage, searchTerm, filterBatch, filterType, filterDate]);
@@ -72,7 +81,7 @@ const PoultryHealthRecords = () => {
       const data = response.data.data || response.data.poultry || [];
       setBatches(data);
     } catch (error) {
-      console.error('Failed to fetch poultry batches');
+      toast.error(t('pages.healthPage.error.loadFailed'));
     }
   }, []);
 
@@ -81,29 +90,29 @@ const PoultryHealthRecords = () => {
     try {
       if (selectedRecord) {
         await api.put(`/poultry-health/${selectedRecord._id}`, formData);
-        toast.success('Poultry health record updated');
+        toast.success(t('pages.healthPage.alerts.updateSuccess'));
       } else {
         await api.post('/poultry-health', formData);
-        toast.success('Poultry health record added');
+        toast.success(t('pages.healthPage.alerts.addSuccess'));
       }
       setShowAddModal(false);
       setSelectedRecord(null);
       resetForm();
       fetchRecords();
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Operation failed');
+      toast.error(error.response?.data?.message || t('pages.healthPage.alerts.error'));
     }
   };
 
   const handleDelete = async () => {
     try {
       await api.delete(`/poultry-health/${selectedRecord._id}`);
-      toast.success('Poultry health record deleted');
+      toast.success(t('pages.healthPage.alerts.deleteSuccess'));
       setShowDeleteModal(false);
       setSelectedRecord(null);
       fetchRecords();
     } catch (error) {
-      toast.error('Failed to delete record');
+      toast.error(t('pages.healthPage.alerts.error'));
     }
   };
 
@@ -165,23 +174,18 @@ const PoultryHealthRecords = () => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Poultry Health Records</h1>
-          <p className="text-gray-600">Manage vaccinations and treatments for poultry batches</p>
+          <h2 className="text-2xl font-semibold">{t('pages.healthPage.title')}</h2>
+          <p className="text-gray-600">{t('pages.healthPage.subtitle')}</p>
         </div>
-        <button
-          onClick={() => {
-            setSelectedRecord(null);
-            resetForm();
-            setShowAddModal(true);
-          }}
-          className="btn-primary flex items-center gap-2"
+        <button 
+          onClick={() => setShowAddModal(true)}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center"
         >
-          <Plus className="w-4 h-4" />
-          Add Health Record
+          <Plus className="w-4 h-4 mr-2" />
+          {t('pages.healthPage.addRecord')}
         </button>
       </div>
 
@@ -189,53 +193,55 @@ const PoultryHealthRecords = () => {
       <div className="bg-white p-4 rounded-lg shadow-sm border">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="label">Search</label>
+            <label className="label">{t('pages.healthPage.filters.search')}</label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
-                placeholder="Search records..."
+                placeholder={t('pages.healthPage.filters.search')}
+                className="input pl-10 w-full"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="input pl-10"
               />
             </div>
           </div>
           <div>
-            <label className="label">Batch</label>
+            <label className="label">{t('pages.healthPage.filters.batch')}</label>
             <select
+              className="input w-full"
               value={filterBatch}
               onChange={(e) => setFilterBatch(e.target.value)}
-              className="input"
             >
-              <option value="">All Batches</option>
-              {batches.map(batch => (
+              <option value="">{t('pages.healthPage.filters.allBatches')}</option>
+              {batches.map((batch) => (
                 <option key={batch._id} value={batch._id}>
-                  {batch.batchNumber || batch.name || 'Batch'} ({batch.quantity || 0} birds)
+                  {batch.name || `Batch ${batch.batchNumber}`}
                 </option>
               ))}
             </select>
           </div>
           <div>
-            <label className="label">Type</label>
+            <label className="label">{t('pages.healthPage.filters.type')}</label>
             <select
+              className="input w-full"
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="input"
             >
-              <option value="">All Types</option>
-              {healthTypes.map(type => (
-                <option key={type} value={type}>{type}</option>
+              <option value="">{t('pages.healthPage.filters.allTypes')}</option>
+              {healthTypes.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
+                </option>
               ))}
             </select>
           </div>
           <div>
-            <label className="label">Date</label>
+            <label className="label">{t('pages.healthPage.filters.date')}</label>
             <input
               type="date"
+              className="input w-full"
               value={filterDate}
               onChange={(e) => setFilterDate(e.target.value)}
-              className="input"
             />
           </div>
         </div>
@@ -247,20 +253,36 @@ const PoultryHealthRecords = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="table-header">Batch</th>
-                <th className="table-header">Date</th>
-                <th className="table-header">Type</th>
-                <th className="table-header">Description</th>
-                <th className="table-header">Vet</th>
-                <th className="table-header">Cost</th>
-                <th className="table-header">Next Due</th>
-                <th className="table-header">Actions</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.poultryId')}
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.date')}
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.type')}
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.description')}
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.veterinarian')}
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.cost')}
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.nextDue')}
+                </th>
+                <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('pages.healthPage.table.actions')}
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {records.map((record) => (
                 <tr key={record._id} className="hover:bg-gray-50">
-                  <td className="table-cell">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <div>
                       <div className="font-medium text-gray-900">
                         {(record.poultry && (record.poultry.batchNumber || record.poultry.name)) || 'Batch'}
@@ -270,28 +292,32 @@ const PoultryHealthRecords = () => {
                       </div>
                     </div>
                   </td>
-                  <td className="table-cell">{formatDate(record.date)}</td>
-                  <td className="table-cell">
+                  <td className="px-6 py-4 whitespace-nowrap">{formatDate(record.date)}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`badge ${getTypeColor(record.type)}`}>
                       {record.type}
                     </span>
                   </td>
-                  <td className="table-cell">
+                  <td className="px-6 py-4">
                     <div className="max-w-xs truncate" title={record.description}>
                       {record.description}
                     </div>
                   </td>
-                  <td className="table-cell">{record.veterinarian || 'N/A'}</td>
-                  <td className="table-cell">
-                    {record.cost ? `$${record.cost}` : 'N/A'}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {record.veterinarian || '-'}
                   </td>
-                  <td className="table-cell">{formatDate(record.nextDueDate)}</td>
-                  <td className="table-cell">
-                    <div className="flex items-center gap-2">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {record.cost ? `$${parseFloat(record.cost).toFixed(2)}` : '-'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {record.nextDueDate ? format(new Date(record.nextDueDate), 'MMM d, yyyy') : '-'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <div className="flex justify-end space-x-2">
                       <button
                         onClick={() => handleEdit(record)}
-                        className="btn-icon btn-icon-secondary"
-                        title="Edit"
+                        className="text-indigo-600 hover:text-indigo-900"
+                        title={t('pages.healthPage.table.edit')}
                       >
                         <Edit className="w-4 h-4" />
                       </button>
@@ -300,8 +326,8 @@ const PoultryHealthRecords = () => {
                           setSelectedRecord(record);
                           setShowDeleteModal(true);
                         }}
-                        className="btn-icon btn-icon-danger"
-                        title="Delete"
+                        className="text-red-600 hover:text-red-900"
+                        title={t('pages.healthPage.table.delete')}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -309,31 +335,38 @@ const PoultryHealthRecords = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>
-          </table>
-        </div>
+              {records.length === 0 && (
+                <tr>
+                  <td colSpan="7" className="px-6 py-4 text-center text-gray-500">
+                    {t('pages.healthPage.table.noRecords')}
+                  </td>
+                </tr>
+              )}
+          </tbody>
+        </table>
+      </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-            <div className="flex-1 flex justify-between sm:hidden">
-              <button
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className="btn-secondary disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                disabled={currentPage === totalPages}
-                className="btn-secondary disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
+      {/* Pagination */}
+      {totalPages > 0 && (
+        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div className="flex-1 flex justify-between sm:hidden">
+            <button
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className="btn-secondary disabled:opacity-50"
+            >
+              {t('common:previous')}
+            </button>
+            <button
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages}
+              className="btn-secondary disabled:opacity-50 ml-3"
+            >
+              {t('common:next')}
+            </button>
+          </div>
+          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
                 <p className="text-sm text-gray-700">
                   Showing page <span className="font-medium">{currentPage}</span> of{' '}
                   <span className="font-medium">{totalPages}</span>
@@ -367,18 +400,18 @@ const PoultryHealthRecords = () => {
           <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div className="mt-3">
               <h3 className="text-lg font-medium text-gray-900 mb-4">
-                {selectedRecord ? 'Edit Health Record' : 'Add Health Record'}
+                {selectedRecord ? t('pages.healthPage.form.editTitle') : t('pages.healthPage.form.addTitle')}
               </h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="label">Batch</label>
+                  <label className="label">{t('pages.healthPage.form.batch')}</label>
                   <select
                     value={formData.poultry}
                     onChange={(e) => setFormData({...formData, poultry: e.target.value})}
                     className="input"
                     required
                   >
-                    <option value="">Select Batch</option>
+                    <option value="">{t('pages.healthPage.form.selectBatch')}</option>
                     {batches.map(batch => (
                       <option key={batch._id} value={batch._id}>
                         {batch.batchNumber || batch.name} ({batch.quantity || 0} birds)
@@ -387,7 +420,7 @@ const PoultryHealthRecords = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="label">Date</label>
+                  <label className="label">{t('pages.healthPage.form.date')}</label>
                   <input
                     type="date"
                     value={formData.date}
@@ -397,21 +430,23 @@ const PoultryHealthRecords = () => {
                   />
                 </div>
                 <div>
-                  <label className="label">Type</label>
+                  <label className="label">{t('pages.healthPage.form.type')}</label>
                   <select
                     value={formData.type}
                     onChange={(e) => setFormData({...formData, type: e.target.value})}
                     className="input"
                     required
                   >
-                    <option value="">Select Type</option>
+                    <option value="">{t('pages.healthPage.form.selectType')}</option>
                     {healthTypes.map(type => (
-                      <option key={type} value={type}>{type}</option>
+                      <option key={type.value} value={type.value}>
+                        {type.label}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="label">Description</label>
+                  <label className="label">{t('pages.healthPage.form.description')}</label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
@@ -421,27 +456,30 @@ const PoultryHealthRecords = () => {
                   />
                 </div>
                 <div>
-                  <label className="label">Veterinarian</label>
+                  <label className="label">{t('pages.healthPage.form.veterinarian')}</label>
                   <input
                     type="text"
                     value={formData.veterinarian}
                     onChange={(e) => setFormData({...formData, veterinarian: e.target.value})}
                     className="input"
+                    placeholder={t('pages.healthPage.form.veterinarianPlaceholder')}
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="label">Cost ($)</label>
+                    <label className="label">{t('pages.healthPage.form.cost')}</label>
                     <input
                       type="number"
-                      step="0.01"
                       value={formData.cost}
                       onChange={(e) => setFormData({...formData, cost: e.target.value})}
                       className="input"
+                      min="0"
+                      step="0.01"
+                      placeholder={t('pages.healthPage.form.costPlaceholder')}
                     />
                   </div>
                   <div>
-                    <label className="label">Next Due Date</label>
+                    <label className="label">{t('pages.healthPage.form.nextDueDate')}</label>
                     <input
                       type="date"
                       value={formData.nextDueDate}
@@ -451,24 +489,25 @@ const PoultryHealthRecords = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="label">Notes</label>
+                  <label className="label">{t('pages.healthPage.form.notes')}</label>
                   <textarea
                     value={formData.notes}
                     onChange={(e) => setFormData({...formData, notes: e.target.value})}
                     className="input"
                     rows="2"
+                    placeholder={t('pages.healthPage.form.notesPlaceholder')}
                   />
                 </div>
-                <div className="flex justify-end gap-3">
+                <div className="mt-5 sm:mt-6 flex justify-end space-x-3">
                   <button
                     type="button"
-                    onClick={() => setShowAddModal(false)}
                     className="btn-secondary"
+                    onClick={() => setShowAddModal(false)}
                   >
-                    Cancel
+                    {t('common:cancel')}
                   </button>
                   <button type="submit" className="btn-primary">
-                    {selectedRecord ? 'Update' : 'Add'} Record
+                    {selectedRecord ? t('common:update') : t('common:save')}
                   </button>
                 </div>
               </form>

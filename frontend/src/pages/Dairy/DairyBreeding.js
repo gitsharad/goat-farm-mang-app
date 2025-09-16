@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import api from '../../services/api';
 
 const DairyBreeding = () => {
+  const { t } = useTranslation('dairy');
   const [animals, setAnimals] = useState([]);
   const [selectedId, setSelectedId] = useState('');
   const [animal, setAnimal] = useState(null);
@@ -44,7 +46,7 @@ const DairyBreeding = () => {
         console.error('Failed to load dairy detail', e);
         const status = e.response?.status;
         if (status === 403 || status === 404) {
-          setOwnershipError('This animal is not accessible under your account. Please select an animal you own or create a new one.');
+          setOwnershipError(t('breeding.errors.notAccessible', 'This animal is not accessible under your account. Please select an animal you own or create a new one.'));
           setAnimal(null);
         }
       } finally {
@@ -80,9 +82,9 @@ const DairyBreeding = () => {
       console.error('Failed to add breeding entry', e);
       const status = e.response?.status;
       if (status === 403 || status === 404) {
-        setOwnershipError('You do not have permission to update this animal. Select another or create a new one.');
+        setOwnershipError(t('breeding.errors.noPermission', 'You do not have permission to update this animal. Select another or create a new one.'));
       } else {
-        alert(e.response?.data?.message || 'Failed to add breeding entry');
+        alert(e.response?.data?.message || t('breeding.errors.addFailed', 'Failed to add breeding entry'));
       }
     } finally {
       setSaving(false);
@@ -95,8 +97,8 @@ const DairyBreeding = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dairy Breeding</h1>
-          <p className="text-gray-600">Manage breeding programs for dairy cattle</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('pages.breeding.title')}</h1>
+          <p className="text-gray-600">{t('pages.breeding.subtitle')}</p>
         </div>
       </div>
 
@@ -108,13 +110,15 @@ const DairyBreeding = () => {
         )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Select Animal</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('pages.selectAnimal')}
+            </label>
             <select
               className="w-full border rounded-md px-3 py-2"
               value={selectedId}
               onChange={(e) => setSelectedId(e.target.value)}
             >
-              <option value="">-- Choose --</option>
+              <option value="">-- {t('pages.breeding.choose')} --</option>
               {animals.map((a) => (
                 <option key={a._id} value={a._id}>
                   {a.animalId || a.name || a._id} ({a.breed})
@@ -127,64 +131,82 @@ const DairyBreeding = () => {
         {animal && (
           <form onSubmit={addBreeding} className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('pages.breeding.form.date')}
+              </label>
               <input type="date" name="date" value={form.date} onChange={onChange} className="w-full border rounded-md px-3 py-2" required />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Bull ID</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('pages.breeding.form.bullId')}
+              </label>
               <input type="text" name="bullId" value={form.bullId} onChange={onChange} className="w-full border rounded-md px-3 py-2" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Bull Breed</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('pages.breeding.form.bullBreed')}
+              </label>
               <input type="text" name="bullBreed" value={form.bullBreed} onChange={onChange} className="w-full border rounded-md px-3 py-2" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Method</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('pages.breeding.form.method')}
+              </label>
               <select name="method" value={form.method} onChange={onChange} className="w-full border rounded-md px-3 py-2">
-                <option>Natural</option>
-                <option>AI</option>
-                <option>ET</option>
+                {Object.entries(t('pages.breeding.methods', { returnObjects: true }))
+                  .filter(([key]) => ['natural', 'ai', 'et'].includes(key))
+                  .map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))
+                }
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Result</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('pages.breeding.form.result')}
+              </label>
               <select name="result" value={form.result} onChange={onChange} className="w-full border rounded-md px-3 py-2">
-                <option>Open</option>
-                <option>Pregnant</option>
-                <option>Aborted</option>
+                {Object.entries(t('pages.breeding.results', { returnObjects: true }))
+                  .filter(([key]) => ['open', 'pregnant', 'aborted'].includes(key))
+                  .map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('pages.breeding.form.notes')}
+              </label>
               <input type="text" name="notes" value={form.notes} onChange={onChange} className="w-full border rounded-md px-3 py-2" />
             </div>
             <div className="md:col-span-6">
               <button disabled={saving || !!ownershipError} type="submit" className="btn-primary disabled:opacity-60">
-                {saving ? 'Saving...' : 'Add Breeding Entry'}
+                {saving ? t('common.saving') : t('pages.breeding.addBreedingRecord')}
               </button>
             </div>
           </form>
         )}
       </div>
 
-      {loading && <div className="text-gray-500">Loading...</div>}
+      {loading && <div className="text-gray-500">{t('common.loading', 'Loading...')}</div>}
 
       {animal && (
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold mb-4">Breeding History</h2>
+          <h2 className="text-lg font-semibold mb-4">{t('pages.breeding.history')}</h2>
           {history.length === 0 ? (
-            <p className="text-gray-600">No entries yet.</p>
+            <p className="text-gray-600">{t('common.noRecords')}</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
-                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Date</th>
-                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Method</th>
-                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Result</th>
-                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Bull ID</th>
-                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Bull Breed</th>
-                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Notes</th>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">{t('pages.breeding.table.date')}</th>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">{t('pages.breeding.table.method')}</th>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">{t('pages.breeding.table.result')}</th>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">{t('pages.breeding.table.bullId')}</th>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">{t('pages.breeding.table.bullBreed')}</th>
+                    <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">{t('pages.breeding.table.notes')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">

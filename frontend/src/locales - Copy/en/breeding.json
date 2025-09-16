@@ -1,0 +1,108 @@
+{
+  "title": "Breeding Records",
+  "breedingRecords": {
+    "title": "Breeding Records",
+    "filters": {
+      "allStatus": "All Statuses",
+      "matingDate": "Mating Date",
+      "goat": "Goat",
+      "allGoats": "All Goats",
+      "search": "Search"
+    },
+    "addRecord": "Add Breeding Record",
+    "editRecord": "Edit Breeding Record",
+    "noRecords": "No breeding records found",
+    "kidsBorn": "{{count}} born",
+    "kidsSurvived": "{{count}} survived",
+    "notAvailable": "N/A",
+    "delete": "Delete",
+    "error": "Error processing breeding record",
+    "saveSuccess": "Breeding record saved successfully",
+    "deleteSuccess": "Breeding record deleted successfully",
+    "deleteConfirm": {
+      "title": "Delete Breeding Record",
+      "message": "Are you sure you want to delete this breeding record? This action cannot be undone."
+    },
+    "buttons": {
+      "add": "Add Record",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "close": "Close"
+    },
+    "columns": {
+      "doe": "Doe",
+      "buck": "Buck",
+      "matingDate": "Mating Date",
+      "expectedDue": "Due Date",
+      "status": "Status",
+      "kiddingDate": "Kidding Date",
+      "kids": "Kids",
+      "actions": "Actions"
+    },
+    "form": {
+      "selectDoe": "Select Doe",
+      "selectBuck": "Select Buck",
+      "doe": "Doe",
+      "buck": "Buck",
+      "matingDate": "Mating Date",
+      "expectedDueDate": "Expected Due Date",
+      "actualDueDate": "Actual Due Date",
+      "breedingMethod": "Breeding Method",
+      "breedingLocation": "Breeding Location",
+      "breedingLocationPlaceholder": "Enter breeding location",
+      "gestationPeriod": "Gestation Period (days)",
+      "healthStatus": "Health Status",
+      "status": "Status",
+      "notes": "Notes",
+      "notesPlaceholder": "Add any additional notes",
+      "pregnancyConfirmed": "Pregnancy Confirmed",
+      "kiddingDate": "Kidding Date",
+      "kidsBorn": "Kids Born",
+      "kidsSurvived": "Kids Survived",
+      "isOverdue": "Is Overdue",
+      "breedingCost": "Breeding Cost",
+      "expectedValue": "Expected Value",
+      "expectedBreed": "Expected Breed",
+      "expectedBreedPlaceholder": "Enter expected breed",
+      "veterinaryCost": "Veterinary Cost",
+      "lastCheckupDate": "Last Checkup Date",
+      "nextCheckupDate": "Next Checkup Date",
+      "complications": "Complications",
+      "pedigreeNotes": "Pedigree Notes",
+      "pedigreeNotesPlaceholder": "Enter pedigree notes",
+      "inbreedingCoefficient": "Inbreeding Coefficient",
+      "inbreedingCoefficientPlaceholder": "0.00",
+      "doeAge": "Doe Age (months)",
+      "buckAge": "Buck Age (months)",
+      "amountPlaceholder": "0.00",
+      "methodOptions": {
+        "natural": "Natural Mating",
+        "artificial": "Artificial Insemination",
+        "embryoTransfer": "Embryo Transfer"
+      },
+      "statusOptions": {
+        "mated": "Mated",
+        "pregnant": "Pregnant",
+        "delivered": "Delivered",
+        "failed": "Failed",
+        "aborted": "Aborted"
+      },
+      "healthStatusOptions": {
+        "healthy": "Healthy",
+        "monitoring": "Needs Monitoring",
+        "treatment": "Under Treatment",
+        "critical": "Critical"
+      }
+    },
+    "modals": {
+      "titleAdd": "Add Breeding Record",
+      "titleEdit": "Edit Breeding Record",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "confirmDelete": "Are you sure you want to delete this record?"
+    }
+  }
+}

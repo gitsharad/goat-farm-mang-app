@@ -1,0 +1,423 @@
+{
+  "poultry": {
+    "dashboard": {
+    "title": "कोंबडीपालन डॅशबोर्ड",
+    "subtitle": "तुमचे कोंबडीपालन फार्म व्यवस्थापित करा",
+    "summary": "कोंबडीपालन फार्मचा आढावा",
+    "totalBirds": "एकूण पक्षी",
+    "activeBirds": "सक्रिय पक्षी",
+    "eggProduction": "अंडी उत्पादन",
+    "feedConsumption": "चारा वापर",
+    "mortalityRate": "मृत्यू दर",
+    "recentActivity": "अलीकडील क्रियाकलाप",
+    "viewAll": "सर्व पहा",
+    "viewSchedule": "लसीकरण वेळपत्रक पहा",
+    "vaccinationAlert": "आगामी लसीकरणे",
+    "vaccinationMessage": "तुमच्याकडे लवकरच {{count}} लसीकरणे बाकी आहेत. कृपया वेळपत्रक तपासा.",
+    "managePoultry": "तुमची कोंबडीपालन यादी आणि नोंदी व्यवस्थापित करा",
+    "healthRecords": "आरोग्य नोंदी पहा आणि व्यवस्थापित करा",
+    "feedManagement": "चारा वापर ट्रॅक करा आणि यादी व्यवस्थापित करा",
+    "salesInventory": "विक्री अहवाल आणि यादी पहा",
+    "addBatch": "नवीन बॅच जोडा",
+    "quickActions": "द्रुत कृती",
+    "healthAlerts": "आरोग्य सूचना",
+    "noAlerts": "कोणत्याही सक्रिय सूचना नाहीत",
+    "noRecentActivity": "अलीकडील कोणतेही क्रियाकलाप नाहीत"
+  },
+  "healthPage": {
+    "title": "कोंबडीपालन आरोग्य नोंदी",
+    "subtitle": "तुमच्या कोंबडीपालनाच्या आरोग्य नोंदी व्यवस्थापित करा आणि ट्रॅक करा",
+    "addRecord": "आरोग्य नोंद जोडा",
+    "filters": {
+      "search": "नोंदी शोधा...",
+      "batch": "बॅचनुसार फिल्टर करा",
+      "type": "प्रकारानुसार फिल्टर करा",
+      "date": "तारखेनुसार फिल्टर करा",
+      "allBatches": "सर्व बॅच",
+      "allTypes": "सर्व प्रकार",
+      "allDates": "सर्व तारखा"
+    },
+    "table": {
+      "date": "तारीख",
+      "poultryId": "कोंबडीपालन आयडी",
+      "type": "प्रकार",
+      "description": "वर्णन",
+      "veterinarian": "पशुवैद्यक",
+      "cost": "खर्च",
+      "nextDue": "पुढील दिनांक",
+      "actions": "क्रिया",
+      "noRecords": "आरोग्य नोंदी सापडल्या नाहीत",
+      "viewDetails": "तपशील पहा",
+      "edit": "सुधारा",
+      "delete": "हटवा"
+    },
+    "form": {
+      "batch": "बॅच",
+      "date": "तारीख",
+      "type": "प्रकार",
+      "selectType": "प्रकार निवडा",
+      "description": "वर्णन",
+      "veterinarian": "पशुवैद्यक",
+      "addTitle": "नवीन कोंबडीपालन जोडा",
+      "editTitle": "कोंबडीपालन संपादित करा",
+      "sections": {
+        "basicInfo": "मूलभूत माहिती",
+        "healthInfo": "आरोग्य माहिती"
+      },
+      "labels": {
+        "tagNumber": "टॅग क्रमांक",
+        "batchNumber": "बॅच क्रमांक",
+        "breed": "जात",
+        "type": "प्रकार",
+        "dateOfHatch": "उबवणीची तारीख",
+        "sources": {
+          "Hatchery": "हॅचरी",
+          "FarmRaised": "शेतातील वाढवलेले",
+          "LocalMarket": "स्थानिक बाजार",
+          "Other": "इतर"
+        },
+        "source": "स्रोत",
+        "status": "स्थिती",
+        "location": "स्थान",
+        "notes": "नोंदी",
+        "healthStatus": "आरोग्य स्थिती",
+        "lastCheckup": "शेवटची तपासणी",
+        "healthIssues": "आरोग्य समस्या",
+        "lastVaccine": "शेवटचे लसीकरण",
+        "vaccineDate": "लसीकरणाची तारीख",
+        "nextVaccineDate": "पुढील तारीख"
+      },
+      "placeholders": {
+        "tagNumber": "पी-००१",
+        "batchNumber": "बी-२०२३-०१",
+        "location": "उदा., कूप अ, पेन ३",
+        "healthIssues": "कोणत्याही आरोग्य समस्या किंवा निरीक्षणे...",
+        "vaccineName": "लसीचे नाव"
+      },
+      "validation": {
+        "tagNumberRequired": "टॅग क्रमांक आवश्यक आहे",
+        "vaccineNameRequired": "तारीख दिली असल्यास लसीचे नाव आवश्यक आहे",
+        "vaccineDateRequired": "लसीचे नाव दिले असल्यास तारीख आवश्यक आहे"
+      },
+      "healthStatus": {
+        "healthy": "निरोगी",
+        "sick": "आजारी",
+        "underTreatment": "उपचाराखाली",
+        "recovering": "बरी होत आहे"
+      },
+      "selectBatch": "बॅच निवडा",
+      "selectFeedType": "चाऱ्याचा प्रकार निवडा",
+      "selectUnit": "एकक निवडा",
+      "consumed": "वापरलेली रक्कम",
+      "veterinarianPlaceholder": "पशुवैद्यकाचे नाव प्रविष्ट करा",
+      "medications": "औषधे",
+      "addMedication": "औषध जोडा",
+      "cost": "खर्च (₹)",
+      "costPlaceholder": "रक्कम प्रविष्ट करा",
+      "nextDueDate": "पुढील देय तारीख",
+      "notes": "नोट्स",
+      "notesPlaceholder": "अतिरिक्त नोट्स इथे जोडा",
+      "attachments": "जोडलेली फाइल्स",
+      "addAttachment": "फाइल जोडा",
+      "save": "नोंद सेव करा",
+      "update": "नोंद अद्यतनित करा",
+      "cancel": "रद्द करा",
+      "updateSuccess": "नोंद अद्यतनित करा"
+    },
+    "types": {
+      "Vaccination": "लसीकरण",
+      "Deworming": "कृमिनाशक",
+      "Treatment": "उपचार",
+      "Checkup": "तपासणी",
+      "Surgery": "शस्त्रक्रिया",
+      "Other": "इतर"
+    },
+    "deleteConfirm": {
+      "title": "नोंद हटवा",
+      "message": "तुम्हाला ही आरोग्य नोंद खरोखर हटवायची आहे का?",
+      "cancel": "रद्द करा",
+      "confirm": "हटवा"
+    },
+    "alerts": {
+      "addSuccess": "आरोग्य नोंद यशस्वीरित्या जोडली",
+      "updateSuccess": "आरोग्य नोंद यशस्वीरित्या अद्यतनित केली",
+      "deleteSuccess": "आरोग्य नोंद यशस्वीरित्या हटवली",
+      "error": "एक त्रुटी आली. कृपया पुन्हा प्रयत्न करा.",
+      "loadError": "आरोग्य नोंदी लोड करण्यात अयशस्वी"
+    }
+  },
+  "types": {
+    "Broiler": "ब्रॉयलर",
+    "Layer": "लेयर",
+    "Desi": "देशी",
+    "Kadaknath": "काळी मसूर",
+    "Aseel": "असील",
+    "RhodeIslandRed": "रोड आयलंड रेड",
+    "Other": "इतर",
+    "DualPurpose": "दुहेरी हेतू"
+  },
+  "sources": {
+    "Hatchery": "हॅचरी",
+    "FarmRaised": "शेतातील वाढवलेले",
+    "LocalMarket": "स्थानिक बाजार",
+    "Other": "इतर"
+  },
+  "status": {
+    "active": "सक्रिय",
+    "inactive": "निष्क्रिय",
+    "sold": "विकले",
+    "deceased": "मृत"
+  },
+  "healthStatus": {
+    "healthy": "निरोगी",
+    "sick": "आजारी",
+    "underTreatment": "उपचाराखाली",
+    "recovering": "बरी होत आहे"
+  },
+  "form": {
+    "sections": {
+      "basicInfo": "मूलभूत माहिती",
+      "healthInfo": "आरोग्य माहिती",
+      "vaccination": "लसीकरण"
+    },
+    "labels": {
+      "type": "प्रकार",
+      "dateOfHatch": "उबवणीची तारीख",
+      "source": "स्त्रोत",
+      "status": "स्थिती",
+      "location": "स्थान",
+      "healthStatus": "आरोग्य स्थिती",
+      "lastCheckup": "शेवटची तपासणी",
+      "healthIssues": "आरोग्य समस्या",
+      "lastVaccine": "शेवटचे लसीकरण",
+      "vaccineDate": "लसीकरणाची तारीख",
+      "nextVaccineDate": "पुढील तारीख",
+      "notes": "नोंदी"
+    },
+    "placeholders": {
+      "location": "स्थान प्रविष्ट करा",
+      "healthIssues": "कोणत्याही आरोग्य समस्या किंवा निरीक्षणे...",
+      "vaccineName": "लसीचे नाव",
+      "additionalNotes": "अतिरिक्त नोंदी..."
+    },
+    "validation": {
+      "vaccineNameRequired": "लसीचे नाव आवश्यक आहे",
+      "vaccineDateRequired": "लसीकरणाची तारीख आवश्यक आहे"
+    },
+    "selectBreed": "जात निवडा"
+  },
+  "buttons": {
+    "cancel": "रद्द करा",
+    "save": "जतन करा",
+    "saving": "जतन करत आहे...",
+    "update": "अद्यतनित करा"
+  },
+  "navigation": {
+    "dashboard": "डॅशबोर्ड",
+    "flock": "कळप व्यवस्थापन",
+    "eggs": "अंडी उत्पादन",
+    "feed": "चारा व्यवस्थापन",
+    "health": "आरोग्य नोंदी",
+    "sales": "विक्री आणि यादी"
+  },
+  "feedPage": {
+    "title": "कोंबडीपालन चारा नोंदी",
+    "subtitle": "चारा वापर आणि यादी व्यवस्थापित करा आणि ट्रॅक करा",
+    "addRecord": "चारा नोंद जोडा",
+    "filters": {
+      "search": "नोंदी शोधा...",
+      "batch": "बॅचनुसार फिल्टर करा",
+      "feedType": "चाऱ्याच्या प्रकारानुसार फिल्टर करा",
+      "date": "तारखेनुसार फिल्टर करा",
+      "allBatches": "सर्व बॅच",
+      "allTypes": "सर्व प्रकार",
+      "allDates": "सर्व तारखा"
+    },
+    "table": {
+      "batch": "बॅच",
+      "date": "तारीख",
+      "feedType": "चाऱ्याचा प्रकार",
+      "quantity": "प्रमाण",
+      "unit": "एकक",
+      "cost": "खर्च",
+      "notes": "नोट्स",
+      "consumed": "वापरले",
+      "waste": "वाया गेले",
+      "actions": "क्रिया",
+      "noRecords": "चाऱ्याच्या नोंदी सापडल्या नाहीत",
+      "viewDetails": "तपशील पहा",
+      "edit": "सुधारा",
+      "delete": "हटवा"
+    },
+    "form": {
+      "addTitle": "चारा नोंद जोडा",
+      "editTitle": "चारा नोंद सुधारा",
+      "batch": "बॅच",
+      "selectBatch": "बॅच निवडा",
+      "date": "तारीख",
+      "feedType": "चाऱ्याचा प्रकार",
+      "selectFeedType": "चाऱ्याचा प्रकार निवडा",
+      "quantity": "प्रमाण",
+      "unit": "एकक",
+      "selectUnit": "एकक निवडा",
+      "cost": "खर्च (₹)",
+      "costPlaceholder": "रक्कम प्रविष्ट करा",
+      "notes": "नोट्स",
+      "notesPlaceholder": "अतिरिक्त नोट्स इथे जोडा",
+      "consumed": "वापरलेले प्रमाण",
+      "waste": "वाया गेलेले प्रमाण",
+      "save": "नोंद जतन करा",
+      "update": "नोंद अद्यतनित करा",
+      "cancel": "रद्द करा"
+    },
+    "types": {
+      "Starter": "स्टार्टर",
+      "Pre-Starter": "प्री-स्टार्टर",
+      "Grower": "ग्रोवर",
+      "Finisher": "फिनिशर",
+      "Layer": "लेयर",
+      "Breeder": "ब्रीडर",
+      "ChickStarter": "चिक स्टार्टर",
+      "BroilerStarter": "ब्रॉयलर स्टार्टर",
+      "BroilerGrower": "ब्रॉयलर ग्रोवर",
+      "BroilerFinisher": "ब्रॉयलर फिनिशर",
+      "Grain": "धान्य",
+      "MaizeCorn": "मका/कॉर्न",
+      "SoybeanMeal": "सोयाबीन मील",
+      "FishMeal": "फिश मील",
+      "Vitamins": "जीवनसत्त्वे",
+      "Minerals": "खनिजे",
+      "Grit": "ग्रिट",
+      "OysterShell": "ऑयस्टर शेल",
+      "Mash": "मॅश",
+      "Crumbles": "क्रंबल्स",
+      "Pellets": "पेलेट्स",
+      "Scratch": "स्क्रॅच",
+      "Greens": "हिरव्या पाला",
+      "Water": "पाणी",
+      "Probiotics": "प्रोबायोटिक्स",
+      "Supplement": "पूरक आहार",
+      "MedicatedFeed": "औषधी चारा",
+      "Other": "इतर"
+    },
+    "deleteConfirm": {
+      "title": "नोंद हटवा",
+      "message": "तुम्हाला ही चाऱ्याची नोंद हटवायची आहे का?",
+      "cancel": "रद्द करा",
+      "confirm": "हटवा"
+    },
+    "alerts": {
+      "addSuccess": "चाऱ्याची नोंद यशस्वीरित्या जोडली गेली",
+      "updateSuccess": "चाऱ्याची नोंद यशस्वीरित्या अद्यतनित केली गेली",
+      "deleteSuccess": "चाऱ्याची नोंद यशस्वीरित्या हटवली गेली",
+      "error": "एक त्रुटी आली. कृपया पुन्हा प्रयत्न करा.",
+      "loadError": "चाऱ्याच्या नोंदी लोड करण्यात अयशस्वी"
+    }
+  },
+  "poultryPage": {
+    "title": "कोंबडीपालन व्यवस्थापन",
+    "subtitle": "तुमची कोंबडीपालन यादी आणि नोंदी व्यवस्थापित करा",
+    "viewReports": "अहवाल पहा",
+    "addPoultry": "कोंबडीपालन जोडा",
+    "filters": {
+      "title": "फिल्टर्स",
+      "showFilters": "फिल्टर्स दाखवा",
+      "hideFilters": "फिल्टर्स लपवा",
+      "breed": "जात",
+      "type": "प्रकार",
+      "status": "स्थिती",
+      "allBreeds": "सर्व जाती",
+      "allTypes": "सर्व प्रकार",
+      "allStatus": "सर्व स्थिती",
+      "resetFilters": "फिल्टर्स रीसेट करा",
+      "searchPlaceholder": "टॅग किंवा बॅच नंबरनुसार शोधा..."
+    },
+    "table": {
+      "tagNumber": "टॅग #",
+      "batchNumber": "बॅच #",
+      "breed": "जात",
+      "type": "प्रकार",
+      "age": "वय",
+      "status": "स्थिती",
+      "actions": "क्रिया",
+      "noRecords": "कोंबडीपालनच्या नोंदी सापडल्या नाहीत",
+      "viewDetails": "तपशील पहा",
+      "edit": "सुधारा",
+      "delete": "हटवा",
+      "months": "{{count}} महिने",
+      "na": "लागू नाही"
+    },
+    "pagination": {
+      "previous": "मागील",
+      "next": "पुढील",
+      "showingPage": "पृष्ठ {{current}} पैकी {{total}}",
+      "previousPage": "मागील पृष्ठ",
+      "nextPage": "पुढील पृष्ठ"
+    },
+    "deleteConfirm": "तुम्हाला खरोखरच ही कोंबडीपालन नोंद हटवायची आहे का?",
+    "deleteSuccess": "कोंबडीपालन नोंद यशस्वीरित्या हटवली",
+    "deleteError": "कोंबडीपालन नोंद हटविण्यात अयशस्वी",
+    "loadError": "कोंबडीपालन डेटा लोड करण्यात अयशस्वी"
+  },
+  "reports": {
+    "title": "कोंबडीपालन विश्लेषण",
+    "subtitle": "तुमच्या कोंबडीपालनाचे कामगिरीचे विश्लेषण करा",
+    "quickStats": "द्रुत आकडेवारी",
+    "totalBirds": "एकूण पक्षी",
+    "totalEggs7d": "अंडी (7 दिवस)",
+    "vaccinations30d": "लसीकरणे (30 दिवस)",
+    "sections": {
+      "eggProduction": "अंडी उत्पादन",
+      "vaccinationSummary": "लसीकरण सारांश",
+      "inventoryStatus": "यादी स्थिती"
+    },
+    "labels": {
+      "eggsProduced": "उत्पादित अंडी",
+      "eggsDamaged": "नष्ट झालेली अंडी",
+      "vaccinationsAdministered": "दिलेली लसीकरणे",
+      "numberOfBirds": "पक्ष्यांची संख्या"
+    },
+    "messages": {
+      "exportingCSV": "डेटा CSV मध्ये एक्सपोर्ट केला जात आहे..."
+    }
+  },
+  "common": {
+    "loading": "लोड होत आहे...",
+    "unknown": "अज्ञात",
+    "previous": "मागील",
+    "next": "पुढील",
+    "showingPage": "पृष्ठ {{current}} पैकी {{total}}",
+    "previousPage": "मागील पृष्ठ",
+    "nextPage": "पुढील पृष्ठ",
+    "sales": "विक्री",
+    "buttons": {
+      "export": "एक्सपोर्ट करा",
+      "save": "जतन करा",
+      "cancel": "रद्द करा",
+      "delete": "हटवा",
+      "edit": "सुधारा",
+      "view": "पहा"
+    },
+    "units": {
+      "kg": "किलो",
+      "g": "ग्रॅम",
+      "lbs": "पाउंड",
+      "tonnes": "टन",
+      "liters": "लीटर",
+      "ml": "मिलीलीटर",
+      "gallons": "गॅलन",
+      "scoops": "स्कूप",
+      "bags": "पोती"
+    }
+  },
+  "production": {
+    "title": "कोंबडीपालन उत्पादन",
+    "subtitle": "बॅचनुसार अंडी उत्पादन ट्रॅक करा",
+    "selectBatch": "बॅच निवडा",
+    "noBatches": "कोणतेही बॅच उपलब्ध नाहीत",
+    "errors": {
+      "loadBatches": "कोंबडीपालन बॅच लोड करण्यात अयशस्वी"
+    }
+  }
+}
+}

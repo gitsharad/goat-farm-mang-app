@@ -8,9 +8,24 @@
  * - Retry configurations
  */
 
+// Helper function to ensure URLs are properly formatted for the proxy
+export const ensureApiPrefix = (url) => {
+  // If it's a full URL, return as is
+  if (url.startsWith('http')) {
+    return url;
+  }
+  
+  // Remove any leading slashes and 'api/' if it exists to prevent double prefix
+  let cleanUrl = url.replace(/^\/+/g, '');
+  cleanUrl = cleanUrl.replace(/^api\//, '');
+  
+  // Add single /api/ prefix for all API requests
+  return `/api/${cleanUrl}`;
+};
+
 export const API_CONFIG = {
-  // Base URL for API requests - using relative path with proxy
-  BASE_URL: '/api', // Proxy will forward to http://localhost:5000
+  // Base URL is set to /api to match backend routes
+  BASE_URL: '/api',
   
   // Default request timeout in milliseconds
   TIMEOUT: 15000, // 15 seconds

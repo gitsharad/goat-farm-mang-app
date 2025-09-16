@@ -1,0 +1,77 @@
+{
+  "dairy": {
+    "dashboard": {
+      "title": "डेअरी डॅशबोर्ड",
+      "subtitle": "तुमच्या डेअरी कार्यक्रमाचे विहंगावलोकन",
+      "totalAnimals": "एकूण प्राणी",
+      "lactatingAnimals": "दूध देणारे प्राणी",
+      "pregnantAnimals": "गरोदर प्राणी",
+      "dailyMilkProduction": "दैनंदिन दुध उत्पादन",
+      "avgMilkYield": "सरासरी दूध उत्पादन",
+      "dueThisWeek": "या आठवड्यात अपेक्षित",
+      "recentActivity": "अलीकडील क्रियाकलाप",
+      "milkProductionTrend": "दुध उत्पादनाची प्रवृत्ती",
+      "healthAlerts": "आरोग्य सूचना"
+    },
+    "quickActions": {
+      "manageDairy": {
+        "title": "डेअरी व्यवस्थापन",
+        "description": "सर्व डेअरी प्राणी पहा आणि व्यवस्थापित करा"
+      },
+      "health": {
+        "title": "आरोग्य नोंदी",
+        "description": "प्राण्यांचे आरोग्य आणि उपचार ट्रॅक करा"
+      },
+      "milkProduction": {
+        "title": "दुध उत्पादन",
+        "description": "दुध उत्पादनाची नोंद आणि ट्रॅकिंग करा"
+      },
+      "breeding": {
+        "title": "पैदास",
+        "description": "पैदास नोंदी आणि वेळापत्रक व्यवस्थापित करा"
+      },
+      "feeding": {
+        "title": "खाद्य व्यवस्था",
+        "description": "खाद्य वेळापत्रक आणि पोषण व्यवस्थापित करा"
+      },
+      "reports": {
+        "title": "अहवाल",
+        "description": "तपशीलवार अहवाल आणि विश्लेषण पहा"
+      }
+    },
+    "milkProductionOverview": "दुध उत्पादनाचे विहंगावलोकन",
+    "dailyMilkProduction": "आज {{liters}} लिटर",
+    "averageDailyProduction": "सरासरी दैनंदिन उत्पादन",
+    "milkingCows": "दुध देणाऱ्या गायी",
+    "currentlyMilking": "सध्या दुध काढत आहे",
+    "viewDetailedProduction": "तपशीलवार उत्पादन अहवाल पहा",
+    
+    "title": "डेअरी व्यवस्थापन",
+    "subtitle": "आपल्या डेअरी प्राण्यांचे व्यवस्थापन करा",
+    "statusText": "स्थिती",
+    "milkProduction1": "दुध उत्पादन",
+    "addAnimal": "प्राणी जोडा",
+    "animalId": "प्राण्याचा ID",
+    "name": "नाव",
+    "breed": "जात",
+    "dateOfBirth": "जन्मतारीख",
+    "gender": "लिंग",
+    "lastMilking": "शेवटचे दूध काढणे",
+    "avgMilkYield": "सरासरी दुध उत्पादन (लीटर)",
+    "lastVaccination": "शेवटचे लसीकरण",
+    "nextVaccination": "पुढील लसीकरणाची तारीख",
+    "actions": "क्रिया",
+    "noAnimalsFound": "कोणतेही डेअरी प्राणी सापडले नाहीत",
+    "searchPlaceholder": "प्राणी शोधा...",
+    "filterByStatus": "स्थितीनुसार फिल्टर करा",
+    "allStatuses": "सर्व स्थिती",
+    "lactating": "दूध देणारे",
+    "dry": "सुकलेले",
+    "pregnant": "गरोदर",
+    "heifer": "वांझ",
+    "bull": "बैल",
+    "sold": "विकले",
+    "deceased": "मृत",
+    "addYourFirstAnimal": "आपला पहिला प्राणी जोडा"
+  }
+}

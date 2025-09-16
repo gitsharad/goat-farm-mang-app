@@ -2,10 +2,33 @@ const express = require('express');
 const router = express.Router();
 const BreedingRecord = require('../models/BreedingRecord');
 const Goat = require('../models/Goat');
+const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
+
+// Test endpoint to verify route and database connection
+router.get('/test', async (req, res) => {
+  console.log('Breeding test endpoint hit');
+  try {
+    const count = await BreedingRecord.countDocuments();
+    res.json({
+      success: true,
+      message: 'Breeding route is working',
+      dbStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+      recordCount: count
+    });
+  } catch (error) {
+    console.error('Breeding test error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error accessing database',
+      error: error.message
+    });
+  }
+});
 
 // Get all breeding records with filtering
 router.get('/', async (req, res) => {
+  console.log('Breeding route hit. Query params:', req.query);
   try {
     const { 
       page = 1, 
@@ -16,8 +39,13 @@ router.get('/', async (req, res) => {
       startDate,
       endDate,
       sortBy = 'matingDate',
-      sortOrder = 'desc'
+      sortOrder = 'desc',
+      _t // Cache busting parameter
     } = req.query;
+    
+    console.log('Processing breeding records request with params:', {
+      page, limit, doeId, buckId, status, startDate, endDate, sortBy, sortOrder
+    });
 
     const filter = {};
     

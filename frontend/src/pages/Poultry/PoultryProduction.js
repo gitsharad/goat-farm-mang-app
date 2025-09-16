@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Egg, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../../services/api';
 import ProductionRecords from './components/ProductionRecords';
 
 const PoultryProduction = () => {
   const [batches, setBatches] = useState([]);
+  const { t } = useTranslation('poultry');
   const [loading, setLoading] = useState(true);
   const [selectedId, setSelectedId] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +21,7 @@ const PoultryProduction = () => {
         if (list.length > 0) setSelectedId(list[0]._id);
       } catch (e) {
         console.error(e);
-        setError('Failed to load poultry batches');
+        setError(t('production.errors.loadBatches'));
       } finally {
         setLoading(false);
       }
@@ -41,9 +43,9 @@ const PoultryProduction = () => {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center">
             <Egg className="w-6 h-6 text-yellow-600 mr-2" />
-            Poultry Production
+            {t('production.title')}
           </h1>
-          <p className="text-gray-600">Track egg production by batch</p>
+          <p className="text-gray-600">{t('production.subtitle')}</p>
         </div>
       </div>
 
@@ -54,7 +56,7 @@ const PoultryProduction = () => {
       )}
 
       <div className="bg-white rounded-lg shadow p-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Select Batch</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t('production.selectBatch')}</label>
         <div className="relative">
           <select
             className="input w-full appearance-none pr-10"
@@ -63,7 +65,7 @@ const PoultryProduction = () => {
           >
             {batches.map((b) => (
               <option key={b._id} value={b._id}>
-                {b.batchName || b.name || 'Unnamed'} (Qty: {b.quantity || 0})
+                {b.batchName || b.name || t('common.unnamed')} ({t('common.quantity')}: {b.quantity || 0})
               </option>
             ))}
           </select>
@@ -76,7 +78,7 @@ const PoultryProduction = () => {
           <ProductionRecords poultryId={selectedId} />
         </div>
       ) : (
-        <div className="text-gray-500">No batches available.</div>
+        <div className="text-gray-500">{t('production.noBatches')}</div>
       )}
     </div>
   );

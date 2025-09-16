@@ -1,0 +1,119 @@
+{
+  "goat": {
+    "title": "Goat Management",
+    "subtitle": "Manage your goats and their records",
+    "addGoat": "Add Goat",
+    "editGoat": "Edit Goat",
+    "goatId": "Goat ID",
+    "name": "Name",
+    "gender": "Gender",
+    "breed": "Breed",
+    "dateOfBirth": "Date of Birth",
+    "age": "Age",
+    "weight": "Weight (kg)",
+    "color": "Color",
+    "purchaseDate": "Purchase Date",
+    "purchasePrice": "Purchase Price",
+    "status": "Status",
+    "notes": "Notes",
+    "parentInfo": "Parent Information",
+    "sire": "Sire",
+    "dam": "Dam",
+    "healthRecords": "Health Records",
+    "breedingRecords": "Breeding Records",
+    "milkingRecords": "Milking Records",
+    "feedRecords": "Feed Records",
+    "vaccinationRecords": "Vaccination Records",
+    "lastUpdated": "Last Updated",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "filters": {
+      "all": "All Goats",
+      "male": "Male Goats",
+      "female": "Female Goats",
+      "pregnant": "Pregnant Goats",
+      "kids": "Kids",
+      "forSale": "For Sale",
+      "sold": "Sold",
+      "deceased": "Deceased"
+    },
+    "genderOptions": {
+      "male": "Male",
+      "female": "Female"
+    },
+    "statusOptions": {
+      "active": "Active",
+      "sold": "Sold",
+      "deceased": "Deceased",
+      "soldForBreeding": "Sold for Breeding",
+      "retired": "Retired"
+    },
+    "breedOptions": {
+      "boer": "Boer",
+      "nubian": "Nubian",
+      "alpine": "Alpine",
+      "saanen": "Saanen",
+      "toggenburg": "Toggenburg",
+      "laMancha": "LaMancha",
+      "oberhasli": "Oberhasli",
+      "nigerianDwarf": "Nigerian Dwarf",
+      "pygmy": "Pygmy",
+      "angora": "Angora",
+      "cashmere": "Cashmere",
+      "jamunapari": "Jamunapari",
+      "sirohi": "Sirohi",
+      "barbari": "Barbari",
+      "osmanabadi": "Osmanabadi",
+      "malabari": "Malabari",
+      "surti": "Surti",
+      "jakhrana": "Jakhrana",
+      "marwari": "Marwari",
+      "other": "Other"
+    },
+    "colorOptions": {
+      "white": "White",
+      "black": "Black",
+      "brown": "Brown",
+      "gray": "Gray",
+      "red": "Red",
+      "tan": "Tan",
+      "spotted": "Spotted",
+      "multiColored": "Multi-colored"
+    },
+    "success": {
+      "created": "Goat created successfully",
+      "updated": "Goat updated successfully",
+      "deleted": "Goat deleted successfully"
+    },
+    "errors": {
+      "createError": "Error creating goat",
+      "updateError": "Error updating goat",
+      "deleteError": "Error deleting goat",
+      "notFound": "Goat not found"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "genderRequired": "Gender is required",
+      "breedRequired": "Breed is required",
+      "dateOfBirthRequired": "Date of birth is required",
+      "invalidDate": "Invalid date format"
+    },
+    "details": {
+      "title": "Goat Details",
+      "basicInfo": "Basic Information",
+      "physicalAttributes": "Physical Attributes",
+      "ownership": "Ownership",
+      "medicalHistory": "Medical History",
+      "reproduction": "Reproduction",
+      "weightHistory": "Weight History"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "health": "Health",
+      "breeding": "Breeding",
+      "milking": "Milking",
+      "feed": "Feed",
+      "documents": "Documents"
+    }
+  }
+}

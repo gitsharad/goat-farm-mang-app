@@ -1,0 +1,124 @@
+{
+  "healthRecords": {
+    "title": "Goat Health Records",
+    "addRecord": "Add Health Record",
+    "editRecord": "Edit Health Record",
+    "noRecords": "No health records found",
+    "tableHeaders": {
+      "goat": "Goat",
+      "date": "Date",
+      "type": "Type",
+      "description": "Description",
+      "veterinarian": "Veterinarian",
+      "cost": "Cost",
+      "nextDueDate": "Next Due",
+      "actions": "Actions"
+    },
+    "form": {
+      "selectGoat": "Select Goat",
+      "date": "Date",
+      "type": "Record Type",
+      "typeOptions": {
+        "vaccination": "Vaccination",
+        "deworming": "Deworming",
+        "treatment": "Treatment",
+        "checkup": "Checkup",
+        "pregnancyCheck": "Pregnancy Check",
+        "delivery": "Delivery Record",
+        "hoofCare": "Hoof Care",
+        "dental": "Dental Check"
+      },
+      "description": "Description",
+      "veterinarian": "Veterinarian Name",
+      "nextVisitDate": "Next Visit Date",
+      "status": "Status",
+      "statusOptions": {
+        "scheduled": "Scheduled",
+        "completed": "Completed",
+        "pending": "Pending",
+        "cancelled": "Cancelled",
+        "inProgress": "In Progress"
+      },
+      "vitalSigns": {
+        "title": "Vital Signs",
+        "temperature": "Temperature (°C)",
+        "heartRate": "Heart Rate (bpm)",
+        "respirationRate": "Respiration Rate",
+        "weight": "Weight (kg)",
+        "bodyCondition": "Body Condition Score"
+      },
+      "medication": {
+        "name": "Medication Name",
+        "dosage": "Dosage",
+        "frequency": "Frequency",
+        "duration": "Duration (days)",
+        "addMedication": "Add Medication",
+        "route": "Administration Route",
+        "routeOptions": {
+          "oral": "Oral",
+          "injection": "Injection",
+          "topical": "Topical",
+          "intramuscular": "Intramuscular",
+          "subcutaneous": "Subcutaneous"
+        }
+      },
+      "submit": "Save Record",
+      "cancel": "Cancel"
+    },
+    "table": {
+      "date": "Date",
+      "goat": "Goat",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "actions": "Actions",
+      "veterinarian": "Veterinarian"
+    },
+    "deleteConfirm": "Are you sure you want to delete this health record?",
+    "deleteSuccess": "Health record deleted successfully",
+    "saveSuccess": "Health record saved successfully",
+    "error": "Error processing health record",
+    "filters": {
+      "all": "All Records",
+      "last30Days": "Last 30 Days",
+      "last6Months": "Last 6 Months",
+      "thisYear": "This Year",
+      "byStatus": "Filter by Status"
+    },
+    "export": {
+      "title": "Export Records",
+      "format": "Format",
+      "dateRange": "Date Range",
+      "download": "Download"
+    }
+  },
+  "symptoms": {
+    "title": "Symptoms",
+    "addSymptom": "Add Symptom",
+    "commonSymptoms": "Common Symptoms",
+    "selectSymptom": "Select Symptom",
+    "severity": "Severity",
+    "severityLevels": {
+      "mild": "Mild",
+      "moderate": "Moderate",
+      "severe": "Severe"
+    },
+    "notes": "Notes"
+  },
+  "treatments": {
+    "title": "Treatments",
+    "addTreatment": "Add Treatment",
+    "treatmentType": "Treatment Type",
+    "medication": "Medication",
+    "dosage": "Dosage",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "instructions": "Instructions"
+  },
+  "alerts": {
+    "upcomingTreatments": "Upcoming Treatments",
+    "dueForVaccination": "Due for Vaccination",
+    "dueForDeworming": "Due for Deworming",
+    "noAlerts": "No health alerts"
+  }
+}

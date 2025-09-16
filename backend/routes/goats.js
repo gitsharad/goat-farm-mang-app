@@ -3,6 +3,60 @@ const router = express.Router();
 const Goat = require("../models/Goat");
 const { body, validationResult } = require("express-validator");
 
+// Get all available goat breeds
+router.get('/breeds', async (req, res) => {
+  try {
+    console.log('Fetching goat breeds from schema...');
+    
+    // Get the enum values from the schema
+    const breedPath = Goat.schema.path('breed');
+    if (!breedPath || !breedPath.enumValues) {
+      console.error('Breed enum values not found in schema');
+      return res.status(500).json({ 
+        success: false,
+        message: 'Breed enum values not found in schema',
+        schema: Goat.schema.obj.breed // Include the breed schema for debugging
+      });
+    }
+    
+    const breeds = breedPath.enumValues;
+    console.log('Available breeds:', breeds);
+    
+    if (!breeds || breeds.length === 0) {
+      console.warn('No breeds found in schema');
+      // Return a default set of breeds if none found in schema
+      const defaultBreeds = [
+        'Boer', 'Nubian', 'Alpine', 'Saanen', 'Toggenburg', 'LaMancha',
+        'Jamunapari', 'Sirohi', 'Barbari', 'Osmanabadi', 'Malabari', 'Surti',
+        'Jakhrana', 'Marwari', 'Mixed', 'Other'
+      ];
+      return res.json(defaultBreeds);
+    }
+    
+    res.json(breeds);
+  } catch (error) {
+    console.error('Error in /breeds endpoint:', {
+      message: error.message,
+      stack: error.stack,
+      schema: Goat.schema.obj.breed
+    });
+    
+    // Return a default set of breeds in case of error
+    const defaultBreeds = [
+      'Boer', 'Nubian', 'Alpine', 'Saanen', 'Toggenburg', 'LaMancha',
+      'Jamunapari', 'Sirohi', 'Barbari', 'Osmanabadi', 'Malabari', 'Surti',
+      'Jakhrana', 'Marwari', 'Mixed', 'Other'
+    ];
+    
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching goat breeds',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+      defaultBreeds: defaultBreeds
+    });
+  }
+});
+
 // Get all goats with filtering and pagination
 router.get("/", async (req, res) => {
   try {

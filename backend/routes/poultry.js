@@ -138,6 +138,78 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+// Get production report
+router.get('/reports/production', auth, async (req, res) => {
+  try {
+    const { timeRange = '7d' } = req.query;
+    const userId = new mongoose.Types.ObjectId(req.user.id);
+
+    // Calculate date range based on timeRange parameter
+    let startDate = new Date();
+    switch(timeRange) {
+      case '1d':
+        startDate.setDate(startDate.getDate() - 1);
+        break;
+      case '7d':
+        startDate.setDate(startDate.getDate() - 7);
+        break;
+      case '30d':
+        startDate.setDate(startDate.getDate() - 30);
+        break;
+      case '90d':
+        startDate.setDate(startDate.getDate() - 90);
+        break;
+      default:
+        startDate.setDate(startDate.getDate() - 7); // Default to 7 days
+    }
+
+    // Aggregate production data
+    const productionData = await ProductionRecord.aggregate([
+      {
+        $match: {
+          createdBy: userId,
+          date: { $gte: startDate },
+          type: 'egg'
+        }
+      },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: '%Y-%m-%d', date: '$date' }
+          },
+          totalEggs: { $sum: '$quantity' },
+          batches: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    // Format the response
+    const result = {
+      timeRange,
+      startDate,
+      endDate: new Date(),
+      totalEggs: productionData.reduce((sum, day) => sum + day.totalEggs, 0),
+      averageDailyProduction: productionData.length > 0 
+        ? (productionData.reduce((sum, day) => sum + day.totalEggs, 0) / productionData.length).toFixed(2)
+        : 0,
+      dailyData: productionData
+    };
+
+    res.json({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error generating production report:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to generate production report',
+      error: error.message
+    });
+  }
+});
+
 // Get production records for a poultry batch
 router.get('/:id([0-9a-fA-F]{24})/production', auth, async (req, res) => {
   try {

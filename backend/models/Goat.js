@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+// Static method to get available breeds
+const getAvailableBreeds = () => {
+  return goatSchema.path('breed').enumValues;
+};
+
 const goatSchema = new mongoose.Schema({
   tagNumber: {
     type: String,
@@ -109,5 +114,8 @@ goatSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();
 });
+
+// Add static method to the schema
+goatSchema.statics.getAvailableBreeds = getAvailableBreeds;
 
 module.exports = mongoose.model('Goat', goatSchema); 

@@ -1,0 +1,474 @@
+{
+  "dairy": {
+    "pages": {
+      "dairyDetailsPage": {
+        "title": "Animal Details",
+        "animalDetails": "Animal Information",
+        "tagId": "Tag ID",
+        "gender": "Gender",
+        "dateOfBirth": "Date of Birth",
+        "status": "Status",
+        "milkProduction": "Milk Production",
+        "healthRecords": "Health Records",
+        "breedingHistory": "Breeding History",
+        "feedingSchedule": "Feeding Schedule",
+        "actions": "Actions",
+        "edit": "Edit",
+        "delete": "Delete",
+        "backToList": "Back to List",
+        "confirmDelete": "Are you sure you want to delete this animal?",
+        "deleteSuccess": "Animal deleted successfully",
+        "deleteError": "Error deleting animal",
+        "loading": "Loading...",
+        "notFound": "Animal not found",
+        "errorLoading": "Error loading data",
+        "lactationBreeding": "Lactation & Breeding",
+        "lactationNumber": "Lactation #",
+        "daysInMilk": "Days in Milk",
+        "lastCalving": "Last Calving",
+        "pregnancy": "Pregnancy",
+        "pregnant": "Pregnant",
+        "open": "Open",
+        "milkProductionLast30Days": "Milk Production (Last 30 Days)",
+        "notAvailable": "N/A"
+      },
+      "selectAnimal": "Select Animal",
+      
+      "dairyPage": {
+        "animalId": "Animal ID",
+        "name": "Name",
+        "breed": "Breed",
+        "status": "Status",
+        "actions": "Actions",
+        "view": "View",
+        "edit": "Edit",
+        "statusOptions": {
+          "active": "Active",
+          "inactive": "Inactive",
+          "sold": "Sold",
+          "deceased": "Deceased"
+        }
+      },
+      "dashboard": {
+        "title": "Dairy Dashboard",
+        "subtitle": "Overview of your dairy operations",
+        "stats": {
+          "totalAnimals": "Total Animals",
+          "lactatingAnimals": "Milking Animals",
+          "dailyMilkProduction": "Daily Milk Production",
+          "pregnantAnimals": "Pregnant Animals"
+        },
+        "quickActions": {
+          "milkProduction": "Milk Production",
+          "healthRecords": "Health Records",
+          "breeding": "Breeding",
+          "feeding": "Feeding Management",
+          "reports": {
+            "title": "View Reports",
+            "description": "Analyze production and health data"
+          }
+        },
+        "milkProductionOverview": "Milk Production Overview",
+        "dailyMilkProduction": "{{liters}} L",
+        "averageDailyProduction": "Average per animal",
+        "milkingCows": "Milking Cows:",
+        "currentlyMilking": "Currently in production",
+        "viewDetailedProduction": "View detailed production report",
+        "recentActivity": "Recent Activity",
+        "milkProductionTrends": "Milk Production Trends",
+        "animalHealthStatus": "Animal Health Status"
+      },
+      "animals": {
+        "title": "Dairy Animals",
+        "subtitle": "Manage your dairy animals",
+        "addAnimal": "Add Animal",
+        "searchPlaceholder": "Search animals...",
+        "filters": {
+          "status": "Filter by Status",
+          "allStatuses": "All Statuses",
+          "breed": "Breed",
+          "allBreeds": "All Breeds",
+          "sold": "Sold",
+          "deceased": "Deceased",
+          "noAnimalsFound": "No animals found",
+          "addYourFirstAnimal": "Add your first animal"
+      
+        },
+        "form": {
+          "title": "Add/Edit Animal",
+          "animalId": "Animal ID",
+          "name": "Name",
+          "breed": "Breed",
+          "breedOptions": {
+            "holstein": "Holstein",
+            "jersey": "Jersey",
+            "gir": "Gir",
+            "sahiwal": "Sahiwal",
+            "other": "Other"
+          },
+          "dateOfBirth": "Date of Birth",
+          "gender": "Gender",
+          "genderOptions": {
+            "male": "Male",
+            "female": "Female"
+          },
+          "status": "Status",
+          "statusOptions": {
+            "active": "Active",
+            "inactive": "Inactive",
+            "sold": "Sold",
+            "deceased": "Deceased"
+          },
+          "cancel": "Cancel",
+          "addAnimal": "Add Animal",
+          "updateAnimal": "Update Animal"
+        },
+        "tableHeaders": {
+          "id": "ID",
+          "name": "Name",
+          "breed": "Breed",
+          "age": "Age",
+          "status": "Status",
+          "lastMilking": "Last Milking",
+          "avgYield": "Avg. Yield",
+          "actions": "Actions"
+        },
+        "status": {
+          "lactating": "Milking",
+          "dry": "Dry",
+          "pregnant": "Pregnant",
+          "heifer": "Heifer",
+          "bull": "Bull",
+          "sold": "Sold",
+          "deceased": "Deceased"
+        }
+      },
+      "milkProduction": {
+        "title": "Milk Production",
+        "subtitle": "Record and analyze milk production",
+        "addRecord": "Add Record",
+        "dailySummary": "Daily Summary",
+        "weeklySummary": "Weekly Summary",
+        "monthlySummary": "Monthly Summary",
+        "filters": {
+          "dateRange": "Date Range",
+          "animal": "Animal",
+          "allAnimals": "All Animals"
+        },
+        "tableHeaders": {
+          "date": "Date",
+          "animal": "Animal",
+          "morning": "Morning",
+          "evening": "Evening",
+          "total": "Total",
+          "quality": "Quality",
+          "notes": "Notes"
+        },
+        "qualityMetrics": {
+          "fat": "Fat %",
+          "snf": "SNF",
+          "density": "Density"
+        }
+      },
+      "feeding": {
+        "title": "Feed Management",
+        "subtitle": "Record and manage animal feed",
+        "addRecord": "Add Record",
+        "editRecord": "Edit Feed Record",
+        "todayFeeding": "Today's Feeding",
+        "upcomingFeeding": "Upcoming Feeding Schedule",
+        "recentActivity": "Recent Feeding Activity",
+        "search": "Search",
+        "searchPlaceholder": "Search feed records...",
+        "animal": "Animal",
+        "allAnimals": "All Animals",
+        "feedType": "Feed Type",
+        "allTypes": "All Types",
+        "date": "Date",
+        "quantity": "Quantity",
+        "cost": "Cost",
+        "currency": "INR",
+        "currencySymbol": "₹",
+        "notes": "Notes",
+        "optionalNotes": "Optional notes...",
+        "actions": "Actions",
+        "na": "N/A",
+        "select": "Select",
+        "selectType": "Select Feed Type",
+        "selectAnimal": "Select Animal",
+        "save": "Save",
+        "update": "Update",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "confirmDelete": "Delete Feed Record",
+        "deleteConfirmation": "Are you sure you want to delete this feed record? This action cannot be undone.",
+        "noRecords": "No feed records found",
+        "feedTypes": {
+          "grass": "Grass",
+          "hay": "Hay",
+          "silage": "Silage",
+          "Silage": "Silage",
+          "concentrate": "Concentrate",
+          "mineral": "Mineral Mix",
+          "supplement": "Supplement",
+          "other": "Other"
+        },
+        "units": {
+          "kg": "kg",
+          "g": "g",
+          "l": "L"
+        },
+        "messages": {
+          "added": "Feed record added successfully",
+          "updated": "Feed record updated successfully",
+          "deleted": "Feed record deleted successfully",
+          "error": "Error processing your request"
+        },
+        "form": {
+          "title": "Feed Record",
+          "animal": "Select Animal",
+          "feedType": "Feed Type",
+          "quantity": "Quantity",
+          "unit": "Unit",
+          "date": "Date",
+          "cost": "Cost",
+          "notes": "Notes",
+          "submit": "Submit",
+          "update": "Update"
+        },
+        "table": {
+          "noData": "No feeding records found",
+          "loading": "Loading..."
+        }
+      },
+      "health": {
+        "title": "Health Management",
+        "subtitle": "Record and manage animal health",
+        "searchPlaceholder": "Search records...",
+        "allAnimals": "All Animals",
+        "allTypes": "All Types",
+        "addRecord": "Add Record",
+        "upcomingVaccinations": "Upcoming Vaccinations",
+        "recentTreatments": "Recent Treatments",
+        "filters": {
+          "search": "Search",
+          "date": "Date",
+          "type": "Type",
+          "dateRange": "Date Range",
+          "animal": "Animal"
+        },
+        "table": {
+          "date": "Date",
+          "animal": "Animal",
+          "type": "Type",
+          "description": "Description",
+          "veterinarian": "Veterinarian",
+          "cost": "Cost",
+          "nextDueDate": "Next Due",
+          "actions": "Actions",
+          "noRecords": "No health records found"
+        },
+        "form": {
+          "selectType": "Select Type",
+          "description": "Description",
+          "veterinarian": "Veterinarian",
+          "cost": "Cost",
+          "nextDueDate": "Next Due Date",
+          "notes": "Notes",
+          "save": "Save",
+          "cancel": "Cancel",
+          "delete": "Delete",
+          "edit": "Edit"
+        },
+        "types": {
+          "Vaccination": "Vaccination",
+          "Deworming": "Deworming",
+          "Treatment": "Treatment",
+          "Checkup": "Checkup",
+          "Surgery": "Surgery",
+          "Other": "Other"
+        },
+        "common": {
+          "unknown": "Unknown"
+        },
+        "tableHeaders": {
+          "date": "Date",
+          "animal": "Animal",
+          "type": "Type",
+          "description": "Description",
+          "veterinarian": "Veterinarian",
+          "nextDue": "Next Due",
+          "actions": "Actions"
+        }
+      },
+      "breeding": {
+        "title": "Breeding Management",
+        "subtitle": "Manage breeding program",
+        "addRecord": "Add Record",
+        "pregnancyChecks": "Pregnancy Checks",
+        "upcomingDeliveries": "Upcoming Deliveries",
+        "choose": "Select",
+        "history": "History",
+        "addBreedingRecord": "Add Breeding Record",
+        "filters": {
+          "status": "Status",
+          "allStatuses": "All Statuses",
+          "dateRange": "Date Range"
+        },
+        "form": {
+          "date": "Date",
+          "bullId": "Bull ID",
+          "bullBreed": "Bull Breed",
+          "method": "Method",
+          "result": "Result",
+          "notes": "Notes"
+        },
+        "table": {
+          "date": "Date",
+          "method": "Method",
+          "result": "Result",
+          "bullId": "Bull ID",
+          "bullBreed": "Bull Breed",
+          "notes": "Notes"
+        },
+        "methods": {
+          "natural": "Natural",
+          "ai": "Artificial Insemination",
+          "et": "Embryo Transfer"
+        },
+        "results": {
+          "open": "Open",
+          "pregnant": "Pregnant",
+          "aborted": "Aborted"
+        },
+        "status": {
+          "pregnant": "Pregnant",
+          "notPregnant": "Not Pregnant",
+          "aborted": "Aborted",
+          "delivered": "Delivered"
+        },
+        "tableHeaders": {
+          "animal": "Animal",
+          "breedingDate": "Breeding Date",
+          "expectedDelivery": "Expected Delivery",
+          "status": "Status",
+          "bull": "Bull",
+          "method": "Method",
+          "actions": "Actions"
+        },
+        "errors": {
+          "notAccessible": "This animal is not accessible in your account. Please select an animal you own or create a new one.",
+          "noPermission": "You don't have permission to update this animal. Please select another one or create a new one.",
+          "addFailed": "Failed to add breeding record"
+        }
+      },
+      "reports": {
+        "title": "Reports",
+        "subtitle": "Detailed reports and analysis",
+        "generateReport": "Generate Report",
+        "selectAnimal": "Select Animal",
+        "refresh": "Refresh",
+        "noData": "No data available",
+        "dateRange": {
+          "start": "Start Date",
+          "end": "End Date",
+          "last30Days": "Last 30 Days",
+          "last90Days": "Last 90 Days",
+          "thisYear": "This Year",
+          "custom": "Custom Range"
+        },
+        "milkProduction": {
+          "title": "Milk Production Report",
+          "totalMilk": "Total Milk Production",
+          "averageDaily": "Average Daily Production",
+          "totalDays": "Total Days in Report",
+          "exportCSV": "Export to CSV",
+          "noData": "No production data available for the selected period",
+          "records": "Records",
+          "chart": {
+            "title": "Milk Production Trend",
+            "xAxis": "Date",
+            "yAxis": "Liters"
+          },
+          "table": {
+            "title": "Milk Production Details",
+            "date": "Date",
+            "morning": "Morning (L)",
+            "evening": "Evening (L)",
+            "total": "Total (L)",
+            "fat": "Fat %",
+            "snf": "SNF %",
+            "notes": "Notes"
+          }
+        },
+        "feedConsumption": {
+          "title": "Feed Consumption",
+          "chartTitle": "Feed Consumption by Type",
+          "recentFeeds": "Recent Feed Records",
+          "recentRecords": "Recent Feed Records",
+          "exportCSV": "Export to CSV",
+          "noRecords": "No records available",
+          "noData": "No feed consumption data available",
+          "tableHeaders": {
+            "date": "Date",
+            "animal": "Animal",
+            "feedType": "Feed Type",
+            "quantity": "Quantity",
+            "unit": "Unit",
+            "cost": "Cost",
+            "notes": "Notes"
+          }
+        },
+        "health": {
+          "title": "Health Overview",
+          "byType": "Health Records by Type",
+          "recentRecords": "Recent Health Records",
+          "exportCSV": "Export to CSV",
+          "noRecords": "No records available",
+          "noData": "No health records found",
+          "tableHeaders": {
+            "date": "Date",
+            "animal": "Animal",
+            "type": "Type",
+            "cost": "Cost",
+            "nextDueDate": "Next Due",
+            "description": "Description"
+          }
+        },
+        "reportTypes": {
+          "milkProduction": "Milk Production",
+          "animalHealth": "Animal Health",
+          "breeding": "Breeding",
+          "financial": "Financial",
+          "inventory": "Inventory"
+        },
+        "filters": {
+          "period": "Period",
+          "animal": "Animal",
+          "allAnimals": "All Animals",
+          "dateRange": "Date Range"
+        },
+        "periods": {
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly",
+          "yearly": "Yearly",
+          "custom": "Custom"
+        },
+        "exportOptions": {
+          "print": "Print",
+          "pdf": "Download PDF",
+          "excel": "Export to Excel"
+        },
+        "errors": {
+          "selectAnimal": "Please select an animal to view reports",
+          "loadError": "Failed to load report data",
+          "notAccessible": "This animal is not accessible under your account"
+        },
+        "loading": "Loading report data..."
+      }
+    }
+  
+  }
+}

@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 
 // Get all dairy animals with filtering
-router.get('/', auth, async (req, res) => {
+router.get('/', auth, async (req, res, next) => {
   try {
     console.log('=== DAIRY GET REQUEST ===');
     console.log('User ID:', req.user.id);
@@ -13,6 +13,11 @@ router.get('/', auth, async (req, res) => {
     
     const { page = 1, limit = 10, _t, ...filters } = req.query;
     const query = { createdBy: req.user.id, ...filters };
+    
+    // If the request is for /api/dairy/animals, handle it here
+    if (req.path === '/animals') {
+      return next();
+    }
     
     console.log('Base query:', JSON.stringify(query, null, 2));
     
@@ -27,33 +32,65 @@ router.get('/', auth, async (req, res) => {
     // Log the final query being executed
     console.log('Final query:', JSON.stringify(query, null, 2));
     
-    // Execute the query
-    const dairy = await Dairy.find(query)
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .lean(); // Convert to plain JavaScript objects
-      
-    console.log('Found records:', dairy.length);
+    // Execute the query with pagination
+    const [dairy, total] = await Promise.all([
+      Dairy.find(query)
+        .limit(Number(limit))
+        .skip((Number(page) - 1) * Number(limit))
+        .lean(),
+      Dairy.countDocuments(query)
+    ]);
     
-    // Check if there are any documents in the collection at all
-    if (dairy.length === 0) {
-      const anyDoc = await Dairy.findOne().lean();
-      console.log('Any document in collection?', anyDoc ? 'Yes' : 'No');
-      if (anyDoc) {
-        console.log('Sample document:', JSON.stringify(anyDoc, null, 2));
-        console.log('Sample document createdBy type:', typeof anyDoc.createdBy, anyDoc.createdBy);
-      }
-    }
+    console.log(`Found ${dairy.length} records out of ${total}`);
     
-    const total = await Dairy.countDocuments(query);
-    console.log('Total matching documents:', total);
-
+    // Send response with consistent structure
     res.json({
       success: true,
       data: dairy,
-      totalPages: Math.ceil(total / limit),
-      currentPage: page,
-      total,
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(total / limit)
+      }
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+});
+
+// Handle /api/dairy/animals route
+router.get('/animals', auth, async (req, res, next) => {
+  try {
+    console.log('=== DAIRY ANIMALS GET REQUEST ===');
+    const { page = 1, limit = 10, _t, ...filters } = req.query;
+    const query = { createdBy: req.user.id, ...filters };
+    
+    if (req.query.search) {
+      query.$or = [
+        { animalId: { $regex: req.query.search, $options: 'i' } },
+        { name: { $regex: req.query.search, $options: 'i' } },
+      ];
+    }
+    
+    const [dairy, total] = await Promise.all([
+      Dairy.find(query)
+        .limit(Number(limit))
+        .skip((Number(page) - 1) * Number(limit))
+        .lean(),
+      Dairy.countDocuments(query)
+    ]);
+    
+    res.json({
+      success: true,
+      data: dairy,
+      pagination: {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(total / limit)
+      }
     });
   } catch (err) {
     console.error(err);

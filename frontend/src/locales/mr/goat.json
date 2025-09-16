@@ -1,0 +1,882 @@
+{
+  "goat": {
+    "pages": {
+      "reports": {
+        "title": "शेळी व्यवस्थापन अहवाल",
+        "subtitle": "तुमच्या शेळी शेताचे तपशीलवार अहवाल पहा आणि डाउनलोड करा",
+        "generateReport": "अहवाल तयार करा",
+        "export": "एक्सपोर्ट करा",
+        "dateRange": "तारीख श्रेणी निवडा",
+        "reportType": "अहवालाचा प्रकार निवडा",
+        "types": {
+          "health": "आरोग्य अहवाल",
+          "breeding": "प्रजनन अहवाल",
+          "milkProduction": "दुग्ध उत्पादन अहवाल",
+          "feed": "खाद्य वापर अहवाल",
+          "sales": "विक्री अहवाल",
+          "inventory": "इन्व्हेंटरी अहवाल"
+        },
+        "filters": {
+          "applyFilters": "फिल्टर्स लागू करा",
+          "clearFilters": "फिल्टर्स साफ करा",
+          "showFilters": "फिल्टर्स दाखवा",
+          "hideFilters": "फिल्टर्स लपवा"
+        },
+        "buyer": "खरेदीदार",
+        "buyerPlaceholder": "खरेदीदाराचे नाव",
+        "noData": "निवडलेल्या फिल्टर्ससाठी कोणतेही डेटा उपलब्ध नाही",
+        "loading": "अहवाल तयार करत आहे...",
+        "error": "अहवाल लोड करताना त्रुटी आली",
+        "charts": {
+          "quantity": "प्रमाण (शेळ्या)",
+          "revenue": "महसूल",
+          "quantityShort": "प्रमाण",
+          "revenueShort": "महसूल",
+          "totalCost": "एकूण खर्च"
+        },
+        "table": {
+          "period": "कालावधी",
+          "invoices": "चलन",
+          "quantity": "प्रमाण (शेळ्या)",
+          "revenue": "महसूल",
+          "totals": "एकूण",
+          "records": "नोंदी",
+          "totalQuantity": "एकूण प्रमाण",
+          "totalCost": "एकूण खर्च",
+          "income": "उत्पन्न",
+          "expenses": "खर्च",
+          "net": "निव्वळ",
+          "balance": "शिल्लक",
+          "totalGoats": "एकूण शेळ्या",
+          "successRate": "यशस्वी दर"
+        },
+        "income": "उत्पन्न",
+        "expenses": "खर्च",
+        "net": "निव्वळ",
+        "balance": "शिल्लक",
+        "type": "प्रकार",
+        "feedType": "खाद्य प्रकार",
+        "feedTypePlaceholder": "उदा. गवत",
+        "unit": "एकक",
+        "unitPlaceholder": "उदा. किलो",
+        "overdue": "ओव्हरड्यू",
+        "upcoming": "येत आहे ({days} दिवसात)",
+        "totalPregnancies": "एकूण गरोदर",
+        "totalKiddings": "एकूण जन्म",
+        "totalKids": "एकूण पिल्ले",
+        "overallSuccess": "एकूण यश",
+        "totals": "एकूण",
+        "reportTypes": {
+          "finance": "आर्थिक अहवाल",
+          "health": "आरोग्य अहवाल",
+          "breeding": "प्रजनन अहवाल",
+          "feed": "खाद्य वापर",
+          "sales": "विक्री अहवाल",
+          "inventory": "यादी",
+          "milkProduction": "दुग्ध उत्पादन अहवाल"
+        }
+      },
+      "goatProduction": {
+        "title": "शेळ्यांचे दुग्ध उत्पादन",
+        "subtitle": "शेळ्यांच्या दुधाच्या नोंदी ट्रॅक आणि विश्लेषित करा",
+        "newRecord": "नवीन नोंद",
+        "totalProduction": "एकूण उत्पादन (लीटर)",
+        "avgPerGoat": "दर शेळीस सरासरी (लीटर)",
+        "dateRange": "तारीख श्रेणी",
+        "to": "ते",
+        "searchPlaceholder": "नोंदी शोधा...",
+        "export": "एक्सपोर्ट करा",
+        "table": {
+          "title": "दुधाच्या नोंदी",
+          "date": "तारीख",
+          "goatId": "शेळी आयडी",
+          "quantity": "प्रमाण (लीटर)",
+          "fat": "चरबी %",
+          "snf": "एसएनएफ %",
+          "time": "वेळ",
+          "notes": "नोंदी"
+        },
+        "milk": {
+          "title": {
+            "add": "नवीन दुधाची नोंद जोडा",
+            "edit": "दुधाची नोंद सुधारा"
+          },
+          "form": {
+            "goat": {
+              "label": "शेळी",
+              "placeholder": "शेळी निवडा",
+              "required": "शेळी आवश्यक आहे"
+            },
+            "date": "तारीख",
+            "timeOfDay": {
+              "label": "वेळ",
+              "options": {
+                "morning": "सकाळ",
+                "afternoon": "दुपारी",
+                "evening": "सायंकाळी",
+                "night": "रात्री"
+              }
+            },
+            "quantity": {
+              "label": "प्रमाण (लीटर)",
+              "placeholder": "०.००",
+              "required": "प्रमाण आवश्यक आहे"
+            },
+            "fat": {
+              "label": "चरबी %",
+              "placeholder": "०.०"
+            },
+            "snf": {
+              "label": "एसएनएफ %",
+              "placeholder": "०.०"
+            },
+            "notes": {
+              "label": "नोंदी",
+              "placeholder": "या दुधाच्या नोंदीबद्दल कोणत्याही अतिरिक्त माहिती..."
+            },
+            "buttons": {
+              "cancel": "रद्द करा",
+              "save": "जतन करा",
+              "update": "अद्यतनित करा",
+              "saving": "जतन करत आहे..."
+            }
+          },
+          "errors": {
+            "saveMilkRecord": "दुधाची नोंद जतन करताना त्रुटी आली",
+            "loadMilkRecord": "दुधाची नोंद लोड करताना त्रुटी आली",
+            "loadGoats": "शेळ्या लोड करताना त्रुटी आली"
+          },
+          "success": {
+            "milkRecordAdded": "दुधाची नोंद यशस्वीरित्या जोडली गेली",
+            "milkRecordUpdated": "दुधाची नोंद यशस्वीरित्या अद्यतनित केली गेली"
+          }
+        }
+      },
+      "feedRecords": {
+        "title": "खाद्य व्यवस्थापन",
+        "subtitle": "शेळ्यांच्या खाद्य नोंदी आणि वेळापत्रक व्यवस्थापित करा",
+        "addRecord": "खाद्य नोंद जोडा",
+        "summary": {
+          "totalRecords": "एकूण नोंदी",
+          "totalCost": "एकूण खर्च",
+          "todaysRecords": "आजच्या नोंदी"
+        },
+        "filters": {
+          "title": "फिल्टर्स",
+          "search": "शोधा",
+          "searchPlaceholder": "नोंदी शोधा...",
+          "goat": "शेळी",
+          "feedType": "खाद्य प्रकार",
+          "date": "तारीख",
+          "allGoats": "सर्व शेळ्या",
+          "allTypes": "सर्व प्रकार",
+          "allDates": "सर्व तारखा"
+        },
+        "table": {
+          "goat": "शेळी",
+          "date": "तारीख",
+          "feedType": "खाद्य प्रकार",
+          "quantity": "प्रमाण",
+          "cost": "खर्च",
+          "feedingTime": "खाण्याची वेळ",
+          "consumed": "खाल्ले",
+          "actions": "कृती",
+          "edit": "सुधारणे",
+          "delete": "हटवा",
+          "generalFeeding": "सामान्य खाद्य"
+        },
+        "tableHeaders": {
+          "date": "तारीख",
+          "goat": "शेळी",
+          "feedType": "खाद्य प्रकार",
+          "quantity": "प्रमाण",
+          "unit": "एकक",
+          "feedingTime": "खाण्याची वेळ",
+          "notes": "नोंदी",
+          "actions": "कृती"
+        },
+        "form": {
+          "titleAdd": "खाद्य नोंद जोडा",
+          "titleEdit": "खाद्य नोंद सुधारा",
+          "fields": {
+            "goat": "शेळी",
+            "selectGoat": "शेळी निवडा",
+            "generalFeeding": "सामान्य खाद्य (विशिष्ट शेळी नाही)",
+            "pen": "खुराडे/गट",
+            "penPlaceholder": "खुराडे किंवा गटाचे नाव प्रविष्ट करा",
+            "feedType": "खाद्य प्रकार",
+            "selectFeedType": "खाद्य प्रकार निवडा",
+            "quantity": "प्रमाण",
+            "unit": "एकक",
+            "feedingDate": "खाद्य देण्याची तारीख",
+            "feedingTime": "खाण्याची वेळ",
+            "notes": "नोंदी",
+            "notesPlaceholder": "अतिरिक्त नोंदी प्रविष्ट करा..."
+          },
+          "validation": {
+            "required": "हे फील्ड आवश्यक आहे",
+            "positiveNumber": "कृपया सकारात्मक संख्या प्रविष्ट करा"
+          },
+          "buttons": {
+            "save": "नोंद जतन करा",
+            "update": "नोंद अद्यतनित करा",
+            "cancel": "रद्द करा"
+          }
+        },
+        "feedTypes": {
+          "hay": "सुकी गवत",
+          "grain": "धान्य",
+          "silage": "सायलेज",
+          "pasture": "चरणभूमी",
+          "concentrate": "कंसंट्रेट",
+          "mineralSupplement": "खनिज पूरक",
+          "vitaminSupplement": "जीवनसत्व पूरक",
+          "other": "इतर"
+        },
+        "units": {
+          "kg": "किलो",
+          "lbs": "पाउंड",
+          "grams": "ग्रॅम",
+          "bales": "गठ्ठे",
+          "scoops": "स्कूप्स",
+          "handfuls": "मुट्ठी"
+        },
+        "feedingTimes": {
+          "morning": "सकाळी",
+          "afternoon": "दुपारी",
+          "evening": "संध्याकाळी",
+          "night": "रात्री",
+          "allDay": "दिवसभर"
+        },
+        "success": {
+          "create": "खाद्य नोंद यशस्वीरित्या जोडली गेली",
+          "update": "खाद्य नोंद यशस्वीरित्या अद्यतनित केली गेली",
+          "delete": "खाद्य नोंद यशस्वीरित्या हटवली गेली"
+        },
+        "error": {
+          "fetch": "खाद्य नोंदी मिळवण्यात अयशस्वी",
+          "fetchGoats": "शेळ्या मिळवण्यात अयशस्वी",
+          "create": "खाद्य नोंद तयार करण्यात अयशस्वी",
+          "update": "खाद्य नोंद अद्यतनित करण्यात अयशस्वी",
+          "delete": "खाद्य नोंद हटविण्यात अयशस्वी"
+        },
+        "deleteModal": {
+          "title": "खाद्य नोंद हटवा",
+          "message": "तुम्हाला ही खाद्य नोंद हटवायची आहे का? ही कृती पूर्ववत केली जाऊ शकत नाही.",
+          "confirm": "हटवा",
+          "cancel": "रद्द करा"
+        }
+      },
+      "breedingPage": {
+        "title": "प्रजनन व्यवस्थापन",
+        "subtitle": "शेळ्यांच्या प्रजनन नोंदी आणि प्रजनन चक्र व्यवस्थापित करा",
+        "addRecord": "प्रजनन नोंद जोडा",
+        "searchPlaceholder": "प्रजनन नोंदी शोधा...",
+        "filters": {
+          "title": "फिल्टर्स",
+          "allGoats": "सर्व शेळ्या",
+          "allStatus": "सर्व स्थिती",
+          "allTypes": "सर्व प्रकार",
+          "allDates": "सर्व तारखा",
+          "goat": "शेळी",
+          "matingDate": "प्रजनन तारीख"
+        },
+        "kidsBorn": "{{count}} जन्मले",
+        "kidsSurvived": "{{count}} जिवंत",
+        "tableHeaders": {
+          "doe": "मादी शेळी",
+          "buck": "नर शेळा",
+          "breedingDate": "प्रजनन तारीख",
+          "expectedKiddingDate": "अपेक्षित बाळंतिकी तारीख",
+          "actualKiddingDate": "वास्तविक बाळंतिकी तारीख",
+          "status": "स्थिती",
+          "kids": "बाळे",
+          "notes": "नोंदी",
+          "actions": "कृती"
+        },
+        "status": {
+          "healthy": "निरोगी",
+          "monitoring": "निरीक्षणाखाली",
+          "treatment": "उपचाराखाली",
+          "critical": "गंभीर स्थिती",
+          "pregnant": "गरोदर",
+          "notPregnant": "गरोदर नाही",
+          "kidded": "बाळंत झाली",
+          "aborted": "गर्भपात झाला",
+          "mated": "प्रजनन झाले",
+          "delivered": "प्रसूत झाली",
+          "failed": "अयशस्वी"
+        },
+        "actions": {
+          "edit": "सुधारणे",
+          "delete": "हटवा",
+          "viewKids": "बाळे पहा",
+          "addPregnancyCheck": "गर्भधारणा तपासणी जोडा",
+          "addKiddingRecord": "बाळंतपण नोंद जोडा"
+        },
+        "form": {
+          "titleAdd": "प्रजनन नोंद जोडा",
+          "titleEdit": "प्रजनन नोंद सुधारा",
+          "fields": {
+            "breedingMethod": "प्रजनन पद्धत",
+            "breedingMethodOptions": {
+              "natural": "नैसर्गिक प्रजनन",
+              "artificial": "कृत्रिम गर्भाधान",
+              "embryoTransfer": "भ्रूण स्थानांतरण"
+            },
+            "doe": "मादी शेळी",
+            "selectDoe": "मादी शेळी निवडा",
+            "buck": "नर शेळा",
+            "selectBuck": "नर शेळा निवडा",
+            "matingDate": "प्रजनन तारीख",
+            "breedingDate": "प्रजनन तारीख",
+            "status": "स्थिती",
+            "expectedDueDate": "अपेक्षित प्रसूती तारीख",
+            "breedingLocation": "प्रजनन स्थळ",
+            "breedingLocationPlaceholder": "प्रजनन स्थळ प्रविष्ट करा",
+            "gestationPeriod": "गर्भकाळ (दिवस)",
+            "healthStatus": "आरोग्य स्थिती",
+            "pregnancyCheckDate": "गर्भधारणा तपासणी तारीख",
+            "pregnancyStatus": "गर्भधारणा स्थिती",
+            "pregnancyConfirmed": "गर्भधारणा पुष्टी झाली",
+            "expectedKiddingDate": "अपेक्षित बाळंतिकी तारीख",
+            "kiddingDate": "बाळंतिकी तारीख",
+            "actualKiddingDate": "वास्तविक बाळंतिकी तारीख",
+            "kidsBorn": "जन्मलेली बाळे",
+            "kidsSurvived": "जिवंत राहिलेली बाळे",
+            "numberOfKids": "बाळांची संख्या",
+            "breedingCost": "प्रजनन खर्च",
+            "expectedValue": "अपेक्षित मूल्य",
+            "veterinaryCost": "पशुवैद्यकीय खर्च",
+            "lastCheckupDate": "शेवटची तपासणी तारीख",
+            "nextCheckupDate": "पुढील तपासणी तारीख",
+            "expectedBreed": "अपेक्षित जात",
+            "expectedBreedPlaceholder": "अपेक्षित जात प्रविष्ट करा",
+            "doeAge": "मादीचे वय (महिने)",
+            "buckAge": "नराचे वय (महिने)",
+            "inbreedingCoefficient": "आतंरजनन गुणांक",
+            "pedigreeNotes": "वंशावळ नोंदी",
+            "pedigreeNotesPlaceholder": "वंशावळ नोंदी प्रविष्ट करा",
+            "notes": "नोंदी",
+            "notesPlaceholder": "अतिरिक्त नोंदी प्रविष्ट करा...",
+            "amountPlaceholder": "0.00"
+          },
+          "validation": {
+            "required": "हे फील्ड आवश्यक आहे",
+            "dateInvalid": "अवैध तारीख स्वरूप",
+            "numberInvalid": "संख्या असणे आवश्यक आहे",
+            "invalidEmail": "अवैध ईमेल स्वरूप"
+          },
+          "buttons": {
+            "save": "नोंद जतन करा",
+            "cancel": "रद्द करा",
+            "update": "नोंद अद्यतनित करा"
+          },
+          "breedingMethod": {
+            "natural": "नैसर्गिक प्रजनन",
+            "artificial": "कृत्रिम गर्भाधान",
+            "embryoTransfer": "भ्रूण स्थानांतरण"
+          }
+        },
+        "deleteModal": {
+          "title": "प्रजनन नोंद हटवा",
+          "message": "तुम्हाला ही प्रजनन नोंद हटवायची आहे का? ही कृती पूर्ववत केली जाऊ शकत नाही.",
+          "confirm": "हटवा",
+          "cancel": "रद्द करा"
+        },
+        "alerts": {
+          "addSuccess": "प्रजनन नोंद यशस्वीरित्या जोडली गेली",
+          "updateSuccess": "प्रजनन नोंद यशस्वीरित्या अद्यतनित केली गेली",
+          "deleteSuccess": "प्रजनन नोंद यशस्वीरित्या हटवली गेली",
+          "error": "एक त्रुटी आली. कृपया पुन्हा प्रयत्न करा."
+        }
+      },
+      "goatHealthPage": {
+        "title": "शेळीचे आरोग्य",
+        "subtitle": "आरोग्य नोंदी आणि उपचार व्यवस्थापित करा",
+        "addRecord": "आरोग्य नोंद जोडा",
+        "searchPlaceholder": "आरोग्य नोंदी शोधा...",
+        "filters": {
+          "title": "फिल्टर्स",
+          "status": "आरोग्य स्थिती",
+          "allStatuses": "सर्व स्थिती",
+          "allGoats": "सर्व शेळ्या",
+          "allTypes": "सर्व प्रकार",
+          "allDates": "सर्व तारखा",
+          "dateRange": "तारखेची श्रेणी",
+          "type": "नोंदीचा प्रकार"
+        },
+        "status": {
+          "healthy": "निरोगी",
+          "sick": "आजारी",
+          "underTreatment": "उपचाराखाली",
+          "recovered": "बरा झाले",
+          "chronic": "चिरकाळी आजार"
+        },
+        "types": {
+          "vaccination": "लसीकरण",
+          "deworming": "कृमिनाशक",
+          "treatment": "उपचार",
+          "checkup": "नियमित तपासणी",
+          "other": "इतर"
+        },
+        "fields": {
+          "date": "तारीख",
+          "goatId": "शेळी आयडी",
+          "type": "नोंदीचा प्रकार",
+          "description": "वर्णन",
+          "diagnosis": "निदान",
+          "treatment": "उपचार",
+          "medication": "औषध",
+          "dosage": "डोस",
+          "nextCheckup": "पुढील तपासणी",
+          "veterinarian": "पशुवैद्यक",
+          "notes": "नोंदी",
+          "status": "स्थिती",
+          "cost": "खर्च",
+          "selectGoat": "शेळी निवडा",
+          "selectType": "प्रकार निवडा"
+        },
+        "tableHeaders": {
+          "goat": "शेळी",
+          "date": "तारीख",
+          "type": "प्रकार",
+          "description": "वर्णन",
+          "veterinarian": "पशुवैद्यक",
+          "actions": "कृती"
+        },
+        "actions": {
+          "edit": "सुधारणे",
+          "delete": "हटवा",
+          "save": "जतन करा",
+          "update": "अद्यतनित करा",
+          "cancel": "रद्द करा",
+          "print": "प्रिंट करा",
+          "editRecord": "नोंद सुधारा",
+          "addRecord": "नोंद जोडा",
+          "deleteRecord": "नोंद हटवा"
+        },
+        "deleteModal": {
+          "title": "नोंद हटवा",
+          "message": "तुम्हाला ही आरोग्य नोंद हटवायची आहे का? ही कृती पूर्ववत केली जाऊ शकत नाही."
+        },
+        "pagination": {
+          "previous": "मागील",
+          "next": "पुढील",
+          "showingPage": "पृष्ठ {current} पैकी {total}"
+        },
+        "validation": {
+          "required": "{{field}} आवश्यक आहे",
+          "invalidDate": "कृपया वैध तारीख प्रविष्ट करा",
+          "futureDate": "तारीख भविष्यातील असू शकत नाही"
+        },
+        "alerts": {
+          "recordSaved": "आरोग्य नोंद यशस्वीरित्या जतन केली गेली",
+          "recordDeleted": "आरोग्य नोंद यशस्वीरित्या हटवली गेली",
+          "confirmDelete": "तुम्हाला ही आरोग्य नोंद हटवायची आहे का?"
+        }
+      },
+      "goats": {
+        "filters": {
+          "title": "फिल्टर्स",
+          "show": "दाखवा",
+          "breed": "जात",
+          "allBreeds": "सर्व जाती",
+          "loadingBreeds": "जाती लोड होत आहेत...",
+          "status": "स्थिती",
+          "allStatuses": "सर्व स्थिती",
+          "gender": "लिंग",
+          "allGenders": "सर्व लिंग",
+          "genderOptions": {
+            "male": "नर",
+            "female": "मादी",
+            "castrated": "बधीर"
+          },
+          "statusOption": {
+            "Active": "सक्रिय",
+            "Sold": "विकली गेली",
+            "deceased": "मृत",
+            "retired": "निवृत्त"
+          },
+          "breeds": {
+            "boer": "बोअर",
+            "nubian": "न्युबियन",
+            "alpine": "अल्पाइन",
+            "saanen": "सानेन",
+            "toggenburg": "टोगेनबर्ग",
+            "lamancha": "लामांचा",
+            "malabari": "मलबारी",
+            "surti": "सुरती",
+            "jakhrana": "झाकरणा",
+            "marwari": "मारवाडी",
+            "mixed": "मिश्रित",
+            "other": "इतर",
+            "jamunapari": "जमुनापारी",
+            "sirohi": "सिरोही",
+            "barbari": "बारबरी",
+            "osmanabadi": "औस्मानाबादी"
+          }
+        },
+        "common": {
+          "search": "शोधा",
+          "years": "वर्षे",
+          "showingPage": "पृष्ठ {{currentPage}} पैकी {{totalPages}}",
+          "noResults": "कोणतेही परिणाम सापडले नाहीत",
+          "loading": "लोड होत आहे...",
+          "saving": "जतन करत आहे..."
+        },
+        "genderOptions": {
+          "male": "नर",
+          "female": "मादी",
+          "castrated": "बधीर",
+          "allGenders": "सर्व लिंग"
+        },
+        "activeStatus": {
+          "Active": "सक्रिय",
+          "Sold": "विकली गेली"
+        },
+        "breeds": {
+          "jamunapari": "जमुनापारी",
+          "sirohi": "सिरोही",
+          "barbari": "बारबरी",
+          "osmanabadi": "औस्मानाबादी"
+        },
+        "title": "शेळ्या",
+        "subtitle": "तुमचे शेळी कळप व्यवस्थापित करा",
+        "addGoat": "शेळी जोडा",
+        "searchPlaceholder": "शेळ्या शोधा...",
+        
+        "tableHeaders": {
+          "tagNumber": "टॅग क्रमांक",
+          "name": "नाव",
+          "breed": "जात",
+          "gender": "लिंग",
+          "age": "वय",
+          "status": "स्थिती",
+          "actions": "कृती"
+        },
+        "actions": {
+          "view": "पहा",
+          "edit": "सुधारा",
+          "delete": "हटवा",
+          "addToGroup": "गटात जोडा"
+        },
+        "bulkActions": {
+          "chooseAction": "कृपया कृती निवडा",
+          "markAsActive": "सक्रिय म्हणून चिन्हांकित करा",
+          "markAsSold": "विकले म्हणून चिन्हांकित करा",
+          "markAsDeceased": "मृत म्हणून चिन्हांकित करा",
+          "markAsRetired": "निवृत्त म्हणून चिन्हांकित करा",
+          "deleteSelected": "निवडलेल्या हटवा",
+          "apply": "लागू करा",
+          "cancel": "रद्द करा",
+          "confirmTitle": "निवडलेल्या शेळ्यांवर कृती करा",
+          "confirmMessage": "तुम्हाला खात्री आहे की तुम्ही {{count}} शेळ्यांवर ही कृती करू इच्छिता?"
+        },
+        "form": {
+          "titleAdd": "नवीन शेळी जोडा",
+          "titleEdit": "शेळीची माहिती सुधारा",
+          "fields": {
+            "tagNumber": "टॅग क्रमांक",
+            "name": "नाव",
+            "breed": "जात",
+            "gender": "लिंग",
+            "dateOfBirth": "जन्मतारीख",
+            "weight": "वजन (किलो)",
+            "color": "रंग",
+            "purchaseDate": "खरेदी तारीख",
+            "purchasePrice": "खरेदी किंमत",
+            "purchaseFrom": "कोणाकडून खरेदी केली",
+            "status": "स्थिती",
+            "motherTag": "आईचा टॅग क्रमांक",
+            "fatherTag": "वडिलांचा टॅग क्रमांक",
+            "notes": "नोंदी"
+          },
+          "placeholders": {
+            "selectBreed": "जात निवडा",
+            "selectGender": "लिंग निवडा",
+            "selectStatus": "स्थिती निवडा",
+            "enterNotes": "अतिरिक्त नोंदी प्रविष्ट करा..."
+          },
+          "validation": {
+            "required": "हे फील्ड आवश्यक आहे",
+            "invalidDate": "अवैध तारीख",
+            "invalidNumber": "कृपया वैध संख्या प्रविष्ट करा"
+          },
+          "buttons": {
+            "save": "जतन करा",
+            "update": "अद्यतनित करा",
+            "cancel": "रद्द करा"
+          }
+        },
+        "deleteModal": {
+          "title": "शेळी हटवा",
+          "message": "तुम्हाला ही शेळी हटवायची आहे का? ही कृती पूर्ववत केली जाऊ शकत नाही.",
+          "confirm": "हटवा",
+          "cancel": "रद्द करा"
+        },
+        "alerts": {
+          "addSuccess": "शेळी यशस्वीरित्या जोडली गेली",
+          "updateSuccess": "शेळीची माहिती यशस्वीरित्या अद्यतनित केली गेली",
+          "deleteSuccess": "शेळी यशस्वीरित्या हटवली गेली",
+          "error": "एक त्रुटी आली. कृपया पुन्हा प्रयत्न करा."
+        },
+        "details": {
+          "title": "शेळीची तपशीलवार माहिती",
+          "basicInfo": "मूलभूत माहिती",
+          "tagNumber": "टॅग क्रमांक",
+          "name": "नाव",
+          "breed": "जात",
+          "gender": "लिंग",
+          "age": "वय",
+          "weight": "वजन",
+          "color": "रंग",
+          "status": "स्थिती",
+          "purchaseInfo": "खरेदी माहिती",
+          "purchaseDate": "खरेदी तारीख",
+          "purchasePrice": "खरेदी किंमत",
+          "purchaseFrom": "कोणाकडून खरेदी केली",
+          "parentInfo": "पालक माहिती",
+          "mother": "आई",
+          "father": "वडील",
+          "notes": "नोंदी",
+          "noNotes": "कोणत्याही नोंदी उपलब्ध नाहीत",
+          "tabs": {
+            "health": "आरोग्य",
+            "breeding": "प्रजनन",
+            "feeding": "खाद्य",
+            "milkProduction": "दुग्ध उत्पादन"
+          }
+        }
+      },      
+      "salesPage": {
+        "title": "विक्री व्यवस्थापन",
+        "subtitle": "शेळ्यांच्या विक्री आणि चलनवाढीचे व्यवस्थापन करा",
+        "createSale": "विक्री तयार करा",
+        "buyer": "खरेदीदार",
+        "name": "नाव",
+        "phone": "फोन",
+        "address": "पत्ता",
+        "items": "वस्तू",
+        "selectGoatOrEnterDesc": "शेळी निवडा किंवा वर्णन प्रविष्ट करा",
+        "description": "वर्णन",
+        "quantity": "प्रमाण",
+        "unitPrice": "प्रति एकक किंमत",
+        "addItem": "वस्तू जोडा",
+        "tax": "कर",
+        "subTotal": "उप-योग",
+        "total": "एकूण",
+        "sales": "विक्री",
+        "invoice": "चलन",
+        "form": {
+          "titleAdd": "नवीन विक्री",
+          "titleEdit": "विक्री सुधारा",
+          "fields": {
+            "buyerName": "खरेदीदाराचे नाव",
+            "buyerPhone": "फोन नंबर",
+            "buyerAddress": "पत्ता",
+            "saleDate": "विक्री तारीख",
+            "paymentMethod": "पैसे भरण्याची पद्धत",
+            "notes": "नोंदी"
+          },
+          "buttons": {
+            "save": "विक्री जतन करा",
+            "update": "विक्री अद्यतनित करा",
+            "cancel": "रद्द करा"
+          }
+        }
+      },
+      "dashboard": {
+        "goatFarmDashboard": "शेळी फार्म डॅशबोर्ड",
+        "lastUpdated": "शेवटचे अद्यतन: {{date}}",
+        "overview": "तुमच्या शेळीपालन कार्याचे विहंगावलोकन",
+        "stats": {
+          "totalGoats": "एकूण शेळ्या",
+          "healthyGoats": "निरोगी शेळ्या",
+          "pregnantGoats": "गरोदर शेळ्या",
+          "upcomingBreeding": "आगामी पैदास",
+          "recentFeeding": "अलीकडील खाद्यपदार्थ",
+          "milkProduction": "दुध उत्पादन (लीटर)"
+        },
+        "quickActions": {
+          "sales": {
+            "title": "विक्री आणि व्यवहार",
+            "description": "विक्री नोंदवा आणि व्यवहार इतिहास पहा"
+          },
+          "manageGoats": {
+            "title": "शेळ्या व्यवस्थापित करा",
+            "description": "शेळ्यांच्या नोंदी पहा आणि संपादित करा"
+          },
+          "health": {
+            "title": "आरोग्य नोंदी",
+            "description": "आरोग्य तपासणी आणि उपचारांचा मागोवा ठेवा"
+          },
+          "breeding": {
+            "title": "पैदास",
+            "description": "पैदास नोंदी आणि वेळापत्रक व्यवस्थापित करा"
+          },
+          "feeding": {
+            "title": "खाद्य व्यवस्था",
+            "description": "खाद्य वापर आणि वेळापत्रक ट्रॅक करा"
+          },
+          "milkProduction": {
+            "title": "दुध उत्पादन",
+            "description": "दुधाचे उत्पादन नोंदवा आणि विश्लेषित करा"
+          },
+          "reports": {
+            "title": "अहवाल",
+            "description": "शेताचे अहवाल पहा आणि तयार करा"
+          }
+        },
+        "alerts": {
+          "title": "सूचना",
+          "noAlerts": "कोणत्याही सक्रिय सूचना नाहीत"
+        },
+        "error": {
+          "loading": "डॅशबोर्ड डेटा लोड करताना त्रुटी"
+        },
+        "cachedData": "{{date}} चा कॅश केलेला डेटा दाखवत आहे",
+        "updating": "अद्यतन करत आहे"
+      },
+      "goatForm": {
+        "title": "नवीन शेळी जोडा",
+        "editTitle": "शेळीची माहिती सुधारा",
+        "basicInfo": "मूलभूत माहिती",
+        "physicalInfo": "शारीरिक माहिती",
+        "purchaseInfo": "खरेदी माहिती",
+        "fields": {
+          "name": "नाव",
+          "tagNumber": "टॅग क्रमांक",
+          "breed": "जात",
+          "selectBreed": "जात निवडा",
+          "selectGender": "लिंग निवडा",
+          "dateOfBirth": "जन्मतारीख",
+          "gender": "लिंग",
+          "color": "रंग",
+          "weight": "वजन (किलो)",
+          "status": "स्थिती",
+          "location": "स्थान",
+          "locationPlaceholder": "शेळीचे स्थान प्रविष्ट करा",
+          "purchaseDate": "खरेदी तारीख",
+          "purchasePrice": "खरेदी किंमत",
+          "purchaseFrom": "कोणाकडून खरेदी केली",
+          "motherId": "आईचा आयडी",
+          "fatherId": "वडिलांचा आयडी",
+          "notes": "नोंदी"
+        },
+        "alerts": {
+          "updateSuccess": "शेळीची माहिती यशस्वीरित्या अद्यतनित केली गेली",
+          "error": "एक त्रुटी आली. कृपया पुन्हा प्रयत्न करा."
+        }
+      }
+    },
+    "title": "शेळी व्यवस्थापन",
+    "subtitle": "तुमच्या शेळ्या आणि त्यांच्या नोंदी व्यवस्थापित करा",
+    "goats": {
+      "filters": {
+        "gender": {
+          "male": "नर",
+          "female": "मादी",
+          "castrated": "बधीर"
+        },
+        "status": {
+          "Active": "सक्रिय",
+          "Sold": "विकली गेली",
+          "deceased": "मृत",
+          "retired": "निवृत्त"
+        },
+        "breeds": {
+          "boer": "बोअर",
+          "nubian": "न्युबियन",
+          "alpine": "आल्पाइन",
+          "saanen": "सानेन",
+          "toggenburg": "टोगेनबर्ग",
+          "lamancha": "ला मान्चा",
+          "jamunapari": "जमुनापारी",
+          "sirohi": "सिरोही",
+          "barbari": "बारबरी",
+          "osmanabadi": "उस्मानाबादी",
+          "malabari": "मलबारी",
+          "surti": "सुरती",
+          "jakhrana": "झाकरणा",
+          "marwari": "मारवाडी",
+          "mixed": "मिश्र",
+          "other": "इतर"
+        },
+        "genders": {
+          "male": "नर",
+          "female": "मादी"
+        },
+        "statuses": {
+          "active": "सक्रिय",
+          "sold": "विकली गेली",
+          "deceased": "मृत",
+          "transferred": "स्थलांतरित"
+        }
+      },
+      "form": {
+        "title": {
+          "add": "नवीन शेळी जोडा",
+          "edit": "शेळीची माहिती सुधारा"
+        },
+        "fields": {
+          "tagNumber": "टॅग क्रमांक",
+          "name": "नाव",
+          "breed": "जात",
+          "gender": "लिंग",
+          "dateOfBirth": "जन्मतारीख",
+          "weight": "वजन (किलो)",
+          "status": "स्थिती"
+        },
+        "buttons": {
+          "save": "जतन करा",
+          "cancel": "रद्द करा",
+          "delete": "हटवा",
+          "confirmDelete": "हटविण्याची पुष्टी करा"
+        },
+        "validation": {
+          "required": "{{field}} आवश्यक आहे",
+          "invalidDate": "अवैध तारीख",
+          "invalidNumber": "कृपया वैध संख्या प्रविष्ट करा"
+        },
+        "deleteConfirmation": "तुम्हाला ही शेळी हटवायची आहे का? ही क्रिया पूर्ववत केली जाऊ शकत नाही.",
+        "deleteSuccess": "शेळी यशस्वीरित्या हटवली गेली",
+        "saveSuccess": "शेळी यशस्वीरित्या जतन केली गेली"
+      },
+      "table": {
+        "columns": {
+          "tagNumber": "टॅग #",
+          "name": "नाव",
+          "breed": "जात",
+          "gender": "लिंग",
+          "age": "वय",
+          "weight": "वजन",
+          "status": "स्थिती",
+          "actions": "क्रिया"
+        },
+        "noData": "कोणत्याही शेळ्या सापडल्या नाहीत"
+      }
+    }
+  },
+  "common": {
+    "save": "जतन करा",
+    "cancel": "रद्द करा"
+  },
+  "pages": {
+
+    "goats": {
+      "filters": {
+        "gender": {
+          "male": "नर",
+          "female": "मादी"
+        },
+        "status": {
+          "Active": "सक्रिय",
+          "Sold": "विकली गेली",
+          "deceased": "मृत",
+          "retired": "निवृत्त"
+        }
+      }
+    }
+  }
+}

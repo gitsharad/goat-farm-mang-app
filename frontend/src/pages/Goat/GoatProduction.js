@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Milk, Plus, BarChart2, Filter, Calendar, Download, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import api from '../../services/api';
 
 const GoatProduction = () => {
+  const { t } = useTranslation('goat');
   const [milkRecords, setMilkRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState({
@@ -20,9 +22,12 @@ const GoatProduction = () => {
     try {
       setLoading(true);
       const response = await api.get(`/goats/milk-records?start=${dateRange.start}&end=${dateRange.end}`);
-      setMilkRecords(response.data);
+      // Ensure we always set an array, even if response.data is null/undefined
+      setMilkRecords(Array.isArray(response?.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching milk records:', error);
+      // Set to empty array on error to prevent reduce errors
+      setMilkRecords([]);
     } finally {
       setLoading(false);
     }
@@ -48,8 +53,8 @@ const GoatProduction = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Goat Milk Production</h1>
-          <p className="text-gray-600">Track and analyze goat milk records</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('pages.goatProduction.title')}</h1>
+          <p className="text-gray-600">{t('pages.goatProduction.subtitle')}</p>
         </div>
         <div className="flex space-x-3">
           <button 
@@ -57,7 +62,7 @@ const GoatProduction = () => {
             className="btn-primary"
           >
             <Plus className="h-4 w-4 mr-2" />
-            New Record
+            {t('pages.goatProduction.newRecord')}
           </button>
         </div>
       </div>
@@ -67,9 +72,9 @@ const GoatProduction = () => {
           <div className="flex items-center">
             <Milk className="h-8 w-8 text-blue-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Production (L)</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.goatProduction.totalProduction')}</p>
               <p className="text-2xl font-semibold text-gray-900">
-                {milkRecords.reduce((sum, record) => sum + record.quantity, 0).toFixed(2)}
+                {Array.isArray(milkRecords) ? milkRecords.reduce((sum, record) => sum + (parseFloat(record?.quantity) || 0), 0).toFixed(2) : '0.00'}
               </p>
             </div>
           </div>
@@ -79,10 +84,10 @@ const GoatProduction = () => {
           <div className="flex items-center">
             <BarChart2 className="h-8 w-8 text-green-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Avg. per Goat (L)</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.goatProduction.avgPerGoat')}</p>
               <p className="text-2xl font-semibold text-gray-900">
-                {milkRecords.length > 0 
-                  ? (milkRecords.reduce((sum, record) => sum + record.quantity, 0) / milkRecords.length).toFixed(2)
+                {Array.isArray(milkRecords) && milkRecords.length > 0 
+                  ? (milkRecords.reduce((sum, record) => sum + (parseFloat(record?.quantity) || 0), 0) / milkRecords.length).toFixed(2)
                   : '0.00'}
               </p>
             </div>
@@ -93,7 +98,7 @@ const GoatProduction = () => {
           <div className="flex items-center">
             <Calendar className="h-8 w-8 text-purple-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Date Range</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.goatProduction.dateRange')}</p>
               <div className="flex space-x-2">
                 <input
                   type="date"
@@ -102,7 +107,7 @@ const GoatProduction = () => {
                   onChange={handleDateChange}
                   className="text-sm border rounded p-1"
                 />
-                <span className="text-gray-500">to</span>
+                <span className="text-gray-500">{t('pages.goatProduction.to')}</span>
                 <input
                   type="date"
                   name="end"
@@ -118,7 +123,7 @@ const GoatProduction = () => {
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-900">Milk Records</h2>
+          <h2 className="text-lg font-semibold text-gray-900">{t('pages.goatProduction.table.title')}</h2>
           <div className="flex items-center space-x-3">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -126,13 +131,13 @@ const GoatProduction = () => {
               </div>
               <input
                 type="text"
-                placeholder="Search records..."
+                placeholder={t('pages.goatProduction.searchPlaceholder')}
                 className="pl-10 pr-4 py-2 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
             <button className="btn-secondary">
               <Download className="h-4 w-4 mr-2" />
-              Export
+              {t('pages.goatProduction.export')}
             </button>
           </div>
         </div>
@@ -142,22 +147,22 @@ const GoatProduction = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date
+                  {t('pages.goatProduction.table.date')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Goat ID
+                  {t('pages.goatProduction.table.goatId')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Quantity (L)
+                  {t('pages.goatProduction.table.quantity')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Fat %
+                  {t('pages.goatProduction.table.fat')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  SNF %
+                  {t('pages.goatProduction.table.snf')}
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Notes
+                  {t('pages.goatProduction.table.notes')}
                 </th>
               </tr>
             </thead>

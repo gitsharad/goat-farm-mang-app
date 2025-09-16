@@ -2,10 +2,11 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastProvider, useToast } from './utils/toast';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './config/i18n';
 import './index.css';
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
-import { LanguageProvider } from './contexts/LanguageContext';
 
 // Initialize React root
 const container = document.getElementById('root');
@@ -26,15 +27,15 @@ const AppWrapper = () => {
 // Wrap the app with providers
 const AppWithProviders = () => (
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <LanguageProvider>
+    <I18nextProvider i18n={i18n}>
+      <BrowserRouter>
+        <AuthProvider>
           <ToastProvider>
             <AppWrapper />
           </ToastProvider>
-        </LanguageProvider>
-      </AuthProvider>
-    </BrowserRouter>
+        </AuthProvider>
+      </BrowserRouter>
+    </I18nextProvider>
   </React.StrictMode>
 );
 
