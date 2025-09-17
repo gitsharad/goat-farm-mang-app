@@ -283,7 +283,7 @@ const Poultry = () => {
                           <Eye className="w-4 h-4" title={t('pages.poultryPage.table.viewDetails')} />
                         </Link>
                         <Link
-                          to={`/poultry/animals/${item._id}/edit`}
+                          to={`/dashboard/poultry/animals/${item._id}/edit`}
                           className="text-indigo-600 hover:text-indigo-900"
                           title="Edit"
                         >

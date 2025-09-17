@@ -51,18 +51,27 @@
       },
       "dashboard": {
         "title": "Dairy Dashboard",
-        "subtitle": "Overview of your dairy operations",
+        "subtitle": "Overview of your dairy farm operations",
         "stats": {
           "totalAnimals": "Total Animals",
-          "lactatingAnimals": "Milking Animals",
+          "healthRecords": "Health Records",
+          "activeCount": "{{count}} Active",
           "dailyMilkProduction": "Daily Milk Production",
+          "liters": "{{liters}} L",
           "pregnantAnimals": "Pregnant Animals"
         },
         "quickActions": {
+          "title": "Quick Actions",
           "milkProduction": "Milk Production",
+          "milkProductionDesc": "Record and track milk yields",
           "healthRecords": "Health Records",
+          "healthRecordsDesc": "Track vaccinations and treatments",
           "breeding": "Breeding",
-          "feeding": "Feeding Management",
+          "breedingDesc": "Track breeding and pregnancy",
+          "feeding": "Feeding",
+          "feedingDesc": "Manage feed and nutrition",
+          "manageAnimals": "Manage Animals",
+          "manageAnimalsDesc": "View and manage your dairy animals",
           "reports": {
             "title": "View Reports",
             "description": "Analyze production and health data"

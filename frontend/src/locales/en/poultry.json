@@ -250,8 +250,9 @@
           "vaccination": "Vaccination"
         },
         "labels": {
-          "tagNumber": "Tag Number",
+          "tagNumber": "Tag/ID Number",
           "batchNumber": "Batch Number",
+          "quantity": "Number of Birds",
           "breed": "Breed",
           "type": "Type",
           "dateOfHatch": "Date of Hatch",
@@ -276,8 +277,10 @@
           "notes": "Enter any additional notes"
         },
         "validation": {
-          "tagNumberRequired": "Tag number is required",
-          "breedRequired": "Please select a breed",
+          "tagNumberRequired": "Tag/ID number is required",
+          "breedRequired": "Breed is required",
+          "quantityRequired": "Number of birds is required",
+          "quantityMin": "Must be at least 1 bird",
           "vaccineNameRequired": "Vaccine name is required when date is provided"
         },
         "buttons": {
@@ -324,9 +327,19 @@
           "title": "Poultry Dashboard",
           "subtitle": "Manage your poultry farm operations",
           "summary": "Poultry Farm Overview",
+          "quickActions": "Quick Actions",
+          "managePoultry": "Manage Poultry",
+          "managePoultryDesc": "View and manage all your poultry",
+          "healthAlerts": "Health Alerts",
+          "healthAlertsDesc": "Monitor and manage poultry health",
+          "eggProduction": "Egg Production",
+          "eggProductionDesc": "Track daily egg production",
+          "feedManagement": "Feed Management",
+          "feedManagementDesc": "Manage feed inventory and schedules",
+          "salesInventory": "Sales & Inventory",
+          "salesInventoryDesc": "Track sales and manage inventory",
           "totalBirds": "Total Birds",
           "activeBirds": "Active Birds",
-          "eggProduction": "Egg Production",
           "feedConsumption": "Feed Consumption",
           "mortalityRate": "Mortality Rate",
           "recentActivity": "Recent Activity",
@@ -335,12 +348,7 @@
           "vaccinationAlert": "Upcoming Vaccinations",
           "vaccinationMessage": "You have {{count}} vaccinations due soon. Please check the schedule.",
           "healthRecords": "Health Records",
-          "managePoultry": "Manage Poultry",
-          "feedManagement": "Feed Management",
-          "salesInventory": "Sales & Inventory",
           "addBatch": "Add New Batch",
-          "quickActions": "Quick Actions",
-          "healthAlerts": "Health Alerts",
           "noAlerts": "No active alerts",
           "noRecentActivity": "No recent activity"
         },

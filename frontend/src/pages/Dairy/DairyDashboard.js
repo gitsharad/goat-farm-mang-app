@@ -99,8 +99,8 @@ const DairyDashboard = () => {
           <div className="flex items-center">
             <Heart className="h-8 w-8 text-red-500" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Health Records</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.milkingCows} Active</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.healthRecords')}</p>
+              <p className="text-2xl font-semibold text-gray-900">{t('pages.dashboard.stats.activeCount', { count: stats.milkingCows })}</p>
             </div>
           </div>
         </Link>
@@ -112,8 +112,8 @@ const DairyDashboard = () => {
           <div className="flex items-center">
             <Milk className="h-8 w-8 text-yellow-500" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Daily Milk Production</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.dailyMilkProduction} L</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.dailyMilkProduction')}</p>
+              <p className="text-2xl font-semibold text-gray-900">{t('pages.dashboard.stats.liters', { liters: stats.dailyMilkProduction })}</p>
             </div>
           </div>
         </Link>
@@ -122,7 +122,7 @@ const DairyDashboard = () => {
           <div className="flex items-center">
             <Heart className="h-8 w-8 text-pink-600" />
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Pregnant Animals</p>
+              <p className="text-sm font-medium text-gray-600">{t('pages.dashboard.stats.pregnantAnimals')}</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.pregnantCows}</p>
             </div>
           </div>
@@ -131,7 +131,7 @@ const DairyDashboard = () => {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        <h2 className="text-xl font-semibold text-gray-800 col-span-full mb-2">Quick Actions</h2>
+        <h2 className="text-xl font-semibold text-gray-800 col-span-full mb-2">{t('pages.dashboard.quickActions.title')}</h2>
         
         {/* Manage Animals */}
         <Link
@@ -143,8 +143,8 @@ const DairyDashboard = () => {
               <Users className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900">Manage Animals</h3>
-              <p className="text-sm text-gray-500">View and manage your dairy animals</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.manageAnimals')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.manageAnimalsDesc')}</p>
             </div>
           </div>
         </Link>
@@ -159,8 +159,8 @@ const DairyDashboard = () => {
               <Heart className="h-6 w-6 text-green-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900">Health Records</h3>
-              <p className="text-sm text-gray-500">Track vaccinations and treatments</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.healthRecords')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.healthRecordsDesc')}</p>
             </div>
           </div>
         </Link>
@@ -175,8 +175,8 @@ const DairyDashboard = () => {
               <Milk className="h-6 w-6 text-yellow-500" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900">Milk Production</h3>
-              <p className="text-sm text-gray-500">Record and track milk yields</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.milkProduction')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.milkProductionDesc')}</p>
             </div>
           </div>
         </Link>
@@ -191,8 +191,8 @@ const DairyDashboard = () => {
               <Heart className="h-6 w-6 text-pink-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900">Breeding</h3>
-              <p className="text-sm text-gray-500">Track breeding and pregnancy</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.breeding')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.breedingDesc')}</p>
             </div>
           </div>
         </Link>
@@ -207,8 +207,8 @@ const DairyDashboard = () => {
               <Utensils className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900">Feeding</h3>
-              <p className="text-sm text-gray-500">Manage feed and nutrition</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.feeding')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.feedingDesc')}</p>
             </div>
           </div>
         </Link>
@@ -223,8 +223,8 @@ const DairyDashboard = () => {
               <TrendingUp className="h-6 w-6 text-indigo-600" />
             </div>
             <div className="ml-4">
-              <h3 className="text-lg font-medium text-gray-900">Reports</h3>
-              <p className="text-sm text-gray-500">View farm analytics</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.reports.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.reports.description')}</p>
             </div>
           </div>
         </Link>

@@ -5,57 +5,11 @@ import { useTranslation } from 'react-i18next';
 import api from '../../services/api';
 
 const PoultryDashboard = () => {
-  const { t, i18n } = useTranslation('poultry');
+  const { t } = useTranslation('poultry');
   
-  // Debug logs
-  useEffect(() => {
-    const logTranslations = () => {
-      console.log('=== POULTRY DASHBOARD DEBUG ===');
-      console.log('Current language:', i18n.language);
-      console.log('Available languages:', i18n.languages);
-      
-      // Get all loaded namespaces and resources
-      const allResources = i18n.store.data[i18n.language];
-      console.log('All loaded resources:', allResources);
-      
-      // Get the translations for the current language and namespace
-      const translations = i18n.getResourceBundle(i18n.language, 'poultry');
-      console.log('Poultry translations:', translations);
-      
-      // Test different translation keys with explicit namespace
-      const testKeys = [
-        'pages.poultryDashboard.dashboard.title',
-        'pages.poultryDashboard.dashboard.managePoultry',
-        'pages.poultryDashboard.navigation.dashboard'
-      ];
-      
-      testKeys.forEach(key => {
-        const value = i18n.t(key, { 
-          ns: 'poultry',
-          lng: i18n.language,
-          defaultValue: `[MISSING: ${key}]`
-        });
-        console.log(`Translation for ${key}:`, value);
-      });
-      
-      // Log available translations structure
-      if (allResources?.poultry?.pages?.poultryDashboard) {
-        console.log('Poultry dashboard translations:', allResources.poultry.pages.poultryDashboard);
-      }
-    };
-    
-    // Log translations on mount and when language changes
-    logTranslations();
-    i18n.on('languageChanged', logTranslations);
-    
-    return () => {
-      i18n.off('languageChanged', logTranslations);
-    };
-  }, [i18n, t]);
+  // Helper function to get translations from the correct namespace
+  const tDashboard = (key) => t(`pages.poultryDashboard.dashboard.${key}`, { defaultValue: key });
   
-  // Access translations using the correct path that matches the JSON structure
-  const tDashboard = (key) => t(`pages.poultryDashboard.dashboard.${key}`, { ns: 'poultry', defaultValue: key });
-  const tNav = (key) => t(`pages.poultryDashboard.navigation.${key}`, { ns: 'poultry', defaultValue: key });
   const [stats, setStats] = useState({
     totalBirds: 0,
     activeBirds: 0,
@@ -183,71 +137,89 @@ const PoultryDashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <Link
-          to="/dashboard/poultry/animals"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center">
-            <Users className="h-10 w-10 text-blue-600" />
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{tDashboard('quickActions')}</h3>
-              <p className="text-gray-600">{tDashboard('managePoultry')}</p>
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">{tDashboard('quickActions')}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Manage Poultry */}
+          <Link
+            to="/dashboard/poultry/animals"
+            className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-blue-500"
+          >
+            <div className="flex items-center">
+              <div className="p-2 rounded-full bg-blue-50">
+                <Users className="h-6 w-6 text-blue-600" />
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-medium text-gray-900">{tDashboard('managePoultry')}</h3>
+                <p className="text-sm text-gray-500">{tDashboard('managePoultryDesc')}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        <Link
-          to="/dashboard/poultry/health"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center">
-            <Heart className="h-10 w-10 text-green-600" />
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{tDashboard('healthAlerts')}</h3>
-              <p className="text-gray-600">{tDashboard('noAlerts')}</p>
+          {/* Health Records */}
+          <Link
+            to="/dashboard/poultry/health"
+            className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-green-500"
+          >
+            <div className="flex items-center">
+              <div className="p-2 rounded-full bg-green-50">
+                <Heart className="h-6 w-6 text-green-600" />
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-medium text-gray-900">{tDashboard('healthAlerts')}</h3>
+                <p className="text-sm text-gray-500">{tDashboard('healthAlertsDesc')}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        <Link
-          to="/dashboard/poultry/reports"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center">
-            <Egg className="h-10 w-10 text-yellow-600" />
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{tDashboard('eggProduction')}</h3>
-              <p className="text-gray-600">{tDashboard('noRecentActivity')}</p>
+          {/* Egg Production */}
+          <Link
+            to="/dashboard/poultry/eggs"
+            className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-yellow-500"
+          >
+            <div className="flex items-center">
+              <div className="p-2 rounded-full bg-yellow-50">
+                <Egg className="h-6 w-6 text-yellow-600" />
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-medium text-gray-900">{tDashboard('eggProduction')}</h3>
+                <p className="text-sm text-gray-500">{tDashboard('eggProductionDesc')}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        <Link
-          to="/dashboard/poultry/feed"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center">
-            <Utensils className="h-10 w-10 text-orange-600" />
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{tDashboard('feedManagement')}</h3>
-              <p className="text-gray-600">{tDashboard('noRecentActivity')}</p>
+          {/* Feed Management */}
+          <Link
+            to="/dashboard/poultry/feed"
+            className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-orange-500"
+          >
+            <div className="flex items-center">
+              <div className="p-2 rounded-full bg-orange-50">
+                <Utensils className="h-6 w-6 text-orange-600" />
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-medium text-gray-900">{tDashboard('feedManagement')}</h3>
+                <p className="text-sm text-gray-500">{tDashboard('feedManagementDesc')}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
 
-        <Link
-          to="/dashboard/poultry/reports"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center">
-            <TrendingUp className="h-10 w-10 text-purple-600" />
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{tDashboard('salesInventory')}</h3>
-              <p className="text-gray-600">{tDashboard('noRecentActivity')}</p>
+          {/* Sales & Inventory */}
+          <Link
+            to="/dashboard/poultry/sales"
+            className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-purple-500"
+          >
+            <div className="flex items-center">
+              <div className="p-2 rounded-full bg-purple-50">
+                <TrendingUp className="h-6 w-6 text-purple-600" />
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-medium text-gray-900">{tDashboard('salesInventory')}</h3>
+                <p className="text-sm text-gray-500">{tDashboard('salesInventoryDesc')}</p>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
 
       {/* Upcoming Vaccinations */}
@@ -256,18 +228,18 @@ const PoultryDashboard = () => {
           <div className="px-6 py-4 border-b border-gray-200">
             <h3 className="text-lg font-semibold text-yellow-600 flex items-center">
               <AlertTriangle className="h-5 w-5 mr-2" />
-              {t('pages.poultryDashboard.dashboard.vaccinationAlert')}
+              {tDashboard('vaccinationAlert')}
             </h3>
           </div>
           <div className="p-6">
             <p className="text-gray-600">
-              {t('pages.poultryDashboard.dashboard.vaccinationMessage', { count: stats.upcomingVaccinations })}
+              {tDashboard('vaccinationMessage', { count: stats.upcomingVaccinations })}
             </p>
             <Link
               to="/dashboard/poultry/reports/vaccinations"
               className="text-primary-600 hover:text-primary-700 font-medium mt-2 inline-block"
             >
-              {t('pages.poultryDashboard.dashboard.viewSchedule')}
+              {tDashboard('viewSchedule')}
             </Link>
           </div>
         </div>

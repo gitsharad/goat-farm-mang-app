@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import { Eye, EyeOff, Users, Heart, Baby, Utensils } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 const Login = () => {
+  const { t } = useTranslation('common');
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -12,7 +15,7 @@ const Login = () => {
     password: '',
     firstName: '',
     lastName: '',
-    role: 'Worker',
+    role: t('loginPage.roles.worker'),
     farmTypes: []
   });
   const [loading, setLoading] = useState(false);
@@ -37,7 +40,7 @@ const Login = () => {
         });
 
         if (result?.success) {
-          toast.success('Login successful!');
+          toast.success(t('loginPage.loginSuccess'));
           
           // Always redirect to dashboard-selector after login
           const targetUrl = '/dashboard-selector';
@@ -48,19 +51,19 @@ const Login = () => {
             window.location.href = targetUrl;
           }, 100);
         } else {
-          toast.error(result?.message || 'Login failed. Please check your credentials.');
+          toast.error(result?.message || t('loginPage.loginFailed'));
         }
       } else {
         // Registration logic
         if (!formData.farmTypes || formData.farmTypes.length === 0) {
-          toast.error('Please select at least one farm type');
+          toast.error(t('loginPage.selectFarmTypeError'));
           setLoading(false);
           return;
         }
         
         result = await register(formData);
         if (result?.success) {
-          toast.success('Registration successful! Please log in.');
+          toast.success(t('loginPage.registrationSuccess'));
           setIsLogin(true); // Switch to login form
           setFormData({
             username: '',
@@ -68,16 +71,16 @@ const Login = () => {
             password: '',
             firstName: '',
             lastName: '',
-            role: 'Worker',
+            role: t('loginPage.roles.worker'),
             farmTypes: []
           });
         } else {
-          toast.error(result?.message || 'Registration failed. Please try again.');
+          toast.error(result?.message || t('loginPage.registrationFailed'));
         }
       }
     } catch (error) {
       console.error('Authentication error:', error);
-      toast.error('An error occurred. Please try again.');
+      toast.error(t('loginPage.genericError'));
     } finally {
       setLoading(false);
     }
@@ -98,7 +101,7 @@ const Login = () => {
       password: '',
       firstName: '',
       lastName: '',
-      role: 'Worker',
+      role: t('loginPage.roles.worker'),
       farmTypes: []
     });
   };
@@ -112,45 +115,48 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex relative">
+      <div className="absolute top-4 right-4 z-10">
+        <LanguageSwitcher />
+      </div>
       {/* Left side - Features */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary-600 to-primary-800 text-white p-12">
         <div className="max-w-md">
-          <h1 className="text-4xl font-bold mb-6">Farm Management System</h1>
+          <h1 className="text-4xl font-bold mb-6">{t('loginPage.appTitle')}</h1>
           <p className="text-lg text-primary-100 mb-8">
-            Streamline your farm operations with our comprehensive management system for goats, poultry, and dairy.
+            {t('loginPage.appDescription')}
           </p>
           
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
               <Users className="h-8 w-8 text-primary-200" />
               <div>
-                <h3 className="font-semibold">Animal Management</h3>
-                <p className="text-primary-200">Track individual animals, breeding, and health records</p>
+                <h3 className="font-semibold">{t('loginPage.features.animalManagement.title')}</h3>
+                <p className="text-primary-200">{t('loginPage.features.animalManagement.description')}</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
               <Heart className="h-8 w-8 text-primary-200" />
               <div>
-                <h3 className="font-semibold">Health Monitoring</h3>
-                <p className="text-primary-200">Monitor vaccinations, treatments, and medical history</p>
+                <h3 className="font-semibold">{t('loginPage.features.healthMonitoring.title')}</h3>
+                <p className="text-primary-200">{t('loginPage.features.healthMonitoring.description')}</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
               <Baby className="h-8 w-8 text-primary-200" />
               <div>
-                <h3 className="font-semibold">Breeding Programs</h3>
-                <p className="text-primary-200">Manage mating schedules and track pregnancies</p>
+                <h3 className="font-semibold">{t('loginPage.features.breedingPrograms.title')}</h3>
+                <p className="text-primary-200">{t('loginPage.features.breedingPrograms.description')}</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
               <Utensils className="h-8 w-8 text-primary-200" />
               <div>
-                <h3 className="font-semibold">Feed Management</h3>
-                <p className="text-primary-200">Track feeding schedules and nutritional requirements</p>
+                <h3 className="font-semibold">{t('loginPage.features.feedManagement.title')}</h3>
+                <p className="text-primary-200">{t('loginPage.features.feedManagement.description')}</p>
               </div>
             </div>
           </div>
@@ -162,12 +168,12 @@ const Login = () => {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+              {isLogin ? t('loginPage.title') : t('loginPage.createAccount')}
             </h2>
             <p className="text-gray-600">
               {isLogin 
-                ? 'Sign in to your account to continue' 
-                : 'Join us to start managing your farm'
+                ? t('loginPage.subtitle')
+                : t('loginPage.joinUs')
               }
             </p>
           </div>
@@ -177,8 +183,8 @@ const Login = () => {
               <>
                 {/* Farm Types Selection - Multiple for registration */}
                 <div>
-                  <label className="label">Farm Types *</label>
-                  <p className="text-sm text-gray-600 mb-3">Select all farm types you manage (choose at least one)</p>
+                  <label className="label">{t('loginPage.farmTypes')} *</label>
+                  <p className="text-sm text-gray-600 mb-3">{t('loginPage.selectFarmTypes')}</p>
                   <div className="space-y-2">
                     <label className="flex items-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
                       <input
@@ -189,8 +195,8 @@ const Login = () => {
                         className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300"
                       />
                       <div className="ml-3">
-                        <div className="text-sm font-medium text-gray-900">🐐 Goat Farm</div>
-                        <div className="text-xs text-gray-500">Manage goats, breeding, health, and feed records</div>
+                        <div className="text-sm font-medium text-gray-900">{t('loginPage.goatFarm')}</div>
+                        <div className="text-xs text-gray-500">{t('loginPage.goatFarmDescription')}</div>
                       </div>
                     </label>
 
@@ -203,8 +209,8 @@ const Login = () => {
                         className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300"
                       />
                       <div className="ml-3">
-                        <div className="text-sm font-medium text-gray-900">🐔 Poultry Farm</div>
-                        <div className="text-xs text-gray-500">Manage poultry batches, egg production, and health</div>
+                        <div className="text-sm font-medium text-gray-900">{t('loginPage.poultryFarm')}</div>
+                        <div className="text-xs text-gray-500">{t('loginPage.poultryFarmDescription')}</div>
                       </div>
                     </label>
 
@@ -217,19 +223,19 @@ const Login = () => {
                         className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300"
                       />
                       <div className="ml-3">
-                        <div className="text-sm font-medium text-gray-900">🐄 Dairy Farm</div>
-                        <div className="text-xs text-gray-500">Manage dairy cattle, milk production, and breeding</div>
+                        <div className="text-sm font-medium text-gray-900">{t('loginPage.dairyFarm')}</div>
+                        <div className="text-xs text-gray-500">{t('loginPage.dairyFarmDescription')}</div>
                       </div>
                     </label>
                     {formData.farmTypes.length === 0 && (
-                      <p className="text-xs text-red-600">Please select at least one farm type.</p>
+                      <p className="text-xs text-red-600">{t('loginPage.selectAtLeastOneFarmType')}</p>
                     )}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="label">First Name</label>
+                    <label className="label">{t('loginPage.firstName')}</label>
                     <input
                       type="text"
                       name="firstName"
@@ -240,7 +246,7 @@ const Login = () => {
                     />
                   </div>
                   <div>
-                    <label className="label">Last Name</label>
+                    <label className="label">{t('loginPage.lastName')}</label>
                     <input
                       type="text"
                       name="lastName"
@@ -253,7 +259,7 @@ const Login = () => {
                 </div>
                 
                 <div>
-                  <label className="label">Email</label>
+                  <label className="label">{t('loginPage.email')}</label>
                   <input
                     type="email"
                     name="email"
@@ -265,7 +271,7 @@ const Login = () => {
                 </div>
 
                 <div>
-                  <label className="label">Role</label>
+                  <label className="label">{t('loginPage.role')}</label>
                   <select
                     name="role"
                     value={formData.role}
@@ -273,10 +279,10 @@ const Login = () => {
                     className="input"
                     required
                   >
-                    <option value="Worker">Worker</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Viewer">Viewer</option>
+                    <option value="Worker">{t('loginPage.roles.worker')}</option>
+                    <option value="Manager">{t('loginPage.roles.manager')}</option>
+                    <option value="Admin">{t('loginPage.roles.admin')}</option>
+                    <option value="Viewer">{t('loginPage.roles.viewer')}</option>
                   </select>
                 </div>
 
@@ -285,7 +291,7 @@ const Login = () => {
 
             <div>
               <label className="label">
-                {isLogin ? 'Username or Email' : 'Username'}
+                {isLogin ? t('loginPage.usernameOrEmail') : t('loginPage.username')}
               </label>
               <input
                 type="text"
@@ -298,7 +304,7 @@ const Login = () => {
             </div>
 
             <div>
-              <label className="label">Password</label>
+              <label className="label">{t('loginPage.password')}</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -330,10 +336,10 @@ const Login = () => {
               {loading ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  {isLogin ? 'Signing in...' : 'Creating account...'}
+                  {isLogin ? t('loginPage.signingIn') : t('loginPage.creatingAccount')}
                 </div>
               ) : (
-                isLogin ? 'Sign In' : 'Create Account'
+                isLogin ? t('loginPage.signIn') : t('loginPage.createAccount')
               )}
             </button>
           </form>
@@ -344,8 +350,8 @@ const Login = () => {
               className="text-primary-600 hover:text-primary-700 font-medium"
             >
               {isLogin 
-                ? "Don't have an account? Sign up" 
-                : 'Already have an account? Sign in'
+                ? t('loginPage.dontHaveAccount')
+                : t('loginPage.alreadyHaveAccount')
               }
             </button>
           </div>

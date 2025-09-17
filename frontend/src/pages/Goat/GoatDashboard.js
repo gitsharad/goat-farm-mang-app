@@ -363,93 +363,117 @@ const GoatDashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Link
-          to="/sales"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
-        >
-          <div className="flex items-center">
-            <DollarSign className="h-10 w-10 text-green-600" />
-            <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.sales.title')}</h3>
-              <p className="text-gray-600">{t('pages.dashboard.quickActions.sales.description')}</p>
-            </div>
-          </div>
-        </Link>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <h2 className="text-xl font-semibold text-gray-800 col-span-full mb-2">{t('pages.dashboard.quickActions.title')}</h2>
+        
+        {/* Manage Goats */}
         <Link
           to="/goats"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-blue-500"
         >
           <div className="flex items-center">
-            <Users className="h-10 w-10 text-blue-600" />
+            <div className="p-2 rounded-full bg-blue-50">
+              <Users className="h-6 w-6 text-blue-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.manageGoats.title')}</h3>
-              <p className="text-gray-600">{t('pages.dashboard.quickActions.manageGoats.description')}</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.manageGoats.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.manageGoats.description')}</p>
             </div>
           </div>
         </Link>
 
+        {/* Health Records */}
         <Link
           to="/goats/health"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-green-500"
         >
           <div className="flex items-center">
-            <Heart className="h-10 w-10 text-green-600" />
+            <div className="p-2 rounded-full bg-green-50">
+              <Heart className="h-6 w-6 text-green-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.health.title')}</h3>
-              <p className="text-gray-600">{t('pages.dashboard.quickActions.health.description')}</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.health.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.health.description')}</p>
             </div>
           </div>
         </Link>
 
+        {/* Breeding */}
         <Link
           to="/goats/breeding"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-purple-500"
         >
           <div className="flex items-center">
-            <Baby className="h-10 w-10 text-purple-600" />
+            <div className="p-2 rounded-full bg-purple-50">
+              <Baby className="h-6 w-6 text-purple-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.breeding.title')}</h3>
-              <p className="text-gray-600">{t('pages.dashboard.quickActions.breeding.description')}</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.breeding.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.breeding.description')}</p>
             </div>
           </div>
         </Link>
 
+        {/* Feeding */}
         <Link
           to="/goats/feed"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-orange-500"
         >
           <div className="flex items-center">
-            <Utensils className="h-10 w-10 text-orange-600" />
+            <div className="p-2 rounded-full bg-orange-50">
+              <Utensils className="h-6 w-6 text-orange-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.feeding.title')}</h3>
-              <p className="text-gray-600">{t('pages.dashboard.quickActions.feeding.description')}</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.feeding.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.feeding.description')}</p>
             </div>
           </div>
         </Link>
 
+        {/* Milk Production */}
         <Link
           to="/goat-production"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-pink-500"
         >
           <div className="flex items-center">
-            <Milk className="h-10 w-10 text-pink-600" />
+            <div className="p-2 rounded-full bg-pink-50">
+              <Milk className="h-6 w-6 text-pink-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.milkProduction.title')}</h3>
-              <p className="text-gray-600">{t('pages.dashboard.quickActions.milkProduction.description')}</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.milkProduction.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.milkProduction.description')}</p>
             </div>
           </div>
         </Link>
 
+        {/* Sales */}
         <Link
-          to="/reports"
-          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow"
+          to="/sales"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-emerald-500"
         >
           <div className="flex items-center">
-            <TrendingUp className="h-10 w-10 text-indigo-600" />
+            <div className="p-2 rounded-full bg-emerald-50">
+              <DollarSign className="h-6 w-6 text-emerald-600" />
+            </div>
             <div className="ml-4">
-              <h3 className="text-lg font-semibold text-gray-900">{t('pages.dashboard.quickActions.reports.title')}</h3>
-              <p className="text-gray-600">{t('pages.dashboard.quickActions.reports.description')}</p>
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.sales.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.sales.description')}</p>
+            </div>
+          </div>
+        </Link>
+
+        {/* Reports */}
+        <Link
+          to="/reports"
+          className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-transform hover:scale-105 border-l-4 border-indigo-500"
+        >
+          <div className="flex items-center">
+            <div className="p-2 rounded-full bg-indigo-50">
+              <TrendingUp className="h-6 w-6 text-indigo-600" />
+            </div>
+            <div className="ml-4">
+              <h3 className="text-lg font-medium text-gray-900">{t('pages.dashboard.quickActions.reports.title')}</h3>
+              <p className="text-sm text-gray-500">{t('pages.dashboard.quickActions.reports.description')}</p>
             </div>
           </div>
         </Link>

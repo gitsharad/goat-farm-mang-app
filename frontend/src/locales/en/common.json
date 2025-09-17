@@ -1,5 +1,80 @@
 {
   "common": {
+    "selectFarmType": "Select Farm Type",
+    "getStarted": "Get started by selecting a farm type below",
+    "selectFarm": "Select Farm",
+    "comingSoon": "Coming Soon",
+    "loginPage": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account to continue",
+      "createAccount": "Create Account",
+      "joinUs": "Join us to start managing your farm",
+      "email": "Email",
+      "password": "Password",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "dontHaveAccount": "Don't have an account? Sign up",
+      "alreadyHaveAccount": "Already have an account? Sign in",
+      "forgotPassword": "Forgot password?",
+      "loginSuccess": "Login successful!",
+      "loginFailed": "Login failed. Please check your credentials.",
+      "registrationSuccess": "Registration successful! Please log in.",
+      "registrationFailed": "Registration failed. Please try again.",
+      "selectFarmTypeError": "Please select at least one farm type",
+      "genericError": "An error occurred. Please try again.",
+      "signingIn": "Signing in...",
+      "creatingAccount": "Creating account...",      
+      "appTitle": "Farm Management System",
+      "appDescription": "Streamline your farm operations with our comprehensive management system for goats, poultry, and dairy.",
+      "features": {
+        "animalManagement": {
+          "title": "Animal Management",
+          "description": "Track individual animals, breeding, and health records"
+        },
+        "healthMonitoring": {
+          "title": "Health Monitoring",
+          "description": "Monitor vaccinations, treatments, and medical history"
+        },
+        "breedingPrograms": {
+          "title": "Breeding Programs",
+          "description": "Manage mating schedules and track pregnancies"
+        },
+        "feedManagement": {
+          "title": "Feed Management",
+          "description": "Track feeding schedules and nutritional requirements"
+        }
+      },
+      "farmTypes": "Farm Types",
+      "selectFarmTypes": "Select the types of farms you manage:",
+      "goatFarm": "Goat Farm",
+      "poultryFarm": "Poultry Farm",
+      "dairyFarm": "Dairy Farm",
+      "goatFarmDescription": "Manage your goat farming operations",
+      "poultryFarmDescription": "Manage your poultry farming operations",
+      "dairyFarmDescription": "Manage your dairy farming operations",
+      "selectAtLeastOneFarmType": "Please select at least one farm type",
+      "usernameOrEmail": "Username or Email",
+      "username": "Username",
+      "role": "Role",
+      "roles": {
+        "worker": "Worker",
+        "manager": "Manager",
+        "admin": "Admin",
+        "viewer": "Viewer"
+      }
+    },
+    "dashboardSelectorPage": {
+      "title": "Welcome to Farm Management",
+      "subtitle": "Select a farm type to get started",
+      "goatFarm": "Goat Farm",
+      "poultryFarm": "Poultry Farm",
+      "dairyFarm": "Dairy Farm",
+      "manageGoats": "Manage your goat farming operations",
+      "managePoultry": "Manage your poultry farming operations",
+      "manageDairy": "Manage your dairy farming operations"
+    },
     "refresh": "Refresh",
     "edit": "Edit",
     "delete": "Delete",

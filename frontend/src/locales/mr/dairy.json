@@ -36,31 +36,53 @@
             "dashboard": {
                 "title": "डेअरी डॅशबोर्ड",
                 "subtitle": "तुमच्या डेअरी कार्याचे विहंगावलोकन",
-                "stats": {
-                    "totalAnimals": "एकूण प्राणी",
-                    "lactatingAnimals": "दुभती जनावरे",
-                    "dailyMilkProduction": "दैनंदिन दूध उत्पादन",
-                    "pregnantAnimals": "गर्भवती जनावरे"
-                },
-                "quickActions": {
-                    "milkProduction": "दूध उत्पादन",
-                    "healthRecords": "आरोग्य नोंदी",
-                    "breeding": "प्रजनन",
-                    "feeding": "खाद्य व्यवस्थापन",
-                    "reports": {
-                        "title": "अहवाल पहा",
-                        "description": "उत्पादन आणि आरोग्य डेटाचे विश्लेषण करा"
-                    }
-                },
+              
+                "recentActivity": "अलीकडील क्रियाकलाप",
+                "milkTrends": "दुधाचे ट्रेंड्स",
+                "animalHealth": "प्राणी आरोग्य",
+                "feedInventory": "खाद्य साठा",
                 "milkProductionOverview": "दूध उत्पादनाचे विहंगावलोकन",
                 "dailyMilkProduction": "{{liters}} लिटर",
                 "averageDailyProduction": "सरासरी प्रति प्राणी",
                 "milkingCows": "दुभती गायी:",
                 "currentlyMilking": "सध्या दुभण्यात",
                 "viewDetailedProduction": "तपशीलवार उत्पादन अहवाल पहा",
-                "recentActivity": "अलीकडील क्रियाकलाप",
                 "milkProductionTrends": "दूध उत्पादनाचे ट्रेंड",
-                "animalHealthStatus": "प्राण्यांची आरोग्य स्थिती"
+                "animalHealthStatus": "प्राण्यांची आरोग्य स्थिती",
+                "stats": {
+                    "healthRecords": "आरोग्य नोंदी",
+                    "activeCount": "{{count}} सक्रिय",
+                    "liters": "{{liters}} लिटर",
+                    "totalAnimals": "एकूण प्राणी",
+                    "lactatingAnimals": "दुभती जनावरे",
+                    "dailyMilkProduction": "दैनंदिन दूध उत्पादन",
+                    "pregnantAnimals": "गर्भवती जनावरे",
+                    "averageMilkYield": "सरासरी दुधाचे उत्पादन",
+                    "milkThisWeek": "या आठवड्यातील दूध",
+                    "milkLastWeek": "मागील आठवड्यातील दूध",
+                    "milkTrend": "दुधाची वाढ/घट"
+                },
+                "quickActions": {
+                    "title": "द्रुत क्रिया",
+                    "milkProduction": "दूध उत्पादन",
+                    "milkProductionDesc": "दुधाचे उत्पादन नोंदवा आणि ट्रॅक करा",
+                    "healthRecords": "आरोग्य नोंदी",
+                    "healthRecordsDesc": "लसीकरण आणि उपचारांची नोंद ठेवा",
+                    "breeding": "प्रजनन",
+                    "breedingDesc": "प्रजनन आणि गर्भधारणा ट्रॅक करा",
+                    "feeding": "खाद्य व्यवस्थापन",
+                    "feedingDesc": "खाद्य आणि पोषण व्यवस्थापित करा",
+                    "manageAnimals": "प्राणी व्यवस्थापित करा",
+                    "manageAnimalsDesc": "तुमचे डेअरी प्राणी पहा आणि व्यवस्थापित करा",
+                    "addAnimal": "नवीन प्राणी जोडा",
+                    "recordMilk": "दूध नोंदवा",
+                    "scheduleVaccination": "लसीकरण शेड्यूल करा",
+                    "viewReports": "अहवाल पहा",
+                    "reports": {
+                        "title": "अहवाल पहा",
+                        "description": "उत्पादन आणि आरोग्य डेटाचे विश्लेषण करा"
+                    }
+                }
             },
             "animals": {
                 "noAnimalsFound": "कोणतीही प्राणी सापडली नाहीत",
@@ -452,6 +474,13 @@
             "reports": {
                 "title": "डेअरी अहवाल",
                 "subtitle": "डेअरीचे तपशीलवार अहवाल आणि विश्लेषण",
+                "milkProductionLabel": "दूध उत्पादन अहवाल",
+                "animalHealth": "प्राणी आरोग्य अहवाल",
+                "breeding": "प्रजनन अहवाल",
+                "financial": "आर्थिक अहवाल",
+                "inventory": "साठा अहवाल",
+                "generatePdf": "PDF तयार करा",
+                "exportToExcel": "एक्सेलमध्ये एक्सपोर्ट करा",
                 "generateReport": "अहवाल तयार करा",
                 "selectAnimal": "प्राणी निवडा",
                 "selectAnimalPlaceholder": "प्राणी निवडा",

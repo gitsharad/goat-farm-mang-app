@@ -18,6 +18,7 @@ const PoultryForm = () => {
     defaultValues: {
       tagNumber: '',
       batchNumber: '',
+      quantity: 1,
       breed: '',
       type: 'Layer',
       dateOfHatch: '',
@@ -197,6 +198,29 @@ const PoultryForm = () => {
                   <option value="Local Market">{t('sources.LocalMarket')}</option>
                   <option value="Other">{t('sources.Other')}</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {t('pages.poultryForm.labels.quantity')} <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  {...register('quantity', { 
+                    required: t('pages.poultryForm.validation.quantityRequired'),
+                    valueAsNumber: true,
+                    min: {
+                      value: 1,
+                      message: t('pages.poultryForm.validation.quantityMin')
+                    }
+                  })}
+                  className={`input ${errors.quantity ? 'border-red-500' : ''}`}
+                  placeholder={t('pages.poultryForm.placeholders.quantity')}
+                />
+                {errors.quantity && (
+                  <p className="mt-1 text-sm text-red-600">{errors.quantity.message}</p>
+                )}
               </div>
 
               <div>

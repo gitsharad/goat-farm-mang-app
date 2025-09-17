@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Goat = require('../models/Goat');
+const Dairy = require('../models/Dairy');
+const Poultry = require('../models/Poultry');
 const HealthRecord = require('../models/HealthRecord');
 const BreedingRecord = require('../models/BreedingRecord');
 const FeedRecord = require('../models/FeedRecord');
@@ -453,6 +455,71 @@ router.get('/slow-growers', async (req, res) => {
     res.json(results);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// Get statistics for all farm types
+router.get('/farms/statistics', async (req, res) => {
+  try {
+    // Get total goat count (all statuses)
+    const goatCount = await Goat.countDocuments({});
+    
+    // Get total dairy cow count (all statuses)
+    const cowCount = await Dairy.countDocuments({});
+    
+    // Get total poultry count - sum the quantity of all poultry batches
+    const poultryResult = await Poultry.aggregate([
+      { $group: { _id: null, total: { $sum: '$quantity' } } }
+    ]);
+    const poultryCount = poultryResult[0]?.total || 0;
+    
+    // Get crops count (assuming you have a Crop model)
+    // const cropCount = await Crop.countDocuments();
+    
+    // Get equipment count (assuming you have an Equipment model)
+    // const equipmentCount = await Equipment.countDocuments();
+    
+    res.json({
+      goat: { count: goatCount },
+      dairy: { count: cowCount },
+      poultry: { count: poultryCount },
+      // crops: { count: cropCount || 0 },
+      // equipment: { count: equipmentCount || 0 }
+    });
+  } catch (error) {
+    console.error('Error fetching farm statistics:', error);
+    res.status(500).json({ 
+      message: 'Error fetching farm statistics',
+      error: error.message 
+    });
+  }
+});
+
+// Test endpoint to verify animal counts
+router.get('/test-counts', async (req, res) => {
+  try {
+    // Get total goat count (all statuses)
+    const goatCount = await Goat.countDocuments({});
+    
+    // Get total dairy cow count (all statuses)
+    const cowCount = await Dairy.countDocuments({});
+    
+    // Get total poultry count - sum the quantity of all poultry batches
+    const poultryResult = await Poultry.aggregate([
+      { $group: { _id: null, total: { $sum: '$quantity' } } }
+    ]);
+    const poultryCount = poultryResult[0]?.total || 0;
+    
+    res.json({
+      goat: goatCount,
+      dairy: cowCount,
+      poultry: poultryCount,
+      message: 'Raw counts from database',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error in test-counts:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
